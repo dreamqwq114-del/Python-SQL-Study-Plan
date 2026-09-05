@@ -1,0 +1,32 @@
+customer_id,age,gender,city,monthly_spending,contract_type,join_date,churn,satisfaction_score
+C001,23,Female,Suzhou,188.5,Monthly,2025-01-12,Yes,3
+C002,41,Male,Shanghai,420.0,Yearly,2023-06-01,No,5
+C003,35,FEMALE, Nanjing,315.8,Monthly,2024/03/18,No,4
+C004,29,male,Suzhou,250.0,Monthly,18-04-2024,Yes,2
+C005,52,Female,Shanghai,560.2,Two-year,2022-11-09,No,5
+C006,19,Male,Wuxi,120.0,Monthly,2025-02-30,Yes,2
+C007,64,Female,Nanjing,610.0,Yearly,2021-08-22,No,4
+C008,38,Male, suzhou ,unknown,Monthly,2024-07-05,Yes,3
+C009,47,Female,Shanghai,485.5,Yearly,2023-01-15,No,
+C010,31,Male,Wuxi,275.0,Monthly,2024-09-10,No,4
+C011,27,Female,Suzhou,230.5,Monthly,2025-03-01,Yes,2
+C012,44,Male,Nanjing,510.0,Two-year,2022-02-17,No,5
+C013,36,Female,Shanghai,390.0,Yearly,2023/12/08,No,4
+C014,58,Male,Wuxi,640.0,Two-year,2020-05-20,No,5
+C015,22,female,Suzhou,175.0,Monthly,2025-04-11,Yes,1
+C016,49,Male,NANJING,530.0,Yearly,2022-10-03,No,4
+C017,33,Female,Shanghai,340.0,Monthly,2024-01-27,Yes,3
+C018,,Male,Wuxi,290.0,Monthly,2024-06-14,No,3
+C019,55,Female,Suzhou,590.0,Two-year,2021-09-30,No,5
+C020,28,Male,Shanghai,260.0,Monthly,2025-01-05,Yes,2
+C021,40,Female,Nanjing,410.5,Yearly,2023-08-19,No,4
+C022,62,Male,Wuxi,680.0,Two-year,2020/12/12,No,5
+C023,25,Female,Suzhou,205.0,Monthly,2025-05-02,Yes,2
+C024,37,Male,Shanghai,365.0,Yearly,2023-04-25,No,4
+C025,46,Female,Nanjing,475.0,Yearly,bad-date,No,4
+C026,30,Male,Wuxi,280.0,Monthly,2024-10-16,Yes,3
+C027,53,Female,Suzhou,550.0,Two-year,2022-01-07,No,5
+C028,34,Male,Shanghai,350.0,Monthly,2024-02-28,Yes,3
+C029,43,Female,Nanjing,445.0,Yearly,2023-02-09,No,4
+C030,26,Male,Wuxi,215.0,Monthly,2025-06-01,Yes,2
+C030,26,Male,Wuxi,215.0,Monthly,2025-06-01,Yes,2

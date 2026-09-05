@@ -1,0 +1,12 @@
+.idea/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.zip
+.coverage
+htmlcov/
+data/processed/*
+!data/processed/.gitkeep
+figures/*
+!figures/.gitkeep

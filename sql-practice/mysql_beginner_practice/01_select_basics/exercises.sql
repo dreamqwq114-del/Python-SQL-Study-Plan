@@ -1,0 +1,266 @@
+USE mysql_beginner_practice;
+
+SELECT DATABASE() AS current_database;
+
+-- ==================================================
+-- 练习 1：查询所有部门名称
+-- ==================================================
+
+-- 难度：模仿
+
+-- 目标：
+-- 从 departments 表中查询所有部门名称。
+
+-- 应返回：
+-- 1 列：department_name。
+-- 约 5 行。
+
+-- 使用知识：
+-- SELECT、FROM
+
+-- 验证方式：
+-- 检查结果是否只有 department_name 一列。
+-- 检查是否包含所有部门。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+SELECT departments.department_name
+from departments ;
+
+
+-- ==================================================
+-- 练习 2：查询员工姓名和薪资
+-- ==================================================
+
+-- 难度：模仿
+
+-- 目标：
+-- 从 employees 表中查询每名员工的姓名和薪资。
+
+-- 应返回：
+-- 2 列：employee_name、salary。
+-- 每名员工一行。
+
+-- 使用知识：
+-- SELECT、FROM、指定列
+
+-- 验证方式：
+-- 检查列数和列名。
+-- 检查是否遗漏员工。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+    select employees.employee_name,employees.salary
+    from employees ;
+
+
+
+-- ==================================================
+-- 练习 3：用别名显示预算最高的三个项目
+-- ==================================================
+
+-- 难度：基础变形
+
+-- 目标：
+-- 查询预算最高的三个项目。
+-- 显示项目名称和预算，并把结果列标题分别改为 project 和 project_budget。
+-- 预算相同时，项目名称按升序排列。
+
+-- 应返回：
+-- 2 列：project、project_budget。
+-- 最多 3 行，预算从高到低。
+
+-- 使用知识：
+-- SELECT、AS、多列 ORDER BY、LIMIT
+
+-- 验证方式：
+-- 检查结果列标题。
+-- 检查预算排序和行数。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+select
+    project_name as project,
+    budget as project_budget
+from projects
+order by budget desc , project_name asc
+limit 3;
+
+
+
+
+-- ==================================================
+-- 练习 4：按升序查看不重复的项目状态
+-- ==================================================
+
+-- 难度：基础变形
+
+-- 目标：
+-- 查询 projects 表中出现过的项目状态，每种状态只显示一次，
+-- 并按状态名称升序排列。
+
+-- 应返回：
+-- 1 列：project_status。
+-- 行数应少于项目总数，且顺序可重复验证。
+
+-- 使用知识：
+-- SELECT、DISTINCT、ORDER BY
+
+-- 验证方式：
+-- 检查结果中是否还有重复状态。
+-- 检查状态是否按升序排列。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+select distinct project_status
+from projects
+order by project_status asc;
+
+
+-- ==================================================
+-- 练习 5：计算并排序项目预算费
+-- ==================================================
+
+-- 难度：基础变形
+
+-- 目标：
+-- 显示项目名称、原预算，以及预算乘以 0.05 的计算结果。
+-- 计算列标题使用 budget_fee。
+-- 按 budget_fee 从高到低排列；计算结果相同时按项目名称升序。
+
+-- 应返回：
+-- 3 列：project_name、budget、budget_fee。
+-- 每个项目一行，计算结果从高到低。
+
+-- 使用知识：
+-- SELECT、计算列、AS、多列 ORDER BY
+
+-- 验证方式：
+-- 任选一行手工核对乘法。
+-- 检查计算结果的排序方向。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+select
+    project_name ,
+    budget ,
+    budget * 0.05 AS budget_fee
+from projects
+order by budget_fee desc , project_name asc ;
+
+
+
+-- ==================================================
+-- 练习 6：制作低预算项目核对清单
+-- ==================================================
+
+-- 难度：独立
+
+-- 目标：
+-- 找出预算最低的四个项目。
+-- 显示项目编号、项目名称和预算。
+-- 预算相同时，项目名称按升序排列。
+
+-- 应返回：
+-- 3 列：project_id、project_name、budget。
+-- 最多 4 行，预算从低到高。
+
+-- 使用知识：
+-- SELECT、ORDER BY、LIMIT
+
+-- 验证方式：
+-- 检查预算排序方向和行数。
+-- 检查相同预算时的项目名称顺序。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+select project_id , project_name , budget
+from projects
+order by budget asc ,project_name asc
+limit 4;
+
+
+-- ==================================================
+-- 练习 7：制作部门列表第一页
+-- ==================================================
+
+-- 难度：独立
+
+-- 目标：
+-- 按部门名称升序制作列表，只显示前三个部门。
+-- 显示部门编号、部门名称和城市。
+-- 部门名称相同时，部门编号较小者排在前面。
+
+-- 应返回：
+-- 3 列：department_id、department_name、city。
+-- 最多 3 行，部门名称升序。
+
+-- 使用知识：
+-- SELECT、多列 ORDER BY、LIMIT
+
+-- 验证方式：
+-- 检查部门名称排序方向。
+-- 检查行数以及相同名称时的编号顺序。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写 SQL：
+select department_id , departments.department_name , departments.city
+from departments
+order by department_name asc , department_id asc
+limit 3;
+
+
+-- ==================================================
+-- 练习 8：改正“薪资最高三人”查询
+-- ==================================================
+
+-- 难度：改错
+
+-- 目标：
+-- 判断下面的 SQL 是否报错、结果是否正确，并改成查询薪资最高的三名员工。
+-- 修改后只显示 employee_name 和 salary。
+-- 薪资相同时，employee_name 按升序排列。
+
+-- 错误 SQL（可以运行，但结果含义不正确）：
+-- SELECT employee_name, salary
+-- FROM employees
+-- LIMIT 3;
+
+-- 请回答：
+-- 1. 原 SQL 是否会报错？
+-- 2. 即使能运行，为什么不能说它返回薪资最高的三人？
+-- 3. 应如何修改？为什么？
+-- 4. 修改后结果应有什么特征？
+
+-- 应返回：
+-- 2 列：employee_name、salary。
+-- 最多 3 行，薪资从高到低。
+
+-- 使用知识：
+-- ORDER BY、LIMIT、运行成功不等于结果正确
+
+-- 验证方式：
+-- 检查第一行薪资是否不低于后面各行。
+-- 检查相同薪资时姓名顺序。
+
+-- 提示：
+-- 卡住后打开本章 hints.md；不要提前打开 answers.sql。
+-- 在下方填写修改后的 SQL 和解释：
+
+
+
+-- 本章结束自检：
+-- [ ] 我先完成了 lesson.md 中的所有示例
+-- [ ] 我没有看答案完成至少 6 道题
+-- [ ] 我能解释每条 SQL 的作用
+-- [ ] 我检查了返回列数
+-- [ ] 我检查了返回行数
+-- [ ] 我检查了 NULL 和重复
+-- [ ] 我把真正做错的题记录进 mistake_log.md

@@ -1,0 +1,266 @@
+# IOM103 Python 数据分析学习项目
+
+这是一个独立的、面向基础不牢大学生的 Python 数据分析课程。课程参考 IOM103 原项目实际用到的代码、数据结构和分析流程，但不会修改原始 `IOM103/Project`。
+
+你会从变量和表格清洗开始，逐步完成可视化、分类、聚类，最后独立完成一个“客户表 + 订单表”的综合分析项目。
+
+## 课程结构
+
+每一节都把教学、完整示例、无答案练习和参考答案分开：
+
+```text
+lessons/     中文教程：问题、术语、代码、准确输出、错误与检查清单
+examples/    完整示例：可以从项目根目录独立运行，没有 TODO
+practice/    学生练习：完整任务契约、TODO 和 NotImplementedError
+answers/     参考答案：完成练习和测试后再看
+tests/       行为测试：同一契约同时检查答案和你的练习
+data/        两张教学用样例 CSV
+independent_readiness/  无答案独立测评与 Python–SQL 桥接模板
+```
+
+四个基础领域共有 44 节：
+
+- Python：9 节、36 道练习
+- Pandas：14 节、42 道练习
+- Matplotlib：6 节、18 道练习
+- scikit-learn：15 节、45 道练习
+
+另有一个综合客户项目，包含 6 个流程函数。因此全课程共有 147 道函数练习。
+
+每个编号一一对应。例如 Pandas 第 6 节：
+
+```text
+lessons/pandas/06_missing_values.md
+examples/pandas/example_06_missing_values.py
+practice/pandas/practice_06_missing_values.py
+answers/pandas/answer_06_missing_values.py
+```
+
+## 第一次使用
+
+### 1. 打开正确文件夹
+
+在 PyCharm 或 IntelliJ IDEA 中，把下面这个目录作为项目根目录打开：
+
+```text
+IOM103_Python_Data_Analysis
+```
+
+不要只打开某个 `.py` 文件，也不要把上一级“大二”文件夹当成 Python 模块。
+
+### 2. 选择项目解释器
+
+当前这台电脑的项目已经使用自己的虚拟环境。在 IDE 中选择：
+
+```text
+IOM103_Python_Data_Analysis\.venv\Scripts\python.exe
+```
+
+这是 Python SDK/解释器，不是 Python Debugger 设置，也不是单独的运行配置。
+
+课程在 Python 3.12 上完成全量验证；`requirements.txt` 同时限制了依赖的大版本范围，避免未来自动安装到接口不兼容的版本。
+
+PowerShell 中可以验证：
+
+```powershell
+.\.venv\Scripts\python.exe --version
+.\.venv\Scripts\python.exe -c "import pandas, matplotlib, sklearn; print('环境正常')"
+```
+
+如果当前目录已经有 `.venv`，可以跳过创建步骤。通过 Git 克隆或复制到新电脑时，`.venv` 不会包含在仓库中；请在项目根目录创建 Python 3.12 虚拟环境并安装依赖：
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### 3. 确认当前目录
+
+以下命令都必须在项目根目录执行，也就是能直接看到 `README.md`、`lessons` 和 `practice` 的位置。
+
+## 每一节的固定学习方法
+
+以 Python 第 1 节为例。
+
+### 第一步：读教程
+
+打开：
+
+```text
+lessons/python/01_variables_and_types.md
+```
+
+不要只扫结论。先自己运行教程中的短代码，确认实际输出和文档一致。
+
+### 第二步：运行完整示例
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.python.example_01_variables_and_types
+```
+
+使用 `python -m ...` 是按模块运行。它能让项目根目录中的包和相对路径被稳定找到。
+
+激活虚拟环境后，同一命令可以简写为：
+
+```powershell
+python -m examples.python.example_01_variables_and_types
+```
+
+### 第三步：只编辑练习
+
+```text
+practice/python/practice_01_variables_and_types.py
+```
+
+每个函数的 docstring 已写明背景、参数、返回值、两个示例、特殊情况和提示。只在当前函数中把 `TODO` 和 `NotImplementedError` 替换成自己的实现，不要改函数名、参数或测试；一个文件中可以先完成部分函数，剩余函数继续保留模板标记。
+
+### 第四步：运行对应测试
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/python/test_python_practice.py -k "01"
+```
+
+未完成时显示 `XFAIL` 是正常状态，含义是“这个练习还在等待实现”。完成正确后，同一项会变成 `PASSED`；出现 `FAILED` 时，根据失败信息修改练习。
+
+### 第五步：最后才看答案
+
+先独立尝试、阅读失败信息并修改。确实卡住后再打开：
+
+```text
+answers/python/answer_01_variables_and_types.py
+```
+
+比较思路后关闭答案，回到 practice 自己重新写一遍，不要直接复制。
+
+## 推荐学习顺序
+
+### 第一阶段：Python
+
+变量与类型 → 容器 → 字典 → 判断与循环 → 函数 → 模块 → 路径 → 异常 → 基础类
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/python/test_python_practice.py
+```
+
+### 第二阶段：Pandas
+
+构造表 → 读取 → 检查 → 选择 → 过滤 → 缺失值 → 类型 → 统计 → 分组 → 合并 → 映射 → 字符串 → 日期 → 保存
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/pandas/test_pandas_practice.py
+```
+
+### 第三阶段：Matplotlib
+
+Figure/Axes → 折线图 → 柱状图 → 直方图 → 散点图 → 布局与保存
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/matplotlib/test_matplotlib_practice.py
+```
+
+绘图练习必须保存图片并关闭 Figure。测试会在临时目录检查文件存在且非空，不会污染项目。
+
+### 第四阶段：scikit-learn
+
+`X/y` → 划分 → 分类编码 → 标准化 → 三种分类器 → 预测 → 指标 → 比较 → 过拟合与泄漏 → KMeans → 肘部法 → 轮廓系数
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/sklearn/test_sklearn_practice.py
+```
+
+所有随机流程固定 `random_state=42`。每篇教程都会解释首次出现的模型术语，不要求你预先懂机器学习。
+
+### 第五阶段：综合客户项目
+
+先读：
+
+```text
+lessons/projects/combined_customer_project.md
+```
+
+运行完整流程示例：
+
+```powershell
+.\.venv\Scripts\python.exe -m examples.projects.example_combined_customer_project
+```
+
+然后依次实现：
+
+```text
+practice/projects/combined_customer_project.py
+```
+
+只测试综合项目：
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/projects/test_combined_customer_project.py
+```
+
+## 无提示独立测评与 SQL 桥接
+
+完成章节练习后，再进入 [`independent_readiness/`](independent_readiness/)。其中的 `assessment.py` 是无答案起始模板，`rubric.md` 只定义可观察结果；不要把独立测评当成另一组可用答案练习。
+
+同目录的 [`bridge_contract.md`](independent_readiness/bridge_contract.md) 和 `bridge_analysis.py` 与 SQL 学习材料的 `12_python_sql_bridge/` 配套：先从数据库导出一行一项目的结果，再用 Python 检查粒度、类型、项目数和预算汇总。SQL 导出结果与 Python 汇总不一致时，应回到连接和重复问题排查，不能先删掉重复行。
+
+## 测试结果怎么读
+
+只统计 147 个答案契约与 147 个练习契约时，初始结果是：
+
+```text
+147 passed, 147 xfailed
+```
+
+- 147 个 `passed`：参考答案通过契约，说明题目和测试一致。
+- 147 个 `xfailed`：你的 147 个练习还保留 `NotImplementedError`。
+
+当你完成一个练习，它对应的 `xfailed` 应变成 `passed`。全部独立完成后，练习与答案合计应至少有 294 个通过项，且不再有练习 `xfailed`。
+
+运行全部测试：
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+```
+
+课程完整性测试还会检查 44 组章节是否一一对应、练习与答案接口是否一致、示例和答案是否泄露 TODO、练习函数的模板标记是否与实现状态一致，以及是否出现硬编码绝对路径或禁用依赖。
+
+因此直接运行当前仓库的完整 `pytest` 时，还会多出 14 个课程完整性通过项，初始总结果是：
+
+```text
+161 passed, 147 xfailed
+```
+
+全部 147 个练习都独立完成并通过后，完整仓库应为：
+
+```text
+308 passed
+```
+
+## 常见问题
+
+### `ModuleNotFoundError`
+
+先确认终端位于项目根目录，再使用 `python -m 包.模块`，不要从子文件夹直接运行文件。
+
+### IDE 显示“没有 Python SDK”
+
+给项目模块选择 `.venv\Scripts\python.exe`。安装 Python 插件只增加 IDE 的 Python 功能，不会自动给每个模块分配解释器。
+
+### 测试显示 XFAIL
+
+这不是环境坏了。打开对应 practice，确认 TODO 是否还在。只有你完成函数后它才会执行真实断言。
+
+### 图片没有弹窗
+
+课程要求保存图片，不要求弹窗。查看测试临时结果或自己指定的输出路径；函数会主动关闭 Figure。
+
+### 模型分数不高
+
+教学 CSV 只有 30 位去重后的客户，目的在于练习完整流程，不用于证明商业模型效果。先检查数据流、泄漏和指标含义，不要为了提高一次分数删除测试或偷看标签。
+
+## 原项目与保留文件
+
+- [原项目流程分析](ORIGINAL_PROJECT_ANALYSIS.md)：说明课程内容如何对应 IOM103。
+- `data/`：课程样例数据，不在练习中修改。
+- `utils/paths.py`：集中管理项目相对路径。
+- `python_data_analysis_basics_before_restructure_20260726_152557.zip`：重构前源码备份，不包含 `.venv` 和缓存。
+- 原始 `IOM103/Project`：始终保持只读。

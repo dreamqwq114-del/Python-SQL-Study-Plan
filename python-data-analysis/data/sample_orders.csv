@@ -1,0 +1,46 @@
+order_id,customer_id,product_name,quantity,unit_price,order_date,order_status
+O001,C001,Headphones,1,299,2025-01-15,Completed
+O002,C002,Keyboard,2,199,2025-01-18,Completed
+O003,C003,Mouse,1,89,2025/01/20,Completed
+O004,C001,USB Cable,3,39,2025-02-02,Completed
+O005,C004,Monitor,1,1299,2025-02-06,Returned
+O006,C005,Laptop Stand,1,159,2025-02-12,Completed
+O007,C006,Mouse Pad,2,49,2025-02-18,Cancelled
+O008,C007,Webcam,1,399,2025-02-23,Completed
+O009,C008,Keyboard,1,199,2025-03-01,Completed
+O010,C009,Headphones,2,299,2025-03-04,Completed
+O011,C010,USB Cable,2,39,2025-03-09,Completed
+O012,C011,Mouse,1,89,2025-03-13,Returned
+O013,C012,Monitor,1,1299,2025-03-18,Completed
+O014,C013,Laptop Stand,2,159,2025-03-22,Completed
+O015,C014,Webcam,1,399,2025-03-27,Completed
+O016,C015,Mouse Pad,1,49,2025-04-02,Completed
+O017,C016,Keyboard,1,199,2025-04-06,Completed
+O018,C017,Headphones,1,299,2025-04-11,Cancelled
+O019,C018,USB Cable,4,39,2025-04-16,Completed
+O020,C019,Monitor,1,1299,2025-04-20,Completed
+O021,C020,Mouse,2,89,2025-04-25,Completed
+O022,C021,Laptop Stand,1,159,2025-05-01,Completed
+O023,C022,Webcam,2,399,2025-05-05,Completed
+O024,C023,Mouse Pad,3,49,2025-05-10,Returned
+O025,C024,Keyboard,1,199,2025-05-14,Completed
+O026,C025,Headphones,1,299,2025-05-19,Completed
+O027,C026,USB Cable,2,39,2025-05-24,Completed
+O028,C027,Monitor,1,1299,2025-05-28,Completed
+O029,C028,Mouse,1,89,2025-06-03,Cancelled
+O030,C029,Laptop Stand,2,159,2025-06-07,Completed
+O031,C030,Webcam,1,399,2025-06-12,Completed
+O032,C002,Mouse Pad,2,49,2025-06-16,Completed
+O033,C004,Keyboard,1,199,2025-06-21,Completed
+O034,C006,Headphones,1,299,2025-06-25,Completed
+O035,C008,USB Cable,5,39,2025-07-01,Completed
+O036,C010,Monitor,1,1299,2025-07-05,Returned
+O037,C012,Mouse,2,89,2025-07-10,Completed
+O038,C014,Laptop Stand,1,159,2025-07-14,Completed
+O039,C016,Webcam,1,399,2025-07-19,Completed
+O040,C018,Mouse Pad,2,49,2025-07-23,Completed
+O041,C020,Keyboard,1,199,2025-07-28,Completed
+O042,C022,Headphones,2,299,2025-08-02,Completed
+O043,C024,USB Cable,3,39,2025-08-06,Completed
+O044,C026,Monitor,1,1299,2025-08-11,Completed
+O045,C028,Mouse,1,89,invalid-date,Completed
