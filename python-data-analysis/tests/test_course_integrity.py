@@ -1,4 +1,4 @@
-"""检查课程文件配对、接口隔离和可移植性。"""
+"""检查课程文件配对、接口隔离和可移植性（chapter-centric 结构）。"""
 
 from __future__ import annotations
 
@@ -9,6 +9,8 @@ import pytest
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+COURSE_ROOT = PROJECT_ROOT / "course"
+PROJECT_CHAPTER = PROJECT_ROOT / "projects" / "combined_customer_project"
 DOMAIN_COUNTS = {
     "python": 9,
     "pandas": 14,
@@ -16,17 +18,21 @@ DOMAIN_COUNTS = {
     "sklearn": 15,
 }
 LEARNING_ROOTS = [
-    PROJECT_ROOT / "lessons",
-    PROJECT_ROOT / "examples",
-    PROJECT_ROOT / "practice",
-    PROJECT_ROOT / "answers",
+    COURSE_ROOT,
+    PROJECT_ROOT / "projects",
     PROJECT_ROOT / "independent_readiness",
 ]
 
 
 def _chapter_names(domain: str) -> list[str]:
-    lesson_directory = PROJECT_ROOT / "lessons" / domain
-    return sorted(path.stem for path in lesson_directory.glob("[0-9][0-9]_*.md"))
+    return sorted(
+        path.parent.name
+        for path in (COURSE_ROOT / domain).glob("*/lesson.md")
+    )
+
+
+def _chapter_file(domain: str, chapter: str, name: str) -> Path:
+    return COURSE_ROOT / domain / chapter / name
 
 
 def _public_nodes(path: Path) -> dict[str, ast.AST]:
@@ -65,37 +71,28 @@ def test_chapter_files_are_paired(domain: str, expected_count: int) -> None:
     assert len(chapters) == expected_count
 
     for chapter in chapters:
-        assert (
-            PROJECT_ROOT / "examples" / domain / f"example_{chapter}.py"
-        ).is_file()
-        assert (
-            PROJECT_ROOT / "practice" / domain / f"practice_{chapter}.py"
-        ).is_file()
-        assert (
-            PROJECT_ROOT / "answers" / domain / f"answer_{chapter}.py"
-        ).is_file()
+        for name in ("lesson.md", "example.py", "practice.py", "answer.py", "test.py"):
+            assert _chapter_file(domain, chapter, name).is_file(), (
+                f"{domain}/{chapter} 缺少 {name}"
+            )
 
 
 @pytest.mark.parametrize("domain", DOMAIN_COUNTS)
 def test_practice_and_answer_interfaces_match(domain: str) -> None:
     for chapter in _chapter_names(domain):
-        practice_path = (
-            PROJECT_ROOT / "practice" / domain / f"practice_{chapter}.py"
-        )
-        answer_path = (
-            PROJECT_ROOT / "answers" / domain / f"answer_{chapter}.py"
-        )
-        practice_nodes = _public_nodes(practice_path)
-        answer_nodes = _public_nodes(answer_path)
-        assert practice_nodes.keys() == answer_nodes.keys()
+        practice_nodes = _public_nodes(_chapter_file(domain, chapter, "practice.py"))
+        answer_nodes = _public_nodes(_chapter_file(domain, chapter, "answer.py"))
+        assert practice_nodes.keys() == answer_nodes.keys(), chapter
         for name in practice_nodes:
-            assert type(practice_nodes[name]) is type(answer_nodes[name])
+            assert type(practice_nodes[name]) is type(answer_nodes[name]), chapter
             assert _arguments(practice_nodes[name]) == _arguments(answer_nodes[name])
 
 
 def test_examples_and_answers_do_not_contain_starter_code() -> None:
-    for root_name in ("examples", "answers"):
-        for path in (PROJECT_ROOT / root_name).rglob("*.py"):
+    for root in (COURSE_ROOT, PROJECT_CHAPTER.parent):
+        for path in root.rglob("*.py"):
+            if path.name in ("practice.py", "test.py", "conftest.py") or path.name.startswith("_"):
+                continue
             source = path.read_text(encoding="utf-8")
             assert "TODO" not in source, path
             assert "NotImplementedError" not in source, path
@@ -103,11 +100,8 @@ def test_examples_and_answers_do_not_contain_starter_code() -> None:
 
 def test_practice_functions_have_consistent_starter_state() -> None:
     """每个练习函数要么是可识别的模板，要么已经移除模板标记。"""
-    paths = [
-        path
-        for path in (PROJECT_ROOT / "practice").rglob("*.py")
-        if path.name != "__init__.py"
-    ]
+    paths = list(COURSE_ROOT.glob("*/[0-9][0-9]_*/practice.py"))
+    paths.append(PROJECT_CHAPTER / "practice.py")
     assert len(paths) == 45
     for path in paths:
         source = path.read_text(encoding="utf-8")
@@ -133,14 +127,14 @@ def test_lessons_have_learning_support_sections() -> None:
     paths = [
         path
         for domain in DOMAIN_COUNTS
-        for path in (PROJECT_ROOT / "lessons" / domain).glob("*.md")
+        for path in (COURSE_ROOT / domain).glob("*/lesson.md")
     ]
     assert len(paths) == 44
     for path in paths:
         source = path.read_text(encoding="utf-8")
         assert "实际问题" in source, path
         assert "常见错误" in source, path
-        assert "python -m examples" in source, path
+        assert "python -m course" in source, path
         assert "pytest" in source, path
         assert "检查清单" in source, path
         assert "ORIGINAL_PROJECT_ANALYSIS.md" in source, path
@@ -169,26 +163,17 @@ def test_learning_sources_are_portable_and_use_allowed_dependencies() -> None:
 
 
 def test_integrated_project_files_and_interfaces_exist() -> None:
-    lesson = PROJECT_ROOT / "lessons/projects/combined_customer_project.md"
-    example = (
-        PROJECT_ROOT
-        / "examples/projects/example_combined_customer_project.py"
-    )
-    practice = (
-        PROJECT_ROOT / "practice/projects/combined_customer_project.py"
-    )
-    answer = (
-        PROJECT_ROOT
-        / "answers/projects/answer_combined_customer_project.py"
-    )
-    test = (
-        PROJECT_ROOT
-        / "tests/projects/test_combined_customer_project.py"
-    )
-    assert all(path.is_file() for path in [lesson, example, practice, answer, test])
+    files = [
+        PROJECT_CHAPTER / "lesson.md",
+        PROJECT_CHAPTER / "example.py",
+        PROJECT_CHAPTER / "practice.py",
+        PROJECT_CHAPTER / "answer.py",
+        PROJECT_CHAPTER / "test.py",
+    ]
+    assert all(path.is_file() for path in files)
 
-    practice_nodes = _public_nodes(practice)
-    answer_nodes = _public_nodes(answer)
+    practice_nodes = _public_nodes(PROJECT_CHAPTER / "practice.py")
+    answer_nodes = _public_nodes(PROJECT_CHAPTER / "answer.py")
     expected = {
         "load_datasets",
         "clean_customers",
@@ -234,37 +219,34 @@ def test_integrated_project_files_and_interfaces_exist() -> None:
 def test_readme_contains_runnable_learning_commands() -> None:
     source = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     required = [
-        "IOM103_Python_Data_Analysis\\.venv\\Scripts\\python.exe",
         "py -3.12 -m venv .venv",
-        "python -m examples.python.example_01_variables_and_types",
-        "tests/python/test_python_practice.py",
-        "tests/pandas/test_pandas_practice.py",
-        "tests/matplotlib/test_matplotlib_practice.py",
-        "tests/sklearn/test_sklearn_practice.py",
-        "tests/projects/test_combined_customer_project.py",
+        "python -m course.python.01_variables_and_types.example",
+        "course/python/01_variables_and_types/test.py",
+        "course/pandas",
+        "course/matplotlib",
+        "course/sklearn",
+        "projects/combined_customer_project/test.py",
         "147 passed, 147 xfailed",
-        "161 passed, 147 xfailed",
+        "162 passed, 147 xfailed",
     ]
     for text in required:
-        assert text in source
+        assert text in source, f"README 缺少 {text}"
 
 
 def test_recent_clarity_fixes_remain_visible_without_revealing_answers() -> None:
     metrics_lesson = (
-        PROJECT_ROOT / "lessons/sklearn/09_classification_metrics.md"
+        COURSE_ROOT / "sklearn" / "09_classification_metrics" / "lesson.md"
     ).read_text(encoding="utf-8")
     assert "specificity" in metrics_lesson
     assert "TN / (TN + FP)" in metrics_lesson
 
-    readiness = (PROJECT_ROOT / "independent_readiness/README.md").read_text(
-        encoding="utf-8"
-    )
+    readiness = (
+        PROJECT_ROOT / "independent_readiness" / "README.md"
+    ).read_text(encoding="utf-8")
     assert "初次作答保存前不允许" in readiness
     assert "首次作答保存后才能打开 `rubric.md`" in readiness
 
-    class_practice = (
-        PROJECT_ROOT / "practice/python/practice_09_basic_classes.py"
-    )
+    class_practice = COURSE_ROOT / "python" / "09_basic_classes" / "practice.py"
     tree = ast.parse(class_practice.read_text(encoding="utf-8"))
     methods = [
         child

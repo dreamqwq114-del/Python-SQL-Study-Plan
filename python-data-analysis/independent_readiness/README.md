@@ -7,7 +7,7 @@
 - 建议限时：90 分钟；
 - 输入：`data/sample_customers.csv` 和 `data/sample_orders.csv`；
 - 允许：查 Python/Pandas 官方文档，运行自己的程序，查看输入文件的列和数据类型；
-- 初次作答保存前不允许：打开 `answers/` 或 `rubric.md`、复制综合项目答案、让现成的
+- 初次作答保存前不允许：打开各章 `answer.py` 或 `rubric.md`、复制综合项目答案、让现成的
   综合项目函数代替作答；
 - 提交：复制 `assessment.py` 为 `submission.py`，只修改其中的 TODO，并保留运行输出和生成的图表。
 

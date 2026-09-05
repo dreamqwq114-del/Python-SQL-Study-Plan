@@ -6,57 +6,59 @@
 
 ## 课程结构
 
-每一节都把教学、完整示例、无答案练习和参考答案分开：
+课程按“**主题 / 章节**”组织，而不是按文件类型组织。每一章的教材、完整示例、无答案练习、参考答案和契约测试都放在同一个章节目录里，学习时不需要在多个文件夹之间来回切换：
 
 ```text
-lessons/     中文教程：问题、术语、代码、准确输出、错误与检查清单
-examples/    完整示例：可以从项目根目录独立运行，没有 TODO
-practice/    学生练习：完整任务契约、TODO 和 NotImplementedError
-answers/     参考答案：完成练习和测试后再看
-tests/       行为测试：同一契约同时检查答案和你的练习
-data/        两张教学用样例 CSV
+course/
+├── python/        Python 基础，共 9 章
+│   └── 01_variables_and_types/
+│       ├── lesson.md      中文教程：问题、术语、代码、准确输出、错误与检查清单
+│       ├── example.py     完整示例：可从项目根目录独立运行，没有 TODO
+│       ├── practice.py    学生练习：完整任务契约、TODO 和 NotImplementedError
+│       ├── answer.py      参考答案：完成练习和测试后再看
+│       └── test.py        行为测试：同一契约同时检查答案和你的练习
+├── pandas/        Pandas 数据处理，共 14 章
+├── matplotlib/    Matplotlib 图表，共 6 章
+└── sklearn/       scikit-learn 建模，共 15 章
+projects/
+└── combined_customer_project/   跨领域综合客户项目，结构与章节相同
+data/                  两张教学用样例 CSV
+utils/                 集中管理项目相对路径
 independent_readiness/  无答案独立测评与 Python–SQL 桥接模板
+tests/                 课程级完整性测试（检查配对、接口与可移植性）
 ```
 
-四个基础领域共有 44 节：
+> 为什么四个主题外面多一层 `course/` 父包？因为 `pandas`、`matplotlib`、`sklearn` 同时也是第三方依赖包的名字。如果把同名目录直接放在项目根目录，本地目录会遮蔽第三方库，导致 `import pandas` 失败。统一收在 `course/` 父包下可以彻底避免命名冲突。
 
-- Python：9 节、36 道练习
-- Pandas：14 节、42 道练习
-- Matplotlib：6 节、18 道练习
-- scikit-learn：15 节、45 道练习
+四个基础领域共有 44 章：
+
+- Python：9 章、36 道练习
+- Pandas：14 章、42 道练习
+- Matplotlib：6 章、18 道练习
+- scikit-learn：15 章、45 道练习
 
 另有一个综合客户项目，包含 6 个流程函数。因此全课程共有 147 道函数练习。
 
-每个编号一一对应。例如 Pandas 第 6 节：
+每个编号一一对应。例如 Pandas 第 6 章，所有文件都在同一目录：
 
 ```text
-lessons/pandas/06_missing_values.md
-examples/pandas/example_06_missing_values.py
-practice/pandas/practice_06_missing_values.py
-answers/pandas/answer_06_missing_values.py
+course/pandas/06_missing_values/
+├── lesson.md
+├── example.py
+├── practice.py
+├── answer.py
+└── test.py
 ```
 
 ## 第一次使用
 
 ### 1. 打开正确文件夹
 
-在 PyCharm 或 IntelliJ IDEA 中，把下面这个目录作为项目根目录打开：
+在 PyCharm 或 IntelliJ IDEA 中，把 `python-data-analysis` 这个目录作为项目根目录打开。
 
-```text
-IOM103_Python_Data_Analysis
-```
-
-不要只打开某个 `.py` 文件，也不要把上一级“大二”文件夹当成 Python 模块。
+不要只打开某个 `.py` 文件，也不要把上一级文件夹当成 Python 模块。
 
 ### 2. 选择项目解释器
-
-当前这台电脑的项目已经使用自己的虚拟环境。在 IDE 中选择：
-
-```text
-IOM103_Python_Data_Analysis\.venv\Scripts\python.exe
-```
-
-这是 Python SDK/解释器，不是 Python Debugger 设置，也不是单独的运行配置。
 
 课程在 Python 3.12 上完成全量验证；`requirements.txt` 同时限制了依赖的大版本范围，避免未来自动安装到接口不兼容的版本。
 
@@ -67,7 +69,7 @@ PowerShell 中可以验证：
 .\.venv\Scripts\python.exe -c "import pandas, matplotlib, sklearn; print('环境正常')"
 ```
 
-如果当前目录已经有 `.venv`，可以跳过创建步骤。通过 Git 克隆或复制到新电脑时，`.venv` 不会包含在仓库中；请在项目根目录创建 Python 3.12 虚拟环境并安装依赖：
+通过 Git 克隆到新电脑时，`.venv` 不会包含在仓库中；请在项目根目录创建 Python 3.12 虚拟环境并安装依赖：
 
 ```powershell
 py -3.12 -m venv .venv
@@ -76,61 +78,47 @@ py -3.12 -m venv .venv
 
 ### 3. 确认当前目录
 
-以下命令都必须在项目根目录执行，也就是能直接看到 `README.md`、`lessons` 和 `practice` 的位置。
+以下命令都必须在项目根目录执行，也就是能直接看到 `README.md`、`course` 和 `projects` 的位置。
 
-## 每一节的固定学习方法
+## 每一章的固定学习方法
 
-以 Python 第 1 节为例。
+以 Python 第 1 章为例。
 
 ### 第一步：读教程
 
-打开：
-
-```text
-lessons/python/01_variables_and_types.md
-```
+打开 `course/python/01_variables_and_types/lesson.md`。
 
 不要只扫结论。先自己运行教程中的短代码，确认实际输出和文档一致。
 
 ### 第二步：运行完整示例
 
 ```powershell
-.\.venv\Scripts\python.exe -m examples.python.example_01_variables_and_types
+python -m course.python.01_variables_and_types.example
 ```
 
 使用 `python -m ...` 是按模块运行。它能让项目根目录中的包和相对路径被稳定找到。
 
-激活虚拟环境后，同一命令可以简写为：
-
-```powershell
-python -m examples.python.example_01_variables_and_types
-```
-
 ### 第三步：只编辑练习
 
 ```text
-practice/python/practice_01_variables_and_types.py
+course/python/01_variables_and_types/practice.py
 ```
 
 每个函数的 docstring 已写明背景、参数、返回值、两个示例、特殊情况和提示。只在当前函数中把 `TODO` 和 `NotImplementedError` 替换成自己的实现，不要改函数名、参数或测试；一个文件中可以先完成部分函数，剩余函数继续保留模板标记。
 
-### 第四步：运行对应测试
+### 第四步：运行本章测试
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/python/test_python_practice.py -k "01"
+pytest course/python/01_variables_and_types/test.py
 ```
 
 未完成时显示 `XFAIL` 是正常状态，含义是“这个练习还在等待实现”。完成正确后，同一项会变成 `PASSED`；出现 `FAILED` 时，根据失败信息修改练习。
 
 ### 第五步：最后才看答案
 
-先独立尝试、阅读失败信息并修改。确实卡住后再打开：
+先独立尝试、阅读失败信息并修改。确实卡住后再打开同目录的 `course/python/01_variables_and_types/answer.py`。
 
-```text
-answers/python/answer_01_variables_and_types.py
-```
-
-比较思路后关闭答案，回到 practice 自己重新写一遍，不要直接复制。
+比较思路后关闭答案，回到 practice 自己重新写一遍，不要直接复制。更多使用约定见 [ANSWER_GUIDE.md](ANSWER_GUIDE.md)。
 
 ## 推荐学习顺序
 
@@ -139,7 +127,7 @@ answers/python/answer_01_variables_and_types.py
 变量与类型 → 容器 → 字典 → 判断与循环 → 函数 → 模块 → 路径 → 异常 → 基础类
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/python/test_python_practice.py
+pytest course/python
 ```
 
 ### 第二阶段：Pandas
@@ -147,7 +135,7 @@ answers/python/answer_01_variables_and_types.py
 构造表 → 读取 → 检查 → 选择 → 过滤 → 缺失值 → 类型 → 统计 → 分组 → 合并 → 映射 → 字符串 → 日期 → 保存
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/pandas/test_pandas_practice.py
+pytest course/pandas
 ```
 
 ### 第三阶段：Matplotlib
@@ -155,7 +143,7 @@ answers/python/answer_01_variables_and_types.py
 Figure/Axes → 折线图 → 柱状图 → 直方图 → 散点图 → 布局与保存
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/matplotlib/test_matplotlib_practice.py
+pytest course/matplotlib
 ```
 
 绘图练习必须保存图片并关闭 Figure。测试会在临时目录检查文件存在且非空，不会污染项目。
@@ -165,35 +153,27 @@ Figure/Axes → 折线图 → 柱状图 → 直方图 → 散点图 → 布局�
 `X/y` → 划分 → 分类编码 → 标准化 → 三种分类器 → 预测 → 指标 → 比较 → 过拟合与泄漏 → KMeans → 肘部法 → 轮廓系数
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/sklearn/test_sklearn_practice.py
+pytest course/sklearn
 ```
 
 所有随机流程固定 `random_state=42`。每篇教程都会解释首次出现的模型术语，不要求你预先懂机器学习。
 
 ### 第五阶段：综合客户项目
 
-先读：
-
-```text
-lessons/projects/combined_customer_project.md
-```
+先读 `projects/combined_customer_project/lesson.md`。
 
 运行完整流程示例：
 
 ```powershell
-.\.venv\Scripts\python.exe -m examples.projects.example_combined_customer_project
+python -m projects.combined_customer_project.example
 ```
 
-然后依次实现：
-
-```text
-practice/projects/combined_customer_project.py
-```
+然后依次实现 `projects/combined_customer_project/practice.py`。
 
 只测试综合项目：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest tests/projects/test_combined_customer_project.py
+pytest projects/combined_customer_project/test.py
 ```
 
 ## 无提示独立测评与 SQL 桥接
@@ -218,28 +198,30 @@ practice/projects/combined_customer_project.py
 运行全部测试：
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest
+pytest
 ```
+
+`pytest.ini` 已固定使用 `--import-mode=importlib`，并把章节内的 `test.py` 纳入收集，因此在项目根目录直接运行 `pytest` 即可，无需额外参数。
 
 课程完整性测试还会检查 44 组章节是否一一对应、练习与答案接口是否一致、示例和答案是否泄露 TODO、练习函数的模板标记是否与实现状态一致，以及是否出现硬编码绝对路径或禁用依赖。
 
-因此直接运行当前仓库的完整 `pytest` 时，还会多出 14 个课程完整性通过项，初始总结果是：
+因此直接运行当前仓库的完整 `pytest` 时，还会多出 15 个课程完整性通过项，初始总结果是：
 
 ```text
-161 passed, 147 xfailed
+162 passed, 147 xfailed
 ```
 
 全部 147 个练习都独立完成并通过后，完整仓库应为：
 
 ```text
-308 passed
+309 passed
 ```
 
 ## 常见问题
 
 ### `ModuleNotFoundError`
 
-先确认终端位于项目根目录，再使用 `python -m 包.模块`，不要从子文件夹直接运行文件。
+先确认终端位于项目根目录，再使用 `python -m 包.模块`，不要从子文件夹直接运行文件。章节目录名以数字开头属于正常设计，章节内部使用相对导入，运行时统一用 `python -m course.<主题>.<章节>.<文件>`。
 
 ### IDE 显示“没有 Python SDK”
 
@@ -260,6 +242,7 @@ practice/projects/combined_customer_project.py
 ## 原项目与保留文件
 
 - [原项目流程分析](ORIGINAL_PROJECT_ANALYSIS.md)：说明课程内容如何对应 IOM103。
+- [参考答案使用说明](ANSWER_GUIDE.md)：答案与练习的配合方式。
 - `data/`：课程样例数据，不在练习中修改。
 - `utils/paths.py`：集中管理项目相对路径。
 - `python_data_analysis_basics_before_restructure_20260726_152557.zip`：重构前源码备份，不包含 `.venv` 和缓存。
