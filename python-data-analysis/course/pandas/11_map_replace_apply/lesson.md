@@ -128,10 +128,50 @@ print(bands.tolist())
 2. `replace_contract_labels()`：只替换字典中存在的合同名称。
 3. `add_spending_band()`：用 apply 实现含缺失值和边界的分档规则。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""用 map、replace 和 apply 转换客户字段。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def transform_customers(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """添加流失标签、合同简称、年消费和客户编号长度。"""
+    result = dataframe.copy()
+    result["churn_label"] = result["churn"].map(
+        {"No": "Stayed", "Yes": "Churned"}
+    )
+    result["contract_type"] = result["contract_type"].replace(
+        {"Two-year": "Long-term"}
+    )
+    spending = pd.to_numeric(result["monthly_spending"], errors="coerce")
+    result["annual_spending"] = spending * 12
+    result["id_length"] = result["customer_id"].apply(len)
+    return result
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    transformed = transform_customers(customers)
+    columns = [
+        "customer_id",
+        "churn_label",
+        "contract_type",
+        "annual_spending",
+        "id_length",
+    ]
+    print(transformed[columns].head(3).to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.11_map_replace_apply.example
 pytest course/pandas/11_map_replace_apply/test.py
 ```
 
@@ -142,3 +182,35 @@ pytest course/pandas/11_map_replace_apply/test.py
 - 我能把多分支规则写成普通函数，再交给 apply。
 - 我会明确检查 200、400 等边界值。
 - 我知道映射后出现缺失值可能代表新类别。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>add_churn_and_annual_spending</code></summary>
+
+Series.map() 适合用字典一一映射，金额列可直接乘 12。
+
+</details>
+
+<details>
+<summary><code>replace_contract_labels</code></summary>
+
+Series.replace(labels) 不会把未匹配的值变成缺失值。
+
+</details>
+
+<details>
+<summary><code>add_spending_band</code></summary>
+
+写一个接收单个金额的小函数，再用 Series.apply()。
+
+</details>

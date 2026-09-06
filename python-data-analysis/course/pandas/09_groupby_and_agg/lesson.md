@@ -160,10 +160,47 @@ reset_index()
 2. `summarize_orders_by_customer()`：从订单行计算客户订单数和总金额。
 3. `calculate_churn_rate_by_contract()`：用 0/1 平均值计算合同流失率。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""按城市汇总客户数量与平均消费。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def summarize_by_city(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """清理城市和消费字段后生成城市汇总。"""
+    result = dataframe.copy()
+    result["city"] = result["city"].str.strip().str.lower()
+    result["monthly_spending"] = pd.to_numeric(
+        result["monthly_spending"],
+        errors="coerce",
+    )
+    return (
+        result.groupby("city")
+        .agg(
+            customer_count=("customer_id", "nunique"),
+            average_spending=("monthly_spending", "mean"),
+        )
+        .reset_index()
+    )
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    summary = summarize_by_city(customers)
+    print(summary.shape)
+    print(summary.round(2).to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.09_groupby_and_agg.example
 pytest course/pandas/09_groupby_and_agg/test.py
 ```
 
@@ -174,3 +211,35 @@ pytest course/pandas/09_groupby_and_agg/test.py
 - 我能区分行数、有效值数和不同值数。
 - 我能先计算行级金额，再计算分组总金额。
 - 我能解释为什么 0/1 平均值等于比例。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>summarize_by_city</code></summary>
+
+groupby().agg() 可给聚合结果命名，最后 reset_index()。
+
+</details>
+
+<details>
+<summary><code>summarize_orders_by_customer</code></summary>
+
+在副本中增加 order_total，再 groupby().agg()。
+
+</details>
+
+<details>
+<summary><code>calculate_churn_rate_by_contract</code></summary>
+
+同一列可以分别使用 size 和 mean 聚合。
+
+</details>

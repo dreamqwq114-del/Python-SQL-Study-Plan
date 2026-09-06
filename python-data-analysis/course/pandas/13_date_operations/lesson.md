@@ -147,10 +147,47 @@ dt.year / dt.month / dt.strftime
 2. `filter_orders_by_date()`：验证起止日期并保留闭区间订单。
 3. `monthly_order_totals()`：排除无效日期并生成月度金额汇总。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""解析混合日期并按订单月份汇总金额。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def monthly_order_totals(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """按月份汇总有效订单日期对应的金额。"""
+    result = dataframe.copy()
+    result["order_date"] = pd.to_datetime(
+        result["order_date"],
+        errors="coerce",
+        format="mixed",
+    )
+    result["order_total"] = result["quantity"] * result["unit_price"]
+    result = result.dropna(subset=["order_date"]).copy()
+    result["order_month"] = result["order_date"].dt.strftime("%Y-%m")
+    return (
+        result.groupby("order_month", as_index=False)["order_total"]
+        .sum()
+        .sort_values("order_month")
+    )
+
+def main() -> None:
+    orders = pd.read_csv(DATA_DIR / "sample_orders.csv")
+    summary = monthly_order_totals(orders)
+    print(summary.to_dict("records"))
+    print(summary["order_total"].sum())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.13_date_operations.example
 pytest course/pandas/13_date_operations/test.py
 ```
 
@@ -161,3 +198,35 @@ pytest course/pandas/13_date_operations/test.py
 - 我能用 `.dt` 提取年、月或格式化月份。
 - 我会验证日期范围的先后顺序。
 - 我能先计算行级金额，再做月度汇总。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>add_date_parts</code></summary>
+
+pd.to_datetime(..., errors="coerce", format="mixed") 后使用 .dt。
+
+</details>
+
+<details>
+<summary><code>filter_orders_by_date</code></summary>
+
+先用 pd.to_datetime() 转边界，再用 between()。
+
+</details>
+
+<details>
+<summary><code>monthly_order_totals</code></summary>
+
+日期列的 .dt.strftime("%Y-%m") 可生成月份文本。
+
+</details>

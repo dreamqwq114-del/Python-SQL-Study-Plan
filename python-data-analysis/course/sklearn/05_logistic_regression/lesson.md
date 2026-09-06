@@ -122,10 +122,44 @@ print(table["direction"].tolist())
 2. 使用给定的 `C` 训练不同强度的模型。
 3. 把特征名和模型系数整理成表格。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""训练逻辑回归并查看预测与系数。"""
+
+from sklearn.datasets import make_classification
+from sklearn.linear_model import LogisticRegression
+
+def train_model() -> tuple[LogisticRegression, object, object]:
+    """创建确定性数据并训练逻辑回归。"""
+    X, y = make_classification(
+        n_samples=60,
+        n_features=3,
+        n_informative=2,
+        n_redundant=0,
+        random_state=42,
+    )
+    model = LogisticRegression(
+        max_iter=1000,
+        random_state=42,
+    ).fit(X, y)
+    return model, X, y
+
+def main() -> None:
+    model, X, y = train_model()
+    print((model.random_state, model.max_iter))
+    print(model.coef_.shape)
+    print(round(model.score(X, y), 3))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.05_logistic_regression.example
 pytest course/sklearn/05_logistic_regression/test.py
 ```
 
@@ -136,3 +170,35 @@ pytest course/sklearn/05_logistic_regression/test.py
 - [ ] 我能解释 `fit`、类别预测和概率预测。
 - [ ] 我知道训练分数不能代替测试分数。
 - [ ] 我不会把系数解释成因果关系。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>train_logistic</code></summary>
+
+model = LogisticRegression(...); model.fit(X, y)。
+
+</details>
+
+<details>
+<summary><code>train_logistic_with_strength</code></summary>
+
+scikit-learn 的 C 越小，正则化约束通常越强。
+
+</details>
+
+<details>
+<summary><code>logistic_coefficient_table</code></summary>
+
+先检查 len(feature_names) 与 model.coef_.shape[1]。
+
+</details>

@@ -146,10 +146,35 @@ copy() 后再修改
 2. `select_rows_by_labels()`：按标签和给定顺序选择客户。
 3. `select_data_block()`：组合指定列和前若干行，并检查负数输入。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用 loc 和 iloc 选择客户表的数据块。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def select_customer_report(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """返回前三位客户的编号、城市和消费。"""
+    columns = ["customer_id", "city", "monthly_spending"]
+    return dataframe.loc[:2, columns].copy()
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    report = select_customer_report(customers)
+    print(report.to_dict("records"))
+    print(customers.iloc[:2, :2].to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.04_select_rows_and_columns.example
 pytest course/pandas/04_select_rows_and_columns/test.py
 ```
 
@@ -160,3 +185,35 @@ pytest course/pandas/04_select_rows_and_columns/test.py
 - 我知道切片的结束位置是否包含。
 - 我能保持调用者要求的行列顺序。
 - 我会在需要修改结果前创建副本。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>select_customer_columns</code></summary>
+
+双层方括号选择多列，再调用 copy()。
+
+</details>
+
+<details>
+<summary><code>select_rows_by_labels</code></summary>
+
+loc 根据标签选择，不是根据第几行选择。
+
+</details>
+
+<details>
+<summary><code>select_data_block</code></summary>
+
+可以先 loc 选列，再 head 选行。
+
+</details>

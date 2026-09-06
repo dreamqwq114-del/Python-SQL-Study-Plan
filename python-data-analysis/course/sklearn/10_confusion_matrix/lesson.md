@@ -125,10 +125,43 @@ print(cost)
 2. 返回 TN、FP、FN、TP 四个整数。
 3. 构建按真实类别归一化的矩阵。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""把分类结果整理为混淆矩阵与四个计数。"""
+
+import numpy as np
+from sklearn.metrics import confusion_matrix
+
+def build_counts() -> tuple[np.ndarray, dict[str, int]]:
+    """返回固定示例的矩阵和 TN/FP/FN/TP。"""
+    y_true = np.array([0, 0, 1, 1])
+    y_pred = np.array([0, 1, 0, 1])
+    matrix = confusion_matrix(y_true, y_pred, labels=[0, 1])
+    tn, fp, fn, tp = matrix.ravel()
+    counts = {
+        "tn": int(tn),
+        "fp": int(fp),
+        "fn": int(fn),
+        "tp": int(tp),
+    }
+    return matrix, counts
+
+def main() -> None:
+    matrix, counts = build_counts()
+    print(matrix.tolist())
+    print(counts)
+    print(matrix.shape)
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.10_confusion_matrix.example
 pytest course/sklearn/10_confusion_matrix/test.py
 ```
 
@@ -139,3 +172,35 @@ pytest course/sklearn/10_confusion_matrix/test.py
 - [ ] 我会显式指定标签顺序。
 - [ ] 我能区分计数矩阵和比例矩阵。
 - [ ] 我能把 FP、FN 转换成业务成本。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>build_confusion_matrix</code></summary>
+
+confusion_matrix(y_true, y_pred, labels=[0, 1])。
+
+</details>
+
+<details>
+<summary><code>confusion_counts</code></summary>
+
+对 2×2 数组使用 .ravel()，再把值转为 int。
+
+</details>
+
+<details>
+<summary><code>normalized_confusion_matrix</code></summary>
+
+confusion_matrix(..., labels=[0,1], normalize="true")。
+
+</details>

@@ -177,10 +177,68 @@ plt.close(figure)
 
 每道题的标题、轴标签、DPI、边界情况和提示都写在 [practice_01_line_and_bar.py](practice.py) 中。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""在两个子图中展示销售趋势和城市客户数量。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+def create_sales_dashboard(
+    sales: pd.DataFrame,
+    customers: pd.DataFrame,
+    output_path: Path,
+) -> None:
+    """创建折线图与柱状图组成的报告。"""
+    ordered = sales.sort_values("month")
+    city_counts = customers["city"].value_counts().sort_index()
+    figure, axes = plt.subplots(1, 2, figsize=(10, 4))
+    axes[0].plot(ordered["month"], ordered["sales"], marker="o")
+    axes[0].set(
+        title="Monthly Sales",
+        xlabel="Month",
+        ylabel="Sales",
+    )
+    axes[1].bar(city_counts.index, city_counts.values)
+    axes[1].set(
+        title="Customers by City",
+        xlabel="City",
+        ylabel="Customer Count",
+    )
+    figure.tight_layout()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(output_path, dpi=150)
+    plt.close(figure)
+
+def main() -> None:
+    sales = pd.DataFrame(
+        {"month": [3, 1, 2], "sales": [135, 120, 150]}
+    )
+    customers = pd.DataFrame({"city": ["Suzhou", "Wuxi", "Suzhou"]})
+    with TemporaryDirectory() as directory:
+        target = Path(directory) / "line_and_bar.png"
+        create_sales_dashboard(sales, customers, target)
+        print(target.name)
+        print(target.exists() and target.stat().st_size > 0)
+        print(len(plt.get_fignums()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.matplotlib.01_line_and_bar.example
 pytest course/matplotlib/01_line_and_bar/test.py
 ```
 
@@ -193,3 +251,35 @@ pytest course/matplotlib/01_line_and_bar/test.py
 - 我会在画折线前按顺序字段排序。
 - 我能从同一计数 Series 取得类别标签和柱高。
 - 我会保存后关闭自己创建的 Figure。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>plot_city_counts</code></summary>
+
+value_counts().sort_index() 得到计数，使用 ax.bar() 绘图。
+
+</details>
+
+<details>
+<summary><code>plot_monthly_sales</code></summary>
+
+sort_values("month") 后使用 ax.plot(..., marker="o")。
+
+</details>
+
+<details>
+<summary><code>plot_sales_and_city_counts</code></summary>
+
+fig, axes = plt.subplots(1, 2)，分别使用 axes[0] 和 axes[1]。
+
+</details>

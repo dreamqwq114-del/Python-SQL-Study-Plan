@@ -125,10 +125,43 @@ print(importance["feature"].tolist())
 2. 根据给定深度训练树，比较模型复杂度。
 3. 把特征名和重要性整理成降序表。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""训练深度受限的客户分类决策树。"""
+
+from sklearn.datasets import make_classification
+from sklearn.tree import DecisionTreeClassifier
+
+def train_tree() -> DecisionTreeClassifier:
+    """训练 max_depth=3 的确定性决策树。"""
+    X, y = make_classification(
+        n_samples=60,
+        n_features=3,
+        n_informative=2,
+        n_redundant=0,
+        random_state=42,
+    )
+    return DecisionTreeClassifier(
+        max_depth=3,
+        random_state=42,
+    ).fit(X, y)
+
+def main() -> None:
+    model = train_tree()
+    print((model.max_depth, model.random_state))
+    print(model.get_depth())
+    print(round(float(model.feature_importances_.sum()), 3))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.06_decision_tree.example
 pytest course/sklearn/06_decision_tree/test.py
 ```
 
@@ -139,3 +172,35 @@ pytest course/sklearn/06_decision_tree/test.py
 - [ ] 我知道限制深度是为了减少过拟合。
 - [ ] 我能按特征重要性排序。
 - [ ] 我不会把重要性误写成因果结论。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>train_tree</code></summary>
+
+创建分类器后调用 fit(X, y)。
+
+</details>
+
+<details>
+<summary><code>train_tree_with_depth</code></summary>
+
+限制深度是控制模型复杂度的一种方法。
+
+</details>
+
+<details>
+<summary><code>tree_importance_table</code></summary>
+
+使用 model.feature_importances_。
+
+</details>

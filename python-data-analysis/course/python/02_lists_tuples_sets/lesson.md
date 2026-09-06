@@ -242,11 +242,34 @@ IOM103 训练脚本使用列表保存数值特征和类别特征，使用候选 
 4. `find_common_customers`：求两个客户集合的交集。
 
 先只阅读 docstring，再逐个替换 TODO。不要查看答案文件直到自己至少尝试一次。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""列表、元组、集合与切片示例。"""
+
+def unique_recent_products(products: list[str], start: int) -> set[str]:
+    """返回指定位置之后出现过的不同商品。"""
+    return set(products[start:])
+
+def main() -> None:
+    products = ["Pen", "Notebook", "Pen", "Mouse"]
+    order = ("Notebook", 2, 12.5)
+    recent_products = unique_recent_products(products, 1)
+
+    print("切片：", products[1:3])
+    print("订单元组：", order)
+    print("不同商品：", sorted(recent_products))
+    print("共同客户：", sorted({"C1", "C2"} & {"C2", "C3"}))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.02_lists_tuples_sets.example
 pytest course/python/02_lists_tuples_sets/test.py
 ```
 
@@ -260,3 +283,42 @@ pytest course/python/02_lists_tuples_sets/test.py
 - 我能用集合去重和求交集；
 - 我不会依赖集合的显示顺序；
 - 我能根据“是否需要修改、是否要求顺序、是否允许重复”选择数据结构。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>unique_recent_items</code></summary>
+
+先写 items[start:]，再使用 set()。
+
+</details>
+
+<details>
+<summary><code>calculate_average_score</code></summary>
+
+先判断列表长度，再计算 sum(scores) / len(scores)。
+
+</details>
+
+<details>
+<summary><code>unpack_order</code></summary>
+
+可以写 product, quantity, price = order。
+
+</details>
+
+<details>
+<summary><code>find_common_customers</code></summary>
+
+集合的 & 运算或 intersection() 都可以求交集。
+
+</details>

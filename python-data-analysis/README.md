@@ -6,17 +6,16 @@
 
 ## 课程结构
 
-课程按“**主题 / 章节**”组织，而不是按文件类型组织。每一章的教材、完整示例、无答案练习、参考答案和契约测试都放在同一个章节目录里，学习时不需要在多个文件夹之间来回切换：
+课程按“**主题 / 章节**”组织，并刻意减少学习时需要来回切换的文件。**正常情况下每章你只需要主动打开 3 个文件**：
 
 ```text
 course/
 ├── python/        Python 基础，共 9 章
 │   └── 01_variables_and_types/
-│       ├── lesson.md      中文教程：问题、术语、代码、准确输出、错误与检查清单
-│       ├── example.py     完整示例：可从项目根目录独立运行，没有 TODO
-│       ├── practice.py    学生练习：完整任务契约、TODO 和 NotImplementedError
-│       ├── answer.py      参考答案：完成练习和测试后再看
-│       └── test.py        行为测试：同一契约同时检查答案和你的练习
+│       ├── lesson.md      唯一需要通读的教材：讲解 + 完整示例代码 + 练习要求 + 折叠提示 + 检查清单
+│       ├── practice.py    做题时打开：完整任务契约、TODO 和 NotImplementedError
+│       ├── answer.py      做完或卡住才打开：参考答案，独立成文件，避免做题时顺手看到
+│       └── test.py        后台自动检查，不需要阅读
 ├── pandas/        Pandas 数据处理，共 14 章
 ├── matplotlib/    Matplotlib 图表，共 6 章
 └── sklearn/       scikit-learn 建模，共 15 章
@@ -27,6 +26,22 @@ utils/                 集中管理项目相对路径
 independent_readiness/  无答案独立测评与 Python–SQL 桥接模板
 tests/                 课程级完整性测试（检查配对、接口与可移植性）
 ```
+
+学习节奏固定为三步：**先通读 `lesson.md`，再写 `practice.py`，最后对照 `answer.py`**；`test.py` 只负责自动检查，不用打开阅读。
+
+### 完整示例已经放进 lesson.md
+
+普通章节不再单独保留 `example.py`：完整示例代码直接内联在 `lesson.md` 的“本章完整示例”代码块里，读到时即可看全，需要运行时复制到文件即可。这样每章少点一个文件。
+
+只有“确实值得单独运行的完整案例”才额外保留 `example.py`，全课程共 3 处：
+
+- `course/python/06_modules_and_imports/example.py`（本章专门演示 `python -m` 模块运行机制）；
+- `course/sklearn/11_model_comparison/example.py`（训练 / 验证 / 测试划分下的多模型对比完整工作流）；
+- `projects/combined_customer_project/example.py`（端到端综合客户分析流程）。
+
+### 提示默认折叠，不会一眼看到
+
+每章 `lesson.md` 末尾的“本节提示（卡住时再展开）”用 `<details>` 折叠，按练习函数逐条列出最小提示；先独立思考，确实卡住再展开对应条目。答案仍然只在 `answer.py` 中，不会写进教材。
 
 > 为什么四个主题外面多一层 `course/` 父包？因为 `pandas`、`matplotlib`、`sklearn` 同时也是第三方依赖包的名字。如果把同名目录直接放在项目根目录，本地目录会遮蔽第三方库，导致 `import pandas` 失败。统一收在 `course/` 父包下可以彻底避免命名冲突。
 
@@ -39,15 +54,14 @@ tests/                 课程级完整性测试（检查配对、接口与可移
 
 另有一个综合客户项目，包含 6 个流程函数。因此全课程共有 147 道函数练习。
 
-每个编号一一对应。例如 Pandas 第 6 章，所有文件都在同一目录：
+每个编号一一对应。例如 Pandas 第 6 章，你要用到的文件都在同一目录：
 
 ```text
 course/pandas/06_missing_values/
-├── lesson.md
-├── example.py
-├── practice.py
-├── answer.py
-└── test.py
+├── lesson.md      # 通读：讲解、完整示例、练习要求、折叠提示
+├── practice.py    # 做题
+├── answer.py      # 对答案
+└── test.py        # 自动检查（无需阅读）
 ```
 
 ## 第一次使用
@@ -84,29 +98,29 @@ py -3.12 -m venv .venv
 
 以 Python 第 1 章为例。
 
-### 第一步：读教程
+### 第一步：通读 lesson.md
 
 打开 `course/python/01_variables_and_types/lesson.md`。
 
-不要只扫结论。先自己运行教程中的短代码，确认实际输出和文档一致。
+讲解、准确输出、常见错误和“本章完整示例”代码块都在这一个文件里。先自己读懂教程中的短代码与完整示例，确认实际输出和文档一致；普通章节无需再去找单独的示例文件。
 
-### 第二步：运行完整示例
+少数保留了 `example.py` 的章节（如模块导入章），才需要从项目根目录按模块运行完整案例：
 
 ```powershell
-python -m course.python.01_variables_and_types.example
+python -m course.python.06_modules_and_imports.example
 ```
 
 使用 `python -m ...` 是按模块运行。它能让项目根目录中的包和相对路径被稳定找到。
 
-### 第三步：只编辑练习
+### 第二步：只编辑练习
 
 ```text
 course/python/01_variables_and_types/practice.py
 ```
 
-每个函数的 docstring 已写明背景、参数、返回值、两个示例、特殊情况和提示。只在当前函数中把 `TODO` 和 `NotImplementedError` 替换成自己的实现，不要改函数名、参数或测试；一个文件中可以先完成部分函数，剩余函数继续保留模板标记。
+每个函数的 docstring 已写明背景、参数、返回值、两个示例、特殊情况和提示。只在当前函数中把 `TODO` 和 `NotImplementedError` 替换成自己的实现，不要改函数名、参数或测试；一个文件中可以先完成部分函数，剩余函数继续保留模板标记。做题时如果卡住，回到 `lesson.md` 末尾展开对应函数的折叠提示。
 
-### 第四步：运行本章测试
+### 第三步：运行本章测试
 
 ```powershell
 pytest course/python/01_variables_and_types/test.py
@@ -114,7 +128,7 @@ pytest course/python/01_variables_and_types/test.py
 
 未完成时显示 `XFAIL` 是正常状态，含义是“这个练习还在等待实现”。完成正确后，同一项会变成 `PASSED`；出现 `FAILED` 时，根据失败信息修改练习。
 
-### 第五步：最后才看答案
+### 第四步：最后才看答案
 
 先独立尝试、阅读失败信息并修改。确实卡住后再打开同目录的 `course/python/01_variables_and_types/answer.py`。
 
@@ -162,7 +176,7 @@ pytest course/sklearn
 
 先读 `projects/combined_customer_project/lesson.md`。
 
-运行完整流程示例：
+这是少数保留独立完整案例的地方，可运行完整流程示例：
 
 ```powershell
 python -m projects.combined_customer_project.example
@@ -203,7 +217,7 @@ pytest
 
 `pytest.ini` 已固定使用 `--import-mode=importlib`，并把章节内的 `test.py` 纳入收集，因此在项目根目录直接运行 `pytest` 即可，无需额外参数。
 
-课程完整性测试还会检查 44 组章节是否一一对应、练习与答案接口是否一致、示例和答案是否泄露 TODO、练习函数的模板标记是否与实现状态一致，以及是否出现硬编码绝对路径或禁用依赖。
+课程完整性测试还会检查 44 组章节是否一一对应、练习与答案接口是否一致、普通章是否把完整示例与折叠提示收进了 `lesson.md`、保留的 `example.py` 与答案是否泄露 TODO、练习函数的模板标记是否与实现状态一致，以及是否出现硬编码绝对路径或禁用依赖。
 
 因此直接运行当前仓库的完整 `pytest` 时，还会多出 15 个课程完整性通过项，初始总结果是：
 
@@ -221,7 +235,7 @@ pytest
 
 ### `ModuleNotFoundError`
 
-先确认终端位于项目根目录，再使用 `python -m 包.模块`，不要从子文件夹直接运行文件。章节目录名以数字开头属于正常设计，章节内部使用相对导入，运行时统一用 `python -m course.<主题>.<章节>.<文件>`。
+先确认终端位于项目根目录。普通章的示例直接看 `lesson.md` 代码块即可；只有保留 `example.py` 的章节才需要用 `python -m 包.模块` 运行，不要从子文件夹直接运行文件。章节目录名以数字开头属于正常设计，章节内部使用相对导入，运行时统一用 `python -m course.<主题>.<章节>.<文件>`。
 
 ### IDE 显示“没有 Python SDK”
 

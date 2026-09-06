@@ -137,10 +137,41 @@ Series 包含很多真假值，Python 不知道应该把整列当成一个真假
 2. `filter_by_cities()`：用城市列表进行成员筛选。
 3. `filter_spending_range()`：筛选包含边界的消费区间，并拒绝反向范围。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""筛选指定年龄、城市与流失状态的客户。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def select_retention_customers(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """筛选 25 至 45 岁、苏州或上海、已流失的客户。"""
+    city = dataframe["city"].str.strip().str.lower()
+    mask = (
+        dataframe["age"].between(25, 45)
+        & city.isin(["suzhou", "shanghai"])
+        & (dataframe["churn"] == "Yes")
+    )
+    return dataframe.loc[mask].copy()
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    selected = select_retention_customers(customers)
+    print(selected.shape)
+    print(selected["customer_id"].tolist())
+    print(selected[["age", "city", "churn"]].to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.05_filter_data.example
 pytest course/pandas/05_filter_data/test.py
 ```
 
@@ -151,3 +182,35 @@ pytest course/pandas/05_filter_data/test.py
 - 我能用 `isin()` 筛选多个类别。
 - 我知道 `between()` 是否包含边界。
 - 我会检查不合理的范围输入。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>filter_customers</code></summary>
+
+每个条件加括号，并使用 & 连接。
+
+</details>
+
+<details>
+<summary><code>filter_by_cities</code></summary>
+
+Series.isin() 用来判断值是否属于一个列表。
+
+</details>
+
+<details>
+<summary><code>filter_spending_range</code></summary>
+
+Series.between(minimum, maximum) 默认包含两端。
+
+</details>

@@ -112,7 +112,7 @@ pd.read_csv()
 
 ### 错误一：运行位置不对
 
-模块示例必须从项目根目录运行。如果在 `course/pandas/02_read_csv/` 内直接启动，`utils` 包可能无法找到。
+本章完整示例代码使用了 `utils.paths`，复制运行时必须从项目根目录启动。如果在 `course/pandas/02_read_csv/` 内直接启动，`utils` 包可能无法找到。
 
 ### 错误二：写死绝对路径
 
@@ -138,10 +138,37 @@ pd.read_csv()
 2. `load_customer_columns()`：按调用者给出的顺序返回指定列。
 3. `load_orders_with_dates()`：读取订单并把无效日期安全转换为 `NaT`。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""从项目 data 目录读取客户 CSV。"""
+
+from pathlib import Path
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def load_customer_columns(path: Path) -> pd.DataFrame:
+    """读取分析需要的客户列。"""
+    columns = ["customer_id", "city", "monthly_spending", "churn"]
+    return pd.read_csv(path, usecols=columns, encoding="utf-8")
+
+def main() -> None:
+    customers = load_customer_columns(DATA_DIR / "sample_customers.csv")
+    print(customers.shape)
+    print(customers.columns.tolist())
+    print(customers.head(2).to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.02_read_csv.example
 pytest course/pandas/02_read_csv/test.py
 ```
 
@@ -152,3 +179,35 @@ pytest course/pandas/02_read_csv/test.py
 - 我能用 `shape` 和 `columns` 验证读取结果。
 - 我能按指定顺序选择少量列。
 - 我能解释无效日期为什么会变成 `NaT`。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>load_customers</code></summary>
+
+把 path 直接传给 pd.read_csv()。
+
+</details>
+
+<details>
+<summary><code>load_customer_columns</code></summary>
+
+先读取完整表，再使用 dataframe.loc[:, columns]。
+
+</details>
+
+<details>
+<summary><code>load_orders_with_dates</code></summary>
+
+使用 pd.to_datetime(..., errors="coerce", format="mixed")。
+
+</details>

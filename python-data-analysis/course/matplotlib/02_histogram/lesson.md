@@ -163,10 +163,57 @@ plt.close(figure)
 2. `plot_spending_histogram()`：允许调用者指定正数箱数。
 3. `plot_age_histograms_by_churn()`：叠加流失与未流失年龄分布。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""绘制客户年龄分布直方图。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def save_age_histogram(dataframe: pd.DataFrame, output_path: Path) -> int:
+    """保存年龄直方图并返回有效年龄数量。"""
+    ages = pd.to_numeric(dataframe["age"], errors="coerce").dropna()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure, axis = plt.subplots(figsize=(6, 4))
+    axis.hist(ages, bins=6, edgecolor="black")
+    axis.set(
+        title="Customer Age Distribution",
+        xlabel="Age",
+        ylabel="Customer Count",
+    )
+    figure.tight_layout()
+    figure.savefig(output_path, dpi=150)
+    plt.close(figure)
+    return len(ages)
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    with TemporaryDirectory() as directory:
+        target = Path(directory) / "age_histogram.png"
+        valid_count = save_age_histogram(customers, target)
+        print(valid_count)
+        print(target.exists() and target.stat().st_size > 0)
+        print(len(plt.get_fignums()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.matplotlib.02_histogram.example
 pytest course/matplotlib/02_histogram/test.py
 ```
 
@@ -177,3 +224,35 @@ pytest course/matplotlib/02_histogram/test.py
 - 我会在绘图前转换数值并删除无效值。
 - 我知道箱数会改变图形细节但不会改变有效样本总数。
 - 我能用透明度和图例比较两个群体。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>plot_age_histogram</code></summary>
+
+pd.to_numeric(errors="coerce").dropna() 后使用 ax.hist(..., bins=5)。
+
+</details>
+
+<details>
+<summary><code>plot_spending_histogram</code></summary>
+
+先检查 bins，再进行数据转换和绘图。
+
+</details>
+
+<details>
+<summary><code>plot_age_histograms_by_churn</code></summary>
+
+对两个布尔条件分别调用 ax.hist(..., alpha=0.6, label=...)。
+
+</details>

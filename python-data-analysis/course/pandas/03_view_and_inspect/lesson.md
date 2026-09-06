@@ -139,10 +139,38 @@ pandas 的 `head(-1)` 有特殊含义，但本课程的 `preview_rows()` 契约�
 2. `preview_rows()`：安全返回指定数量的表头记录。
 3. `count_column_values()`：决定是否把缺失值计入类别频数。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""检查客户表的行列、类型与类别数量。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def inspect_customers(dataframe: pd.DataFrame) -> dict[str, object]:
+    """返回客户表的结构摘要。"""
+    return {
+        "rows": dataframe.shape[0],
+        "columns": dataframe.shape[1],
+        "column_names": dataframe.columns.tolist(),
+        "city_counts": dataframe["city"].value_counts().head(3).to_dict(),
+    }
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    print(customers.head(3).to_dict("records"))
+    print(inspect_customers(customers))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.03_view_and_inspect.example
 pytest course/pandas/03_view_and_inspect/test.py
 ```
 
@@ -153,3 +181,35 @@ pytest course/pandas/03_view_and_inspect/test.py
 - 我能区分列名和数据类型。
 - 我能统计类别频数，并决定是否包括缺失值。
 - 我知道为什么检查应该发生在清洗和建模之前。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>summarize_structure</code></summary>
+
+shape、columns.tolist() 和 dtype 的 str() 可以完成任务。
+
+</details>
+
+<details>
+<summary><code>preview_rows</code></summary>
+
+先检查 count，再使用 head(count).copy()。
+
+</details>
+
+<details>
+<summary><code>count_column_values</code></summary>
+
+value_counts() 的 dropna 参数控制是否忽略缺失值。
+
+</details>

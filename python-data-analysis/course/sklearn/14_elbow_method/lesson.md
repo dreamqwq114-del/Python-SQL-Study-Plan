@@ -122,10 +122,48 @@ print(table["drop"].isna().tolist())
 2. 计算相邻 `k` 的惯性下降量。
 3. 构造包含 `k`、惯性和下降量的结果表。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""计算不同聚类数对应的 inertia。"""
+
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+
+def build_elbow_table() -> pd.DataFrame:
+    """返回 k=2 至 5 的 inertia 表。"""
+    X, _ = make_blobs(
+        n_samples=60,
+        centers=3,
+        cluster_std=0.45,
+        random_state=42,
+    )
+    rows = []
+    for k in range(2, 6):
+        model = KMeans(
+            n_clusters=k,
+            random_state=42,
+            n_init=10,
+        ).fit(X)
+        rows.append({"k": k, "inertia": model.inertia_})
+    return pd.DataFrame(rows)
+
+def main() -> None:
+    table = build_elbow_table()
+    print(table["k"].tolist())
+    print(table["inertia"].is_monotonic_decreasing)
+    print(table.round(2).to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.14_elbow_method.example
 pytest course/sklearn/14_elbow_method/test.py
 ```
 
@@ -136,3 +174,35 @@ pytest course/sklearn/14_elbow_method/test.py
 - [ ] 我会观察下降速度，而不是直接选最低惯性。
 - [ ] 我能计算相邻 k 的下降量。
 - [ ] 我会结合其他指标和业务解释选择 k。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>calculate_inertias</code></summary>
+
+在循环中 fit 模型，然后读取 float(model.inertia_)。
+
+</details>
+
+<details>
+<summary><code>calculate_inertia_drops</code></summary>
+
+使用 range(1, len(inertias)) 比较相邻项。
+
+</details>
+
+<details>
+<summary><code>build_elbow_table</code></summary>
+
+先得到 inertia 列表，再创建 DataFrame。
+
+</details>

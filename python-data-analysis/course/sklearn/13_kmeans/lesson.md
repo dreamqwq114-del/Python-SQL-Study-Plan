@@ -118,10 +118,45 @@ print(cluster_profiles[0])
 2. 给客户表增加 `cluster` 列。
 3. 把质心整理成带特征名的 DataFrame。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用 K-Means 给小型客户数据分群。"""
+
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+
+def fit_customer_clusters() -> KMeans:
+    """创建三群数据并拟合 K-Means。"""
+    X, _ = make_blobs(
+        n_samples=30,
+        centers=3,
+        cluster_std=0.4,
+        random_state=42,
+    )
+    return KMeans(
+        n_clusters=3,
+        random_state=42,
+        n_init=10,
+    ).fit(X)
+
+def main() -> None:
+    model = fit_customer_clusters()
+    counts = np.bincount(model.labels_)
+    print((model.n_clusters, model.random_state, model.n_init))
+    print(counts.tolist())
+    print(model.cluster_centers_.shape)
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.13_kmeans.example
 pytest course/sklearn/13_kmeans/test.py
 ```
 
@@ -132,3 +167,35 @@ pytest course/sklearn/13_kmeans/test.py
 - [ ] 我知道为什么距离型算法常要标准化。
 - [ ] 我能读取标签和质心的形状。
 - [ ] 我不会给簇编号附加天然好坏含义。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>fit_kmeans</code></summary>
+
+创建 KMeans 后调用 fit(X)。
+
+</details>
+
+<details>
+<summary><code>cluster_customers</code></summary>
+
+fit_predict 同时完成训练和返回 labels。
+
+</details>
+
+<details>
+<summary><code>cluster_centers_table</code></summary>
+
+pd.DataFrame(model.cluster_centers_, columns=feature_names)，再 insert()。
+
+</details>

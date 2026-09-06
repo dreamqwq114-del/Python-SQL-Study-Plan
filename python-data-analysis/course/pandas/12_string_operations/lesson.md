@@ -133,10 +133,47 @@ Series 不是单个字符串，不能直接写 `series.strip()`。应写 `series
 2. `filter_products_by_keyword()`：不区分大小写地搜索普通文本关键词。
 3. `add_product_key()`：把商品名称变成稳定的小写下划线键。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""统一城市、性别和商品名称文本。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def clean_customer_text(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """去除空格并统一城市和性别的大小写。"""
+    result = dataframe.copy()
+    result["city"] = result["city"].str.strip().str.lower()
+    result["gender"] = result["gender"].str.strip().str.lower()
+    return result
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    orders = pd.read_csv(DATA_DIR / "sample_orders.csv")
+    cleaned = clean_customer_text(customers)
+    usb_orders = orders.loc[
+        orders["product_name"].str.contains(
+            "usb",
+            case=False,
+            na=False,
+            regex=False,
+        )
+    ]
+    print(sorted(cleaned["city"].dropna().unique().tolist()))
+    print(sorted(cleaned["gender"].dropna().unique().tolist()))
+    print(usb_orders["product_name"].tolist())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.12_string_operations.example
 pytest course/pandas/12_string_operations/test.py
 ```
 
@@ -147,3 +184,35 @@ pytest course/pandas/12_string_operations/test.py
 - 我能让缺失商品名在搜索时安全返回 False。
 - 我知道普通文本搜索为什么使用 `regex=False`。
 - 我会在清理后重新检查类别数量。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>clean_text_fields</code></summary>
+
+通过 Series.str 依次调用 strip() 和 lower()。
+
+</details>
+
+<details>
+<summary><code>filter_products_by_keyword</code></summary>
+
+str.contains(keyword, case=False, na=False, regex=False)。
+
+</details>
+
+<details>
+<summary><code>add_product_key</code></summary>
+
+使用 str.strip().str.lower().str.replace(r"\s+", "_", regex=True)。
+
+</details>

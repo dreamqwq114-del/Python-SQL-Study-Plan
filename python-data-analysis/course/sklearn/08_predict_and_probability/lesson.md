@@ -109,10 +109,53 @@ print(result.shape)
 2. 按给定阈值把概率转成标签。
 3. 把客户编号、预测标签和概率组合成结果表。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""输出分类标签、正类概率和客户预测表。"""
+
+import pandas as pd
+from sklearn.datasets import make_classification
+from sklearn.linear_model import LogisticRegression
+
+def build_predictions() -> pd.DataFrame:
+    """训练模型并返回前五位客户的预测表。"""
+    X, y = make_classification(
+        n_samples=50,
+        n_features=3,
+        n_informative=2,
+        n_redundant=0,
+        random_state=42,
+    )
+    model = LogisticRegression(
+        max_iter=1000,
+        random_state=42,
+    ).fit(X, y)
+    labels = model.predict(X[:5])
+    probabilities = model.predict_proba(X[:5])[:, 1]
+    return pd.DataFrame(
+        {
+            "customer_id": [f"C{i:03d}" for i in range(1, 6)],
+            "predicted_churn": labels,
+            "churn_probability": probabilities,
+        }
+    )
+
+def main() -> None:
+    predictions = build_predictions()
+    print(predictions.shape)
+    print(predictions["predicted_churn"].tolist())
+    print(predictions["churn_probability"].between(0, 1).all())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.08_predict_and_probability.example
 pytest course/sklearn/08_predict_and_probability/test.py
 ```
 
@@ -123,3 +166,35 @@ pytest course/sklearn/08_predict_and_probability/test.py
 - [ ] 我能用阈值生成 0/1 标签。
 - [ ] 我能解释降低阈值的收益与代价。
 - [ ] 我能生成包含客户编号的预测结果表。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>predict_labels_and_probabilities</code></summary>
+
+predict_proba 的第 0 列是类 0 概率，第 1 列是类 1 概率。
+
+</details>
+
+<details>
+<summary><code>predict_with_threshold</code></summary>
+
+布尔数组可用 .astype(int) 转成 0/1。
+
+</details>
+
+<details>
+<summary><code>build_prediction_table</code></summary>
+
+先比较 len()，再把三列放进 pd.DataFrame 字典。
+
+</details>

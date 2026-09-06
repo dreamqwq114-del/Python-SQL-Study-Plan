@@ -145,10 +145,52 @@ head(count) 取得高消费客户
 2. `sort_customers_by_spending()`：按调用者指定方向排序。
 3. `top_spending_customers()`：返回高消费前 N 名并验证数量输入。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""排序客户并计算消费统计。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def prepare_spending_report(
+    dataframe: pd.DataFrame,
+) -> tuple[pd.DataFrame, dict[str, float]]:
+    """返回高消费客户和三项消费统计。"""
+    result = dataframe.copy()
+    result["monthly_spending"] = pd.to_numeric(
+        result["monthly_spending"],
+        errors="coerce",
+    )
+    result = result.sort_values(
+        "monthly_spending",
+        ascending=False,
+    )
+    spending = result["monthly_spending"]
+    statistics = {
+        "mean": round(float(spending.mean()), 2),
+        "median": round(float(spending.median()), 2),
+        "max": round(float(spending.max()), 2),
+    }
+    return result.head(3), statistics
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    top_customers, statistics = prepare_spending_report(customers)
+    print(top_customers["customer_id"].tolist())
+    print(top_customers["monthly_spending"].tolist())
+    print(statistics)
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.08_sort_and_statistics.example
 pytest course/pandas/08_sort_and_statistics/test.py
 ```
 
@@ -159,3 +201,35 @@ pytest course/pandas/08_sort_and_statistics/test.py
 - 我能计算平均数、中位数和最大值。
 - 我知道缺失值默认如何参与这些统计。
 - 我能解释极端值为什么会让平均数和中位数不同。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>spending_statistics</code></summary>
+
+pandas 的 mean()、median()、max() 默认忽略缺失值。
+
+</details>
+
+<details>
+<summary><code>sort_customers_by_spending</code></summary>
+
+sort_values() 可通过 ascending 控制方向。
+
+</details>
+
+<details>
+<summary><code>top_spending_customers</code></summary>
+
+先 sort_values()，再 head(count)。
+
+</details>

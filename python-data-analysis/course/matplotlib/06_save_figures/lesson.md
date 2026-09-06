@@ -196,10 +196,65 @@ plt.close(figure)
 2. `save_transparent_spending_scatter()`：以 200 dpi 保存透明 PNG。
 3. `save_city_figure_formats()`：同一 Figure 输出 PNG 和 PDF 路径。
 
-## 10. 运行命令
+## 10. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""把同一张图保存为 PNG 和 PDF，并关闭 Figure。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def save_city_formats(
+    dataframe: pd.DataFrame,
+    output_directory: Path,
+) -> list[Path]:
+    """把城市客户数图保存为 PNG 和 PDF。"""
+    city = dataframe["city"].str.strip().str.lower()
+    counts = city.value_counts().sort_index()
+    figure, axis = plt.subplots(figsize=(6, 4))
+    axis.bar(counts.index, counts.values)
+    axis.set(
+        title="Customers by City",
+        xlabel="City",
+        ylabel="Customer Count",
+    )
+    figure.tight_layout()
+    output_directory.mkdir(parents=True, exist_ok=True)
+    paths = [
+        output_directory / "city_counts.png",
+        output_directory / "city_counts.pdf",
+    ]
+    for path in paths:
+        figure.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(figure)
+    return paths
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    with TemporaryDirectory() as directory:
+        paths = save_city_formats(customers, Path(directory))
+        print([path.suffix for path in paths])
+        print(all(path.exists() and path.stat().st_size > 0 for path in paths))
+        print(len(plt.get_fignums()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.matplotlib.06_save_figures.example
 pytest course/matplotlib/06_save_figures/test.py
 ```
 
@@ -210,3 +265,35 @@ pytest course/matplotlib/06_save_figures/test.py
 - 我会在需要时保存透明 PNG。
 - 我能让同一 Figure 输出多个格式。
 - 我会在所有路径中保存后关闭 Figure，并验证文件非空。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>save_churn_figure</code></summary>
+
+保存必须发生在 plt.close(fig) 之前。
+
+</details>
+
+<details>
+<summary><code>save_transparent_spending_scatter</code></summary>
+
+fig.savefig(..., dpi=200, transparent=True, bbox_inches="tight")。
+
+</details>
+
+<details>
+<summary><code>save_city_figure_formats</code></summary>
+
+只创建一个 Figure，对两个 Path 分别调用 fig.savefig()，最后关闭。
+
+</details>

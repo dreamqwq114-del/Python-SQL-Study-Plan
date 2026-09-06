@@ -149,10 +149,45 @@ print(orders.loc[mask].to_dict("records"))
 2. `concat_order_batches()`：按顺序拼接订单批次并处理空列表。
 3. `find_orders_without_customer()`：找出客户主表中不存在的订单。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""连接客户与订单，并拼接订单批次。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def merge_customer_orders(
+    customers: pd.DataFrame, orders: pd.DataFrame
+) -> pd.DataFrame:
+    """按 customer_id 左连接客户与订单。"""
+    unique_customers = customers.drop_duplicates("customer_id")
+    return unique_customers.merge(
+        orders,
+        on="customer_id",
+        how="left",
+        validate="one_to_many",
+    )
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    orders = pd.read_csv(DATA_DIR / "sample_orders.csv")
+    merged = merge_customer_orders(customers, orders)
+    combined = pd.concat([orders.head(2), orders.tail(2)], ignore_index=True)
+    print((customers.shape, orders.shape, merged.shape))
+    print(merged[["customer_id", "order_id"]].head(4).to_dict("records"))
+    print(combined["order_id"].tolist())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.10_merge_and_concat.example
 pytest course/pandas/10_merge_and_concat/test.py
 ```
 
@@ -163,3 +198,35 @@ pytest course/pandas/10_merge_and_concat/test.py
 - 我理解一位客户多笔订单为什么会增加行数。
 - 我会重置拼接后的索引。
 - 我会检查无法匹配的业务键。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>merge_customers_orders</code></summary>
+
+customers.merge(orders, on="customer_id", how="left")。
+
+</details>
+
+<details>
+<summary><code>concat_order_batches</code></summary>
+
+非空时使用 pd.concat(..., ignore_index=True)。
+
+</details>
+
+<details>
+<summary><code>find_orders_without_customer</code></summary>
+
+使用 ~orders["customer_id"].isin(customers["customer_id"])。
+
+</details>

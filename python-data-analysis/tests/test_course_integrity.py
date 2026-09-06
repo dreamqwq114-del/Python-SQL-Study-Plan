@@ -22,6 +22,12 @@ LEARNING_ROOTS = [
     PROJECT_ROOT / "projects",
     PROJECT_ROOT / "independent_readiness",
 ]
+# 每章必备的四个文件；example.py 仅少数“值得单独运行的完整案例”保留
+REQUIRED_CHAPTER_FILES = ("lesson.md", "practice.py", "answer.py", "test.py")
+STANDALONE_EXAMPLES = {
+    ("python", "06_modules_and_imports"),
+    ("sklearn", "11_model_comparison"),
+}
 
 
 def _chapter_names(domain: str) -> list[str]:
@@ -71,10 +77,21 @@ def test_chapter_files_are_paired(domain: str, expected_count: int) -> None:
     assert len(chapters) == expected_count
 
     for chapter in chapters:
-        for name in ("lesson.md", "example.py", "practice.py", "answer.py", "test.py"):
+        for name in REQUIRED_CHAPTER_FILES:
             assert _chapter_file(domain, chapter, name).is_file(), (
                 f"{domain}/{chapter} 缺少 {name}"
             )
+        has_example = _chapter_file(domain, chapter, "example.py").is_file()
+        expect_example = (domain, chapter) in STANDALONE_EXAMPLES
+        assert has_example == expect_example, (
+            f"{domain}/{chapter} 的 example.py 保留状态不符合白名单约定"
+        )
+        lesson = _chapter_file(domain, chapter, "lesson.md").read_text(encoding="utf-8")
+        if not expect_example:
+            # 普通章不再保留 example.py，完整示例必须内联进 lesson，且提示折叠在末尾
+            assert "本章完整示例" in lesson, f"{domain}/{chapter} 缺少内联完整示例"
+            assert "```python" in lesson, f"{domain}/{chapter} 完整示例缺少代码块"
+            assert "本节提示（卡住时再展开）" in lesson, f"{domain}/{chapter} 缺少折叠提示"
 
 
 @pytest.mark.parametrize("domain", DOMAIN_COUNTS)
@@ -132,9 +149,18 @@ def test_lessons_have_learning_support_sections() -> None:
     assert len(paths) == 44
     for path in paths:
         source = path.read_text(encoding="utf-8")
+        domain = path.parent.parent.name
+        chapter = path.parent.name
+        standalone = (domain, chapter) in STANDALONE_EXAMPLES
         assert "实际问题" in source, path
         assert "常见错误" in source, path
-        assert "python -m course" in source, path
+        if standalone:
+            # 保留独立 example.py 的章节，用 python -m 运行完整案例
+            assert f"python -m course.{domain}.{chapter}.example" in source, path
+        else:
+            # 普通章节把完整示例内联进 lesson
+            assert "本章完整示例" in source, path
+        assert "本节提示（卡住时再展开）" in source, path
         assert "pytest" in source, path
         assert "检查清单" in source, path
         assert "ORIGINAL_PROJECT_ANALYSIS.md" in source, path
@@ -220,7 +246,7 @@ def test_readme_contains_runnable_learning_commands() -> None:
     source = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     required = [
         "py -3.12 -m venv .venv",
-        "python -m course.python.01_variables_and_types.example",
+        "python -m course.python.06_modules_and_imports.example",
         "course/python/01_variables_and_types/test.py",
         "course/pandas",
         "course/matplotlib",

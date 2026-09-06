@@ -124,10 +124,44 @@ print(y.value_counts().sort_index().to_dict())
 
 每道题都先检查输入列，再返回新对象，不要修改原 DataFrame。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""从客户表中分离模型特征 X 和标签 y。"""
+
+import pandas as pd
+
+def select_model_data(
+    dataframe: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.Series]:
+    """选择两个数值特征和流失标签。"""
+    X = dataframe[["age", "monthly_spending"]].copy()
+    y = dataframe["churn"].copy()
+    return X, y
+
+def main() -> None:
+    customers = pd.DataFrame(
+        {
+            "age": [23, 41, 35, 29],
+            "monthly_spending": [188.5, 420.0, 315.8, 250.0],
+            "city": ["Suzhou", "Shanghai", "Nanjing", "Suzhou"],
+            "churn": [1, 0, 0, 1],
+        }
+    )
+    X, y = select_model_data(customers)
+    print(X.columns.tolist())
+    print((X.shape, y.shape))
+    print(y.value_counts().sort_index().to_dict())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.01_features_and_labels.example
 pytest course/sklearn/01_features_and_labels/test.py
 ```
 
@@ -140,3 +174,35 @@ pytest course/sklearn/01_features_and_labels/test.py
 - [ ] 我能用 `shape` 检查样本数和特征数。
 - [ ] 我不会把 `churn` 或 `customer_id` 直接放进特征。
 - [ ] 我能统计二分类标签的类别数量。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>select_features_and_label</code></summary>
+
+多列使用双层方括号，单列使用一层方括号，并调用 copy()。
+
+</details>
+
+<details>
+<summary><code>select_mixed_features</code></summary>
+
+本节只负责选择变量，类别编码在第 3 节完成。
+
+</details>
+
+<details>
+<summary><code>count_target_classes</code></summary>
+
+先检查 isna() 和 isin([0, 1])，再用 value_counts()。
+
+</details>

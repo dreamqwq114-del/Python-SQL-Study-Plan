@@ -224,11 +224,40 @@ IOM103 Task A2 使用循环对 Logistic Regression、Decision Tree 和 Random Fo
 2. `count_churned`：循环验证并统计状态；
 3. `calculate_valid_average`：跳过缺失值；
 4. `find_first_large_order`：查找第一个超过阈值的位置。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用条件判断和循环分析客户消费示例。"""
+
+def classify_spending(amount: float) -> str:
+    """根据月消费金额返回客户等级。"""
+    if amount < 100:
+        return "low"
+    if amount < 500:
+        return "medium"
+    return "high"
+
+def main() -> None:
+    customers = [("C001", 80.0), ("C002", 220.0), ("C003", 560.0)]
+    high_value_count = 0
+
+    for customer_id, spending in customers:
+        level = classify_spending(spending)
+        print(f"{customer_id}: {level}")
+        if level == "high":
+            high_value_count += 1
+
+    print("高消费客户数：", high_value_count)
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.04_if_and_loops.example
 pytest course/python/04_if_and_loops/test.py
 ```
 
@@ -242,3 +271,42 @@ pytest course/python/04_if_and_loops/test.py
 - 我能用 `for` 遍历列表并累计结果；
 - 我知道何时使用 `continue` 和 `break`；
 - 我能处理空列表和全部缺失的情况。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>classify_spending</code></summary>
+
+先处理错误输入，再按从小到大的边界写 if/elif/else。
+
+</details>
+
+<details>
+<summary><code>count_churned</code></summary>
+
+循环中可以先验证当前值，再使用 if 判断是否需要计数。
+
+</details>
+
+<details>
+<summary><code>calculate_valid_average</code></summary>
+
+同时维护 total 和 count，只有值不是 None 时才更新它们。
+
+</details>
+
+<details>
+<summary><code>find_first_large_order</code></summary>
+
+enumerate() 能同时得到索引和金额，找到后可以立即 return。
+
+</details>

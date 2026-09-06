@@ -218,11 +218,46 @@ IOM103 原项目从三个 CSV 读取数据，把模型指标和客户分群保�
 2. `read_nonempty_lines`：清理非空行；
 3. `write_report`：创建目录并写报告；
 4. `count_csv_rows`：跳过表头统计记录。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用 pathlib 读写 UTF-8 文件示例。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+def write_report(file_path: Path, lines: list[str]) -> None:
+    """创建父目录并写入多行报告。"""
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    file_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+def read_nonempty_lines(file_path: Path) -> list[str]:
+    """返回清理后的非空行。"""
+    result: list[str] = []
+    for line in file_path.read_text(encoding="utf-8").splitlines():
+        cleaned = line.strip()
+        if cleaned:
+            result.append(cleaned)
+    return result
+
+def main() -> None:
+    with TemporaryDirectory() as temporary_directory:
+        report_path = Path(temporary_directory) / "outputs" / "summary.txt"
+        write_report(report_path, ["客户数：3", "流失数：1"])
+
+        print("文件存在：", report_path.exists())
+        print("文件名：", report_path.name)
+        print("报告内容：", read_nonempty_lines(report_path))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.07_files_and_paths.example
 pytest course/python/07_files_and_paths/test.py
 ```
 
@@ -236,3 +271,42 @@ pytest course/python/07_files_and_paths/test.py
 - 我知道 `with` 会自动关闭文件；
 - 我能在写入前创建父目录；
 - 我知道 CSV 表头不属于数据记录。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>read_first_line</code></summary>
+
+可以使用 file_path.open() 和文件对象的 readline()。
+
+</details>
+
+<details>
+<summary><code>read_nonempty_lines</code></summary>
+
+可以在列表推导式前先写普通 for 循环，理解后再决定是否简化。
+
+</details>
+
+<details>
+<summary><code>write_report</code></summary>
+
+file_path.parent.mkdir(parents=True, exist_ok=True) 可创建父目录。
+
+</details>
+
+<details>
+<summary><code>count_csv_rows</code></summary>
+
+先用 next(reader, None) 读取表头，再循环统计后续行。
+
+</details>

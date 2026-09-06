@@ -145,12 +145,44 @@ pd.Series() 或 pd.DataFrame()
 
 练习的详细输入、输出、边界情况和提示都写在 [practice_01_series_and_dataframe.py](practice.py) 的 docstring 中。
 
-## 9. 运行命令
+## 9. 本章完整示例
 
-在项目根目录运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""用 Series 和 DataFrame 表示订单数量与客户记录。"""
+
+import pandas as pd
+
+def create_customer_data() -> tuple[pd.Series, pd.DataFrame]:
+    """创建订单数量 Series 和客户 DataFrame。"""
+    quantities = pd.Series(
+        [1, 2, 3],
+        index=["O001", "O002", "O003"],
+        name="quantity",
+    )
+    customers = pd.DataFrame(
+        {
+            "customer_id": ["C001", "C002"],
+            "city": ["Suzhou", "Shanghai"],
+            "monthly_spending": [188.5, 420.0],
+        }
+    )
+    return quantities, customers
+
+def main() -> None:
+    quantities, customers = create_customer_data()
+    print(quantities.to_dict())
+    print(customers.to_dict("records"))
+    print(customers.shape)
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.01_series_and_dataframe.example
 pytest course/pandas/01_series_and_dataframe/test.py
 ```
 
@@ -163,3 +195,35 @@ pytest course/pandas/01_series_and_dataframe/test.py
 - 我能通过索引标签从 Series 取值。
 - 我能用两列直接计算新列。
 - 我知道何时先使用 `copy()`，避免修改原始数据。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>build_customer_frame</code></summary>
+
+把“列名: 一列数据”写进字典，再交给 pd.DataFrame()。
+
+</details>
+
+<details>
+<summary><code>build_order_series</code></summary>
+
+pd.Series() 可以同时接收 data、index 和 name。
+
+</details>
+
+<details>
+<summary><code>add_order_total</code></summary>
+
+先使用 dataframe.copy()，再让两列直接相乘。
+
+</details>

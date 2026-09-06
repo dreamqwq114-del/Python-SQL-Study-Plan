@@ -21,7 +21,6 @@ def calculate_order_total(quantity, unit_price):
     total = quantity * unit_price
     return total
 
-
 result = calculate_order_total(3, 20)
 print(result)
 ```
@@ -45,7 +44,6 @@ def calculate_growth_rate(old_value, new_value):
     rate = (new_value - old_value) / old_value * 100
     return rate
 
-
 growth = calculate_growth_rate(100, 125)
 print(growth)
 ```
@@ -61,7 +59,6 @@ print(growth)
 ```python
 def wrong_total(quantity, price):
     print(quantity * price)
-
 
 result = wrong_total(2, 10)
 print(result)
@@ -85,7 +82,6 @@ None
 ```python
 def calculate_order_total(quantity, unit_price, discount=0.0):
     return quantity * unit_price * (1 - discount)
-
 
 print(calculate_order_total(2, 15))
 print(calculate_order_total(3, 20, 0.1))
@@ -112,7 +108,6 @@ def summarize_scores(scores):
     maximum = max(scores)
     average = sum(scores) / len(scores)
     return minimum, maximum, average
-
 
 low, high, mean = summarize_scores([60, 80, 100])
 print(low)
@@ -141,7 +136,6 @@ def calculate_total(quantity, price):
     total = quantity * price
     return total
 
-
 order_total = calculate_total(2, 12.5)
 print(order_total)
 ```
@@ -167,7 +161,6 @@ def format_customer_label(customer_id, city="Unknown"):
     if cleaned_city == "":
         cleaned_city = "Unknown"
     return f"{cleaned_id} - {cleaned_city}"
-
 
 print(format_customer_label(" C001 ", " Suzhou "))
 print(format_customer_label("C002"))
@@ -228,11 +221,41 @@ IOM103 训练脚本没有把整个项目写成一长段，而是拆成 `prepare_
 2. `calculate_growth_rate`：计算百分比变化；
 3. `summarize_scores`：一次返回三个统计量；
 4. `format_customer_label`：清理参数并返回文本。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""函数、参数与返回值示例。"""
+
+def calculate_order_total(
+    quantity: int,
+    unit_price: float,
+    discount: float = 0.0,
+) -> float:
+    """返回应用折扣后的订单金额。"""
+    return quantity * unit_price * (1 - discount)
+
+def calculate_growth_rate(old_value: float, new_value: float) -> float:
+    """返回百分数形式的增长率。"""
+    return (new_value - old_value) / old_value * 100
+
+def main() -> None:
+    regular_total = calculate_order_total(2, 15.0)
+    discounted_total = calculate_order_total(3, 20.0, 0.1)
+    growth_rate = calculate_growth_rate(100.0, 125.0)
+
+    print(f"无折扣金额：{regular_total:.2f}")
+    print(f"折扣后金额：{discounted_total:.2f}")
+    print(f"销售增长率：{growth_rate:.1f}%")
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.05_functions.example
 pytest course/python/05_functions/test.py
 ```
 
@@ -246,3 +269,42 @@ pytest course/python/05_functions/test.py
 - 我能设置并使用默认参数；
 - 我能用元组返回多个结果；
 - 我能把重复公式提取成单一职责函数。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>calculate_order_total</code></summary>
+
+默认参数让调用者在没有折扣时可以省略第三个参数。
+
+</details>
+
+<details>
+<summary><code>calculate_growth_rate</code></summary>
+
+函数返回数字，不要在返回值中添加百分号字符串。
+
+</details>
+
+<details>
+<summary><code>summarize_scores</code></summary>
+
+min()、max()、sum() 和 len() 可以分别完成所需计算。
+
+</details>
+
+<details>
+<summary><code>format_customer_label</code></summary>
+
+先用 strip() 得到清理后的两个变量，再处理空城市。
+
+</details>

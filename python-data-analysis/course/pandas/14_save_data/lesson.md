@@ -158,10 +158,48 @@ read_csv() 重新读取验证
 
 所有保存练习都写入 pytest 临时目录，不会污染项目数据目录。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""把客户城市汇总保存为 CSV 并重新读取验证。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def save_city_summary(dataframe: pd.DataFrame, path: Path) -> None:
+    """生成城市客户数汇总并保存为 UTF-8 CSV。"""
+    summary = (
+        dataframe.assign(city=dataframe["city"].str.strip().str.lower())
+        .groupby("city")
+        .size()
+        .reset_index(name="customer_count")
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    summary.to_csv(path, index=False, encoding="utf-8")
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    with TemporaryDirectory() as directory:
+        target = Path(directory) / "reports" / "city_summary.csv"
+        save_city_summary(customers, target)
+        reloaded = pd.read_csv(target)
+        print(target.exists())
+        print(reloaded.shape)
+        print(reloaded.to_dict("records"))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.14_save_data.example
 pytest course/pandas/14_save_data/test.py
 ```
 
@@ -172,3 +210,35 @@ pytest course/pandas/14_save_data/test.py
 - 我能控制输出列及顺序。
 - 我不会在函数中写死个人电脑路径。
 - 我会重新读取结果，验证行列和内容。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>save_processed</code></summary>
+
+path.parent.mkdir(parents=True, exist_ok=True)，再 to_csv(index=False)。
+
+</details>
+
+<details>
+<summary><code>save_selected_columns</code></summary>
+
+先 loc 选列，再调用 to_csv(index=False, encoding="utf-8")。
+
+</details>
+
+<details>
+<summary><code>save_city_summary</code></summary>
+
+groupby("city").size().reset_index(name="customer_count")。
+
+</details>

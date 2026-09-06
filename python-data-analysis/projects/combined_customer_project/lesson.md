@@ -392,3 +392,57 @@ pytest projects/combined_customer_project/test.py
 - [ ] 我能解释先划分、后拟合预处理器如何避免泄漏。
 - [ ] 我能解释五个测试指标，而不是只报告 accuracy。
 - [ ] 我能在不看答案的情况下按六个函数独立完成整个流程。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>load_datasets</code></summary>
+
+分别调用 pd.read_csv()，不要在本题清洗或合并。
+
+</details>
+
+<details>
+<summary><code>clean_customers</code></summary>
+
+先 copy() 和 drop_duplicates()；不要在训练/测试划分前用全表中位数填补。
+
+</details>
+
+<details>
+<summary><code>summarize_orders</code></summary>
+
+先筛选状态，再用 groupby().agg() 同时计算三个统计量。
+
+</details>
+
+<details>
+<summary><code>merge_customer_summary</code></summary>
+
+使用 merge(..., how="left", validate="one_to_one", sort=False)。
+
+</details>
+
+<details>
+<summary><code>create_customer_figure</code></summary>
+
+保存 fig.savefig(output_path, dpi=150)，最后 plt.close(fig)。
+
+</details>
+
+<details>
+<summary><code>train_churn_classifier</code></summary>
+
+先 split，再让整个 Pipeline 在 X_train 上 fit；AUROC 使用
+    predict_proba(X_test) 的正类概率。
+
+</details>

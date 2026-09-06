@@ -110,10 +110,39 @@ True
 2. 只标准化 DataFrame 中指定的数值列。
 3. 汇总标准化后训练列的均值和标准差。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""用训练集参数标准化训练和测试特征。"""
+
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+def scale_train_and_test(
+    train: np.ndarray,
+    test: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """只在训练数组上拟合缩放器。"""
+    scaler = StandardScaler()
+    return scaler.fit_transform(train), scaler.transform(test)
+
+def main() -> None:
+    train = np.array([[20.0, 100.0], [30.0, 200.0], [40.0, 300.0]])
+    test = np.array([[50.0, 400.0]])
+    train_scaled, test_scaled = scale_train_and_test(train, test)
+    print(np.round(train_scaled.mean(axis=0), 6).tolist())
+    print(np.round(train_scaled.std(axis=0), 6).tolist())
+    print(np.round(test_scaled, 3).tolist())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.04_standard_scaler.example
 pytest course/sklearn/04_standard_scaler/test.py
 ```
 
@@ -124,3 +153,35 @@ pytest course/sklearn/04_standard_scaler/test.py
 - [ ] 我只用训练集拟合缩放器。
 - [ ] 我能检查标准化后的均值和标准差。
 - [ ] 我知道树模型不一定需要标准化。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>scale_features</code></summary>
+
+scaler.fit_transform(train)，再 scaler.transform(test)。
+
+</details>
+
+<details>
+<summary><code>scale_dataframe_columns</code></summary>
+
+先 copy()，再用 .loc[:, columns] 写回缩放数组。
+
+</details>
+
+<details>
+<summary><code>summarize_scaled_training</code></summary>
+
+检查 ndim 和 size，再使用 np.mean(..., axis=0)。
+
+</details>

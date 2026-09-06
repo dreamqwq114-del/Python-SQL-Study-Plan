@@ -170,10 +170,68 @@ plt.close(figure)
 2. `plot_online_and_store_sales()`：比较两个渠道并检查排序、图例和网格。
 3. `plot_customer_dashboard()`：两个子图、各自标题和整图总标题。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""用完整标题、轴标签、图例和布局绘制订单状态折线。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def save_status_lines(dataframe: pd.DataFrame, output_path: Path) -> list[str]:
+    """保存订单状态折线并返回图例标签。"""
+    result = dataframe.copy()
+    result["order_amount"] = result["quantity"] * result["unit_price"]
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure, axis = plt.subplots(figsize=(7, 4))
+    labels = []
+    for status, group in result.groupby("order_status", sort=True):
+        labels.append(str(status))
+        axis.plot(
+            range(1, len(group) + 1),
+            group["order_amount"],
+            marker="o",
+            label=str(status),
+        )
+    axis.set(
+        title="Order Amount by Status",
+        xlabel="Order Sequence",
+        ylabel="Order Amount",
+    )
+    axis.legend()
+    axis.grid(alpha=0.3)
+    figure.tight_layout()
+    figure.savefig(output_path, dpi=150)
+    plt.close(figure)
+    return labels
+
+def main() -> None:
+    orders = pd.read_csv(DATA_DIR / "sample_orders.csv")
+    with TemporaryDirectory() as directory:
+        target = Path(directory) / "status_lines.png"
+        labels = save_status_lines(orders, target)
+        print(labels)
+        print(target.exists() and target.stat().st_size > 0)
+        print(len(plt.get_fignums()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.matplotlib.05_labels_legends_layout.example
 pytest course/matplotlib/05_labels_legends_layout/test.py
 ```
 
@@ -184,3 +242,35 @@ pytest course/matplotlib/05_labels_legends_layout/test.py
 - 多条线都在绘图时绑定正确 label。
 - 我能区分 Axes 标题和 Figure 总标题。
 - 我会使用浅色网格和紧凑布局提高可读性。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>plot_order_status_lines</code></summary>
+
+groupby("status", sort=True) 后对每组调用 ax.plot(..., label=status)。
+
+</details>
+
+<details>
+<summary><code>plot_online_and_store_sales</code></summary>
+
+对排序后的同一 Axes 调用两次 plot()，并分别设置 label。
+
+</details>
+
+<details>
+<summary><code>plot_customer_dashboard</code></summary>
+
+plt.subplots(1, 2) 后分别使用 value_counts().sort_index()。
+
+</details>

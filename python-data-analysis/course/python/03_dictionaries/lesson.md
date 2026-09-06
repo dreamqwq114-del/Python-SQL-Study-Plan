@@ -231,11 +231,40 @@ IOM103 Task A2 使用模型名称对应模型对象，并把每个模型的 accu
 2. `build_customer_record`：创建客户字典；
 3. `get_required_value`：读取必需字段；
 4. `merge_monthly_sales`：合并两个月销售额。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用字典表示记录并统计类别示例。"""
+
+def count_contracts(contracts: list[str]) -> dict[str, int]:
+    """统计每种合同类型的客户数。"""
+    counts: dict[str, int] = {}
+    for contract in contracts:
+        counts[contract] = counts.get(contract, 0) + 1
+    return counts
+
+def main() -> None:
+    customer = {
+        "customer_id": "C001",
+        "city": "Suzhou",
+        "monthly_spending": 188.5,
+    }
+    contracts = ["Monthly", "Yearly", "Monthly", "Two-year"]
+
+    print("客户编号：", customer["customer_id"])
+    print("城市：", customer.get("city"))
+    print("合同统计：", count_contracts(contracts))
+    print("字段：", list(customer.keys()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.03_dictionaries.example
 pytest course/python/03_dictionaries/test.py
 ```
 
@@ -249,3 +278,42 @@ pytest course/python/03_dictionaries/test.py
 - 我能用 `items()` 同时遍历键和值；
 - 我能用字典完成类别计数；
 - 我知道什么时候应复制字典，避免修改原始数据。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>count_categories</code></summary>
+
+dictionary.get(value, 0) 可以提供初始计数 0。
+
+</details>
+
+<details>
+<summary><code>build_customer_record</code></summary>
+
+字典字面量写成 {"key": value}。
+
+</details>
+
+<details>
+<summary><code>get_required_value</code></summary>
+
+record[key] 与 record.get(key) 在字段缺失时行为不同。
+
+</details>
+
+<details>
+<summary><code>merge_monthly_sales</code></summary>
+
+可以先复制 january，再遍历 february 并使用 get() 累加。
+
+</details>

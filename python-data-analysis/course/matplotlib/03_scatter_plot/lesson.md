@@ -169,10 +169,68 @@ plt.close(figure)
 2. `plot_quantity_unit_price()`：观察订单数量与商品单价关系。
 3. `plot_income_spending_by_cluster()`：按聚类编号绘制多组散点和图例。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""绘制客户年龄与月消费散点图。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def save_age_spending_scatter(
+    dataframe: pd.DataFrame,
+    output_path: Path,
+) -> int:
+    """保存散点图并返回有效数据对数量。"""
+    points = pd.DataFrame(
+        {
+            "age": pd.to_numeric(dataframe["age"], errors="coerce"),
+            "spending": pd.to_numeric(
+                dataframe["monthly_spending"],
+                errors="coerce",
+            ),
+        }
+    ).dropna()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure, axis = plt.subplots(figsize=(6, 4))
+    axis.scatter(points["age"], points["spending"], alpha=0.7)
+    axis.set(
+        title="Age vs Monthly Spending",
+        xlabel="Age",
+        ylabel="Monthly Spending",
+    )
+    figure.tight_layout()
+    figure.savefig(output_path, dpi=150)
+    plt.close(figure)
+    return len(points)
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    with TemporaryDirectory() as directory:
+        target = Path(directory) / "age_spending.png"
+        valid_pairs = save_age_spending_scatter(customers, target)
+        print(valid_pairs)
+        print(target.exists() and target.stat().st_size > 0)
+        print(len(plt.get_fignums()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.matplotlib.03_scatter_plot.example
 pytest course/matplotlib/03_scatter_plot/test.py
 ```
 
@@ -183,3 +241,35 @@ pytest course/matplotlib/03_scatter_plot/test.py
 - 我能为散点图设置明确标题和轴标签。
 - 我能按类别分组绘点并添加图例。
 - 我不会仅凭散点图声称因果关系。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>plot_age_spending</code></summary>
+
+先组成含两列的临时 DataFrame，再 dropna()，避免横纵坐标错位。
+
+</details>
+
+<details>
+<summary><code>plot_quantity_unit_price</code></summary>
+
+ax.scatter(dataframe["quantity"], dataframe["unit_price"])。
+
+</details>
+
+<details>
+<summary><code>plot_income_spending_by_cluster</code></summary>
+
+for cluster in sorted(dataframe["cluster"].dropna().unique())。
+
+</details>

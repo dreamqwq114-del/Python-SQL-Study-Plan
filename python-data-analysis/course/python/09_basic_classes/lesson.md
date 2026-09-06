@@ -24,7 +24,6 @@ class Customer:
         self.name = name
         self.monthly_spending = monthly_spending
 
-
 customer = Customer("Alice", 188.5)
 
 print(customer.name)
@@ -61,7 +60,6 @@ class Customer:
     def describe(self):
         return f"{self.name}: {self.monthly_spending:.2f}"
 
-
 customer = Customer("Alice", 188.5)
 print(customer.describe())
 print(customer.annual_spending())
@@ -94,7 +92,6 @@ class Order:
     def total(self):
         return self.quantity * self.unit_price
 
-
 order = Order("Book", 2, 12.0)
 print(order.total())
 ```
@@ -116,7 +113,6 @@ class Customer:
     def __init__(self, name, spending):
         self.name = name
         self.spending = spending
-
 
 first = Customer("Alice", 100)
 second = Customer("Bob", 250)
@@ -143,7 +139,6 @@ class Customer:
     def __init__(self, name, spending):
         self.name = name
         self.spending = spending
-
 
 rows = [("Alice", 100), ("Bob", 250)]
 customers = []
@@ -221,11 +216,45 @@ IOM103 中的编码器、缩放器、分类模型和 KMeans 都是对象；Pipel
 2. `Order`：订单属性、总金额和描述；
 3. `ScoreSummary`：保存成绩副本并计算统计量；
 4. `build_customers`：把多行元组转换为对象。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用基础类封装客户数据和行为示例。"""
+
+class Customer:
+    """保存客户名称和月消费。"""
+
+    def __init__(self, name: str, monthly_spending: float) -> None:
+        self.name = name
+        self.monthly_spending = monthly_spending
+
+    def annual_spending(self) -> float:
+        """返回十二个月的消费金额。"""
+        return self.monthly_spending * 12
+
+    def describe(self) -> str:
+        """返回客户摘要。"""
+        return f"{self.name}: {self.monthly_spending:.2f}"
+
+def main() -> None:
+    customers = [
+        Customer("Alice", 188.5),
+        Customer("Bob", 250.0),
+    ]
+
+    for customer in customers:
+        print(customer.describe())
+        print(f"年消费：{customer.annual_spending():.2f}")
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.09_basic_classes.example
 pytest course/python/09_basic_classes/test.py
 ```
 
@@ -239,3 +268,21 @@ pytest course/python/09_basic_classes/test.py
 - 我能创建对象、读取属性和调用方法；
 - 我知道方法名后需要括号才会执行；
 - 我能看懂 scikit-learn 的“创建模型 → fit → predict”对象流程。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>build_customers</code></summary>
+
+在循环中调用 Customer(name, spending)，再 append 到结果列表。
+
+</details>

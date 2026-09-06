@@ -217,3 +217,42 @@ pytest course/python/06_modules_and_imports/test.py
 - 我能从统一目录常量构造相对项目路径；
 - 我知道为什么从根目录使用 `python -m`；
 - 我能解释 `if __name__ == "__main__"` 的作用。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>build_data_path</code></summary>
+
+Path(file_name).name 可以帮助判断传入值是否只是文件名。
+
+</details>
+
+<details>
+<summary><code>build_processed_path</code></summary>
+
+可以复用与 build_data_path 相同的验证思路。
+
+</details>
+
+<details>
+<summary><code>build_figure_path</code></summary>
+
+Path.suffix 可以读取包括点号在内的扩展名。
+
+</details>
+
+<details>
+<summary><code>get_project_directories</code></summary>
+
+字典的四个值已经从 utils.paths 导入。
+
+</details>

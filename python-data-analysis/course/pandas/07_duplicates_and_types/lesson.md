@@ -142,10 +142,43 @@ pd.to_numeric(errors="coerce")
 2. `convert_customer_types()`：把年龄转为可空整数，把消费转为数值。
 3. `keep_latest_customer_records()`：保留表中最后出现的客户记录。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""按客户编号去重并修正消费金额类型。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def clean_customer_types(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """去除重复客户，并把消费金额安全转换为数字。"""
+    result = dataframe.drop_duplicates(
+        subset="customer_id",
+        keep="first",
+    ).copy()
+    result["monthly_spending"] = pd.to_numeric(
+        result["monthly_spending"],
+        errors="coerce",
+    )
+    return result.reset_index(drop=True)
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    cleaned = clean_customer_types(customers)
+    print((customers.shape, cleaned.shape))
+    print(str(cleaned["monthly_spending"].dtype))
+    print(cleaned["monthly_spending"].isna().sum())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.07_duplicates_and_types.example
 pytest course/pandas/07_duplicates_and_types/test.py
 ```
 
@@ -156,3 +189,35 @@ pytest course/pandas/07_duplicates_and_types/test.py
 - 我能安全转换含脏值的数字文本。
 - 我能解释 `errors="coerce"`。
 - 我知道转换后要检查新产生的缺失值。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>clean_duplicates_and_spending</code></summary>
+
+使用 drop_duplicates(subset=..., keep="first") 和 pd.to_numeric()。
+
+</details>
+
+<details>
+<summary><code>convert_customer_types</code></summary>
+
+pd.to_numeric(errors="coerce") 会把失败值变成缺失值。
+
+</details>
+
+<details>
+<summary><code>keep_latest_customer_records</code></summary>
+
+drop_duplicates() 的 keep 参数可以选择保留最后一条。
+
+</details>

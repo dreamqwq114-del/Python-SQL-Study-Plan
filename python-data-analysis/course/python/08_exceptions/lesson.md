@@ -48,7 +48,6 @@ def parse_positive_amount(text):
         raise ValueError("金额必须大于 0")
     return amount
 
-
 print(parse_positive_amount("12.5"))
 ```
 
@@ -70,7 +69,6 @@ def parse_positive_amount(text):
     if amount <= 0:
         raise ValueError("金额必须大于 0")
     return amount
-
 
 for text in ["12.5", "0", "bad"]:
     try:
@@ -105,7 +103,6 @@ def parse_optional_score(text):
     if score < 0 or score > 100:
         raise ValueError("成绩必须在 0 到 100 之间")
     return score
-
 
 print(parse_optional_score("88.5"))
 print(parse_optional_score(" NA "))
@@ -200,11 +197,37 @@ IOM103 的 `TotalCharges` 列包含空白文本。原项目使用 `pd.to_numeric
 2. `parse_optional_score`：区分缺失和错误；
 3. `safe_divide`：拒绝分母为 0；
 4. `read_required_text`：处理必需文件缺失或为空。
+### 本章完整示例
 
-运行：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用异常保护数据转换示例。"""
+
+def parse_positive_amount(text: str) -> float:
+    """把文本转换成严格大于 0 的金额。"""
+    amount = float(text)
+    if amount <= 0:
+        raise ValueError("金额必须大于 0")
+    return amount
+
+def main() -> None:
+    values = ["12.5", "0", "unknown"]
+
+    for value in values:
+        try:
+            amount = parse_positive_amount(value)
+            print(f"{value} -> {amount:.2f}")
+        except ValueError as error:
+            print(f"{value} -> 错误：{error}")
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.08_exceptions.example
 pytest course/python/08_exceptions/test.py
 ```
 
@@ -218,3 +241,42 @@ pytest course/python/08_exceptions/test.py
 - 我只捕获自己能够处理的具体异常；
 - 我不会把缺失、错误和真实的 0 混在一起；
 - 我知道 Pandas 的批量转换也需要明确失败规则。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>parse_positive_amount</code></summary>
+
+float() 已经会为无法转换的文本产生 ValueError。
+
+</details>
+
+<details>
+<summary><code>parse_optional_score</code></summary>
+
+先处理缺失标记，再调用 float()，可以避免对 "NA" 进行转换。
+
+</details>
+
+<details>
+<summary><code>safe_divide</code></summary>
+
+使用 if 检查分母，再执行除法。
+
+</details>
+
+<details>
+<summary><code>read_required_text</code></summary>
+
+使用 try/except 捕获 FileNotFoundError，并用 raise ValueError(...) from error。
+
+</details>

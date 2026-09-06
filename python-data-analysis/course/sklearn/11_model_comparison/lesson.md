@@ -128,3 +128,35 @@ pytest course/sklearn/11_model_comparison/test.py
 - [ ] 我能生成和排序模型比较表。
 - [ ] 我不会在最终测试集上反复调参。
 - [ ] 我能结合解释性、成本和错误类型选择模型。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>compare_models</code></summary>
+
+对每个模型 fit、predict、predict_proba，再把字典加入列表。
+
+</details>
+
+<details>
+<summary><code>rank_models</code></summary>
+
+sort_values(metric, ascending=False).reset_index(drop=True)。
+
+</details>
+
+<details>
+<summary><code>select_best_model_name</code></summary>
+
+results[metric].idxmax() 返回第一个最大值的索引标签。
+
+</details>

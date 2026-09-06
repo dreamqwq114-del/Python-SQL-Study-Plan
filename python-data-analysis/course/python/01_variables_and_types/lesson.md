@@ -527,11 +527,47 @@ course/python/01_variables_and_types/practice.py
 - 特殊情况：数量为 `"0"` 时，总金额显示为 `0.00 元`
 
 练习文件中的 `TODO` 表示需要你填写的位置。`NotImplementedError` 表示这道题目前故意没有实现；写完代码后应删除或替换这一行。
+### 本章完整示例
 
-示例与测试命令：
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""变量、数据类型、类型转换与 f-string 示例。"""
+
+def build_order_summary(
+    product_name: str,
+    quantity_text: str,
+    unit_price_text: str,
+) -> str:
+    """转换订单字段并返回摘要。"""
+    quantity = int(quantity_text)
+    unit_price = float(unit_price_text)
+    total_amount = quantity * unit_price
+    return (
+        f"商品：{product_name}，数量：{quantity}，"
+        f"单价：{unit_price:.2f} 元，总金额：{total_amount:.2f} 元"
+    )
+
+def main() -> None:
+    product_name = "Python 入门书"
+    quantity_text = "2"
+    unit_price_text = "39.90"
+    is_member = True
+    coupon = None
+
+    print(build_order_summary(product_name, quantity_text, unit_price_text))
+    print(type(int(quantity_text)).__name__)
+    print(type(float(unit_price_text)).__name__)
+    print(type(is_member).__name__)
+    print(type(coupon).__name__)
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.python.01_variables_and_types.example
 pytest course/python/01_variables_and_types/test.py
 ```
 
@@ -554,3 +590,42 @@ pytest course/python/01_variables_and_types/test.py
 - [ ] 我能用 f-string 生成包含变量的成绩或订单文本。
 - [ ] 我能读懂变量未定义、错误类型相加和转换失败的原因。
 - [ ] 运行第一章测试后，四道练习不再显示 `XFAIL`。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>convert_age</code></summary>
+
+先使用 int() 完成类型转换，再判断结果是否小于 0。
+
+</details>
+
+<details>
+<summary><code>convert_price</code></summary>
+
+使用 float() 转换，再检查得到的价格是否小于 0。
+
+</details>
+
+<details>
+<summary><code>calculate_order_amount</code></summary>
+
+分别使用 float() 和 int()，不要直接把两个字符串相乘。
+
+</details>
+
+<details>
+<summary><code>build_order_summary</code></summary>
+
+f-string 中的 {value:.2f} 可以把浮点数显示成两位小数。
+
+</details>

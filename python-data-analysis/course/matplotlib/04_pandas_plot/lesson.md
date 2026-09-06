@@ -176,10 +176,70 @@ Matplotlib Axes
 2. `plot_contract_churn_rate()`：合同流失率降序图并固定 0–1 纵轴。
 3. `plot_monthly_order_totals()`：清理日期、汇总金额并绘月度折线。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""先用 pandas 聚合，再通过 pandas 绘图入口保存柱状图。"""
+
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def save_city_average_plot(
+    dataframe: pd.DataFrame,
+    output_path: Path,
+) -> pd.Series:
+    """保存城市平均消费图并返回聚合结果。"""
+    result = dataframe.copy()
+    result["city"] = result["city"].str.strip().str.lower()
+    result["monthly_spending"] = pd.to_numeric(
+        result["monthly_spending"],
+        errors="coerce",
+    )
+    summary = (
+        result.groupby("city")["monthly_spending"]
+        .mean()
+        .sort_index()
+    )
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure, axis = plt.subplots(figsize=(6, 4))
+    summary.plot.bar(ax=axis)
+    axis.set(
+        title="Average Spending by City",
+        xlabel="City",
+        ylabel="Average Monthly Spending",
+    )
+    figure.tight_layout()
+    figure.savefig(output_path, dpi=150)
+    plt.close(figure)
+    return summary
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    with TemporaryDirectory() as directory:
+        target = Path(directory) / "city_average.png"
+        summary = save_city_average_plot(customers, target)
+        print(summary.round(2).to_dict())
+        print(target.exists() and target.stat().st_size > 0)
+        print(len(plt.get_fignums()))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.matplotlib.04_pandas_plot.example
 pytest course/matplotlib/04_pandas_plot/test.py
 ```
 
@@ -190,3 +250,35 @@ pytest course/matplotlib/04_pandas_plot/test.py
 - 我会排序类别或月份，保证显示顺序合理。
 - 我能把 pandas 绘图结果放到指定 Axes。
 - 我知道统计正确比图形样式更重要。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>plot_city_average</code></summary>
+
+groupby("city")["monthly_spending"].mean().sort_index().plot.bar()。
+
+</details>
+
+<details>
+<summary><code>plot_contract_churn_rate</code></summary>
+
+0/1 列分组后的 mean() 就是每组比例。
+
+</details>
+
+<details>
+<summary><code>plot_monthly_order_totals</code></summary>
+
+先生成 order_month，再 groupby().sum().sort_index().plot(marker="o")。
+
+</details>

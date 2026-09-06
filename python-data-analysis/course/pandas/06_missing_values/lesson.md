@@ -150,10 +150,40 @@ fillna() 填充 或 dropna(subset=...) 删除
 2. `fill_missing_scores()`：在副本中用指定满意度补齐。
 3. `drop_incomplete_rows()`：只按调用者指定的关键列删除记录。
 
-## 9. 运行命令
+## 9. 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""统计缺失值并填充客户满意度。"""
+
+import pandas as pd
+
+from utils.paths import DATA_DIR
+
+def fill_satisfaction(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """用满意度中位数填充缺失值。"""
+    result = dataframe.copy()
+    median_score = result["satisfaction_score"].median()
+    result["satisfaction_score"] = result["satisfaction_score"].fillna(
+        median_score
+    )
+    return result
+
+def main() -> None:
+    customers = pd.read_csv(DATA_DIR / "sample_customers.csv")
+    cleaned = fill_satisfaction(customers)
+    print(customers.isna().sum().to_dict())
+    print(cleaned["satisfaction_score"].isna().sum())
+    print(cleaned["satisfaction_score"].median())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.pandas.06_missing_values.example
 pytest course/pandas/06_missing_values/test.py
 ```
 
@@ -164,3 +194,35 @@ pytest course/pandas/06_missing_values/test.py
 - 我会根据业务含义选择填充或删除。
 - 我能只检查指定关键列。
 - 我会在处理后再次验证缺失数量。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>count_missing</code></summary>
+
+先用 isna() 得到真假表，再按列 sum()。
+
+</details>
+
+<details>
+<summary><code>fill_missing_scores</code></summary>
+
+先 copy()，再对指定列使用 fillna()。
+
+</details>
+
+<details>
+<summary><code>drop_incomplete_rows</code></summary>
+
+dropna(subset=...) 可只检查指定列，之后 reset_index(drop=True)。
+
+</details>

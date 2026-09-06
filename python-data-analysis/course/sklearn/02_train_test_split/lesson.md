@@ -131,10 +131,44 @@ print(y_train.mean(), y_test.mean())
 2. 接收调用者给出的测试比例。
 3. 汇总训练集和测试集的样本数及正类比例。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""使用固定随机种子进行分层训练/测试划分。"""
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+def split_customer_data(
+    X: pd.DataFrame,
+    y: pd.Series,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    """按 75%/25% 分层划分数据。"""
+    return train_test_split(
+        X,
+        y,
+        test_size=0.25,
+        stratify=y,
+        random_state=42,
+    )
+
+def main() -> None:
+    X = pd.DataFrame({"customer_number": range(40)})
+    y = pd.Series([0, 1] * 20, name="churn")
+    X_train, X_test, y_train, y_test = split_customer_data(X, y)
+    print((len(X_train), len(X_test)))
+    print((y_train.mean(), y_test.mean()))
+    print(sorted(X_test["customer_number"].tolist())[:3])
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.02_train_test_split.example
 pytest course/sklearn/02_train_test_split/test.py
 ```
 
@@ -145,3 +179,35 @@ pytest course/sklearn/02_train_test_split/test.py
 - [ ] 我能解释 `test_size`、`stratify` 和 `random_state`。
 - [ ] 我能检查划分后的行数和标签比例。
 - [ ] 我会先划分，再拟合预处理器。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>split_data</code></summary>
+
+train_test_split(..., test_size=0.25, stratify=y, random_state=42)。
+
+</details>
+
+<details>
+<summary><code>split_with_test_size</code></summary>
+
+先验证比例，再调用 train_test_split。
+
+</details>
+
+<details>
+<summary><code>summarize_split_balance</code></summary>
+
+0/1 Series 的 mean() 就是正类比例。
+
+</details>

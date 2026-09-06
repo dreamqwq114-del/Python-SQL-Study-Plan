@@ -128,10 +128,57 @@ print(available_after_churn)
 2. 根据给定差值阈值判断是否可能过拟合。
 3. 只用训练集拟合缩放器，再转换测试集。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""比较训练/测试分数，并只用训练集拟合缩放器。"""
+
+import numpy as np
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.tree import DecisionTreeClassifier
+
+def evaluate_tree() -> tuple[float, float, float]:
+    """返回训练分数、测试分数和泄漏安全的测试缩放值。"""
+    X, y = make_classification(
+        n_samples=80,
+        n_features=4,
+        n_informative=3,
+        n_redundant=0,
+        random_state=42,
+    )
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.25,
+        stratify=y,
+        random_state=42,
+    )
+    model = DecisionTreeClassifier(random_state=42).fit(X_train, y_train)
+    scaler = StandardScaler().fit(X_train)
+    scaled_test = scaler.transform(X_test)
+    return (
+        model.score(X_train, y_train),
+        model.score(X_test, y_test),
+        float(np.mean(scaled_test)),
+    )
+
+def main() -> None:
+    train_score, test_score, test_mean = evaluate_tree()
+    print((round(train_score, 3), round(test_score, 3)))
+    print(round(train_score - test_score, 3))
+    print(round(test_mean, 3))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.12_overfitting_and_leakage.example
 pytest course/sklearn/12_overfitting_and_leakage/test.py
 ```
 
@@ -142,3 +189,35 @@ pytest course/sklearn/12_overfitting_and_leakage/test.py
 - [ ] 我能判断某列在预测时是否真正可用。
 - [ ] 我只用训练集拟合预处理器。
 - [ ] 我知道测试集不能反复用于模型选择。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>compare_train_test_accuracy</code></summary>
+
+score(X, y) 对分类器默认返回准确率。
+
+</details>
+
+<details>
+<summary><code>detect_overfitting</code></summary>
+
+先逐个验证范围，再进行差值比较。
+
+</details>
+
+<details>
+<summary><code>scale_without_leakage</code></summary>
+
+scaler.fit(X_train) 后分别调用 transform。
+
+</details>

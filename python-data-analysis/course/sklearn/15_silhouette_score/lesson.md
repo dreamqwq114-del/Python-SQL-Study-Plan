@@ -132,10 +132,57 @@ print(evaluation.loc[evaluation["silhouette"].idxmax(), "k"])
 2. 返回轮廓系数最高的 `k`，并验证输入。
 3. 构造同时包含惯性和轮廓系数的评价表。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""用轮廓系数辅助选择聚类数量。"""
+
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+from sklearn.metrics import silhouette_score
+
+def build_evaluation_table() -> pd.DataFrame:
+    """同时计算 inertia 和 silhouette。"""
+    X, _ = make_blobs(
+        n_samples=60,
+        centers=3,
+        cluster_std=0.45,
+        random_state=42,
+    )
+    rows = []
+    for k in [2, 3, 4]:
+        model = KMeans(
+            n_clusters=k,
+            random_state=42,
+            n_init=10,
+        )
+        labels = model.fit_predict(X)
+        rows.append(
+            {
+                "k": k,
+                "inertia": model.inertia_,
+                "silhouette": silhouette_score(X, labels),
+            }
+        )
+    return pd.DataFrame(rows)
+
+def main() -> None:
+    table = build_evaluation_table()
+    best_k = int(table.loc[table["silhouette"].idxmax(), "k"])
+    print(table["k"].tolist())
+    print(best_k)
+    print(table["silhouette"].between(-1, 1).all())
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.15_silhouette_score.example
 pytest course/sklearn/15_silhouette_score/test.py
 ```
 
@@ -146,3 +193,35 @@ pytest course/sklearn/15_silhouette_score/test.py
 - [ ] 我知道为什么 `k=1` 不能计算轮廓系数。
 - [ ] 我会同时参考肘部、轮廓系数和簇大小。
 - [ ] 我能在原始单位中解释最终客户簇。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>calculate_silhouette_scores</code></summary>
+
+model.fit_predict(X) 后调用 silhouette_score。
+
+</details>
+
+<details>
+<summary><code>select_best_silhouette_k</code></summary>
+
+可以按 (-score, k) 排序，或用 max 的元组规则谨慎处理并列。
+
+</details>
+
+<details>
+<summary><code>build_cluster_evaluation</code></summary>
+
+每个 k 只需 fit_predict 一次，再读取 inertia_ 和计算轮廓系数。
+
+</details>

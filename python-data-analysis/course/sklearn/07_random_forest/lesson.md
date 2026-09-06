@@ -111,10 +111,43 @@ print(list(zip(settings, estimated_relative_cost)))
 2. 使用给定树数训练森林。
 3. 返回按重要性降序排列的特征表。
 
-## 运行命令
+## 本章完整示例
+
+下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
+
+```python
+"""训练多棵树组成的随机森林。"""
+
+from sklearn.datasets import make_classification
+from sklearn.ensemble import RandomForestClassifier
+
+def train_forest() -> RandomForestClassifier:
+    """训练 50 棵树的确定性随机森林。"""
+    X, y = make_classification(
+        n_samples=60,
+        n_features=4,
+        n_informative=3,
+        n_redundant=0,
+        random_state=42,
+    )
+    return RandomForestClassifier(
+        n_estimators=50,
+        random_state=42,
+    ).fit(X, y)
+
+def main() -> None:
+    model = train_forest()
+    print((model.n_estimators, model.random_state))
+    print(len(model.estimators_))
+    print(round(float(model.feature_importances_.sum()), 3))
+
+if __name__ == "__main__":
+    main()
+```
+
+运行本章测试：
 
 ```powershell
-python -m course.sklearn.07_random_forest.example
 pytest course/sklearn/07_random_forest/test.py
 ```
 
@@ -125,3 +158,35 @@ pytest course/sklearn/07_random_forest/test.py
 - [ ] 我能说明森林为何比单棵树更稳定。
 - [ ] 我会固定随机种子并在测试集评估。
 - [ ] 我能在稳定性和运行成本间做选择。
+
+---
+
+## 本节提示（卡住时再展开）
+
+<details>
+<summary>全部展开</summary>
+
+下面按练习函数列出最小提示，先独立思考，确实卡住再展开对应条目。
+
+</details>
+
+<details>
+<summary><code>train_forest</code></summary>
+
+n_estimators 表示森林中决策树数量。
+
+</details>
+
+<details>
+<summary><code>train_forest_with_estimators</code></summary>
+
+固定 random_state 才能公平比较实验。
+
+</details>
+
+<details>
+<summary><code>forest_importance_table</code></summary>
+
+实现结构与上一节树重要性表相似。
+
+</details>
