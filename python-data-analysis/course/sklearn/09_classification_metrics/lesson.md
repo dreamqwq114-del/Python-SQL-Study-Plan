@@ -127,7 +127,7 @@ AUROC 需要同时存在正类和负类。应在划分时分层并检查标签�
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""计算多项二分类指标。"""
+"""在一组固定预测上计算分类指标演示。"""
 
 import numpy as np
 from sklearn.metrics import (
@@ -138,23 +138,25 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 
-def calculate_metrics() -> dict[str, float]:
-    """对固定预测结果计算五项指标。"""
-    y_true = np.array([0, 0, 1, 1])
-    y_pred = np.array([0, 1, 1, 1])
-    y_prob = np.array([0.1, 0.6, 0.7, 0.9])
+
+def demo_score_fixed_predictions() -> dict[str, float]:
+    """演示五个常用二分类指标各自如何调用。"""
+    actual = np.array([0, 0, 1, 1])
+    predicted = np.array([0, 1, 1, 1])
+    probability = np.array([0.1, 0.6, 0.7, 0.9])
     return {
-        "accuracy": accuracy_score(y_true, y_pred),
-        "precision": precision_score(y_true, y_pred),
-        "recall": recall_score(y_true, y_pred),
-        "f1": f1_score(y_true, y_pred),
-        "roc_auc": roc_auc_score(y_true, y_prob),
+        "accuracy": accuracy_score(actual, predicted),
+        "precision": precision_score(actual, predicted, zero_division=0),
+        "recall": recall_score(actual, predicted, zero_division=0),
+        "f1": f1_score(actual, predicted, zero_division=0),
+        "roc_auc": roc_auc_score(actual, probability),
     }
 
+
 def main() -> None:
-    metrics = calculate_metrics()
-    print(list(metrics))
-    print({name: round(value, 3) for name, value in metrics.items()})
+    for name, value in demo_score_fixed_predictions().items():
+        print(name, round(value, 3))
+
 
 if __name__ == "__main__":
     main()

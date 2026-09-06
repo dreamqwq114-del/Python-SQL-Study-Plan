@@ -28,9 +28,6 @@ def plot_age_histogram(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         无有效年龄时仍保存空图；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        pd.to_numeric(errors="coerce").dropna() 后使用 ax.hist(..., bins=5)。
     """
     # TODO: 清理年龄并绘制 5 箱直方图。
     raise NotImplementedError("TODO: 实现 plot_age_histogram")
@@ -64,9 +61,6 @@ def plot_spending_histogram(
 
     特殊情况：
         bins<=0 时主动抛出 ValueError，且不得创建图片；不修改原表。
-
-    提示：
-        先检查 bins，再进行数据转换和绘图。
     """
     # TODO: 验证箱数并绘制消费直方图。
     raise NotImplementedError("TODO: 实现 plot_spending_histogram")
@@ -99,9 +93,6 @@ def plot_age_histograms_by_churn(
 
     特殊情况：
         无效年龄不绘制；不修改原表；缺少 age 或 churn 时抛出 KeyError。
-
-    提示：
-        对两个布尔条件分别调用 ax.hist(..., alpha=0.6, label=...)。
     """
     # TODO: 叠加两组年龄直方图。
     raise NotImplementedError("TODO: 实现 plot_age_histograms_by_churn")

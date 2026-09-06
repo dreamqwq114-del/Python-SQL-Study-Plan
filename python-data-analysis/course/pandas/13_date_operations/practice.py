@@ -23,9 +23,6 @@ def add_date_parts(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         混合日期格式应尽量识别；不修改原表。
-
-    提示：
-        pd.to_datetime(..., errors="coerce", format="mixed") 后使用 .dt。
     """
     # TODO: 转换 join_date 并提取年月。
     raise NotImplementedError("TODO: 实现 add_date_parts")
@@ -57,9 +54,6 @@ def filter_orders_by_date(
     特殊情况：
         start 或 end 无效、或 start>end 时抛出 ValueError；
         无效 order_date 被排除。
-
-    提示：
-        先用 pd.to_datetime() 转边界，再用 between()。
     """
     # TODO: 验证边界并筛选订单日期。
     raise NotImplementedError("TODO: 实现 filter_orders_by_date")
@@ -86,9 +80,6 @@ def monthly_order_totals(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         无效日期不参与分组；不修改原表。
-
-    提示：
-        日期列的 .dt.strftime("%Y-%m") 可生成月份文本。
     """
     # TODO: 计算并按月汇总订单金额。
     raise NotImplementedError("TODO: 实现 monthly_order_totals")

@@ -25,9 +25,6 @@ def scale_features(train: np.ndarray, test: np.ndarray) -> tuple[np.ndarray, np.
 
     特殊情况：
         不在 test 上 fit；列数不一致时保留 scikit-learn 的 ValueError。
-
-    提示：
-        scaler.fit_transform(train)，再 scaler.transform(test)。
     """
     # TODO: 用训练集参数标准化两组数据。
     raise NotImplementedError("TODO: 实现 scale_features")
@@ -59,9 +56,6 @@ def scale_dataframe_columns(
 
     特殊情况：
         columns 为空时返回两张副本；不修改输入；缺列时抛出 KeyError。
-
-    提示：
-        先 copy()，再用 .loc[:, columns] 写回缩放数组。
     """
     # TODO: 只标准化指定 DataFrame 列。
     raise NotImplementedError("TODO: 实现 scale_dataframe_columns")
@@ -89,9 +83,6 @@ def summarize_scaled_training(
 
     特殊情况：
         必须是非空二维数组，否则抛出 ValueError。
-
-    提示：
-        检查 ndim 和 size，再使用 np.mean(..., axis=0)。
     """
     # TODO: 计算标准化训练数据的列均值和列标准差。
     raise NotImplementedError("TODO: 实现 summarize_scaled_training")

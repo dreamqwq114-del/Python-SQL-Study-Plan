@@ -23,9 +23,6 @@ def summarize_structure(dataframe: pd.DataFrame) -> dict[str, object]:
 
     特殊情况：
         空表的 rows 为 0；不修改原表。
-
-    提示：
-        shape、columns.tolist() 和 dtype 的 str() 可以完成任务。
     """
     # TODO: 生成 rows、columns、dtypes。
     raise NotImplementedError("TODO: 实现 summarize_structure")
@@ -52,9 +49,6 @@ def preview_rows(dataframe: pd.DataFrame, count: int) -> pd.DataFrame:
 
     特殊情况：
         count=0 返回空表；count<0 时主动抛出 ValueError。
-
-    提示：
-        先检查 count，再使用 head(count).copy()。
     """
     # TODO: 验证 count 并返回表头副本。
     raise NotImplementedError("TODO: 实现 preview_rows")
@@ -84,9 +78,6 @@ def count_column_values(
 
     特殊情况：
         列不存在时抛出 KeyError；空列返回空 Series。
-
-    提示：
-        value_counts() 的 dropna 参数控制是否忽略缺失值。
     """
     # TODO: 返回指定列的频数统计。
     raise NotImplementedError("TODO: 实现 count_column_values")

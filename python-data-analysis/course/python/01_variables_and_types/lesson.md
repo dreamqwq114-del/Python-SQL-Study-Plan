@@ -532,34 +532,27 @@ course/python/01_variables_and_types/practice.py
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""变量、数据类型、类型转换与 f-string 示例。"""
+"""变量、数据类型、类型转换与 f-string 演示。"""
 
-def build_order_summary(
-    product_name: str,
-    quantity_text: str,
-    unit_price_text: str,
-) -> str:
-    """转换订单字段并返回摘要。"""
-    quantity = int(quantity_text)
-    unit_price = float(unit_price_text)
-    total_amount = quantity * unit_price
-    return (
-        f"商品：{product_name}，数量：{quantity}，"
-        f"单价：{unit_price:.2f} 元，总金额：{total_amount:.2f} 元"
-    )
+
+def demo_type_conversion() -> None:
+    """演示字符串与数字之间的类型转换。"""
+    count_text = "12"
+    price_text = "3.5"
+    count = int(count_text)
+    price = float(price_text)
+    print("数量翻倍：", count * 2)
+    print("价格类型：", type(price).__name__)
+    print(f"小计：{count * price:.2f}")
+
 
 def main() -> None:
-    product_name = "Python 入门书"
-    quantity_text = "2"
-    unit_price_text = "39.90"
-    is_member = True
-    coupon = None
+    demo_type_conversion()
+    is_registered = False
+    remark = None
+    print("布尔类型：", type(is_registered).__name__)
+    print("空值类型：", type(remark).__name__)
 
-    print(build_order_summary(product_name, quantity_text, unit_price_text))
-    print(type(int(quantity_text)).__name__)
-    print(type(float(unit_price_text)).__name__)
-    print(type(is_member).__name__)
-    print(type(coupon).__name__)
 
 if __name__ == "__main__":
     main()

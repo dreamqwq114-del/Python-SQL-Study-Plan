@@ -22,9 +22,6 @@ def select_customer_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         缺列时抛出 KeyError；不得修改原表。
-
-    提示：
-        双层方括号选择多列，再调用 copy()。
     """
     # TODO: 选择固定的两列。
     raise NotImplementedError("TODO: 实现 select_customer_columns")
@@ -53,9 +50,6 @@ def select_rows_by_labels(
 
     特殊情况：
         labels=[] 返回零行；标签不存在时抛出 KeyError。
-
-    提示：
-        loc 根据标签选择，不是根据第几行选择。
     """
     # TODO: 使用 loc 选择索引标签。
     raise NotImplementedError("TODO: 实现 select_rows_by_labels")
@@ -85,9 +79,6 @@ def select_data_block(
 
     特殊情况：
         row_count<0 时抛出 ValueError；列不存在时抛出 KeyError。
-
-    提示：
-        可以先 loc 选列，再 head 选行。
     """
     # TODO: 验证行数并选择数据块。
     raise NotImplementedError("TODO: 实现 select_data_block")

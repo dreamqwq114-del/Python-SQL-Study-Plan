@@ -226,28 +226,25 @@ IOM103 训练脚本没有把整个项目写成一长段，而是拆成 `prepare_
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""函数、参数与返回值示例。"""
+"""定义函数、参数与返回值演示。"""
 
-def calculate_order_total(
-    quantity: int,
-    unit_price: float,
-    discount: float = 0.0,
-) -> float:
-    """返回应用折扣后的订单金额。"""
-    return quantity * unit_price * (1 - discount)
 
-def calculate_growth_rate(old_value: float, new_value: float) -> float:
-    """返回百分数形式的增长率。"""
-    return (new_value - old_value) / old_value * 100
+def demo_rectangle_area(width: float, height: float = 1.0) -> float:
+    """演示位置参数和带默认值的参数。"""
+    return width * height
+
+
+def demo_min_max(numbers: list[float]) -> tuple[float, float]:
+    """演示一个函数一次返回多个值。"""
+    return min(numbers), max(numbers)
+
 
 def main() -> None:
-    regular_total = calculate_order_total(2, 15.0)
-    discounted_total = calculate_order_total(3, 20.0, 0.1)
-    growth_rate = calculate_growth_rate(100.0, 125.0)
+    print("使用默认高度：", demo_rectangle_area(4.0))
+    print("指定高度：", demo_rectangle_area(4.0, 2.5))
+    lowest, highest = demo_min_max([3.0, 9.0, 1.5])
+    print("最小、最大：", lowest, highest)
 
-    print(f"无折扣金额：{regular_total:.2f}")
-    print(f"折扣后金额：{discounted_total:.2f}")
-    print(f"销售增长率：{growth_rate:.1f}%")
 
 if __name__ == "__main__":
     main()

@@ -26,9 +26,6 @@ def calculate_inertias(X: np.ndarray, k_values: list[int]) -> list[float]:
 
     特殊情况：
         k_values 为空返回空列表；无效 k 保留 KMeans 的 ValueError。
-
-    提示：
-        在循环中 fit 模型，然后读取 float(model.inertia_)。
     """
     # TODO: 计算每个 k 的 inertia。
     raise NotImplementedError("TODO: 实现 calculate_inertias")
@@ -56,9 +53,6 @@ def calculate_inertia_drops(
 
     特殊情况：
         inertia 若出现负数或后一个大于前一个时抛出 ValueError。
-
-    提示：
-        使用 range(1, len(inertias)) 比较相邻项。
     """
     # TODO: 计算合法 inertia 序列的相邻下降量。
     raise NotImplementedError("TODO: 实现 calculate_inertia_drops")
@@ -88,9 +82,6 @@ def build_elbow_table(
 
     特殊情况：
         空 k_values 返回有两列但零行的 DataFrame。
-
-    提示：
-        先得到 inertia 列表，再创建 DataFrame。
     """
     # TODO: 生成肘部法结果表。
     raise NotImplementedError("TODO: 实现 build_elbow_table")

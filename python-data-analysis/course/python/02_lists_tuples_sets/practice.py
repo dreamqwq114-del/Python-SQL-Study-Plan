@@ -25,9 +25,6 @@ def unique_recent_items(items: list[str], start: int) -> set[str]:
     特殊情况：
         空列表或超出列表右边界的 start 返回空集合；负数 start 按 Python
         切片规则从末尾计算。
-
-    提示：
-        先写 items[start:]，再使用 set()。
     """
     # TODO: 对列表切片并去重。
     raise NotImplementedError("TODO: 实现 unique_recent_items")
@@ -54,9 +51,6 @@ def calculate_average_score(scores: list[float]) -> float:
 
     特殊情况：
         空列表没有平均值，应产生 ValueError。
-
-    提示：
-        先判断列表长度，再计算 sum(scores) / len(scores)。
     """
     # TODO: 检查空列表并计算平均值。
     raise NotImplementedError("TODO: 实现 calculate_average_score")
@@ -85,9 +79,6 @@ def unpack_order(order: tuple[str, int, float]) -> str:
     特殊情况：
         数量或单价小于 0 时产生 ValueError。元组项数不为 3 时，Python
         解包本身会产生 ValueError。
-
-    提示：
-        可以写 product, quantity, price = order。
     """
     # TODO: 解包元组、检查数值并生成文本。
     raise NotImplementedError("TODO: 实现 unpack_order")
@@ -119,9 +110,6 @@ def find_common_customers(
 
     特殊情况：
         任意一个集合为空时返回空集合；不能修改传入的原集合。
-
-    提示：
-        集合的 & 运算或 intersection() 都可以求交集。
     """
     # TODO: 返回两个客户集合的交集。
     raise NotImplementedError("TODO: 实现 find_common_customers")

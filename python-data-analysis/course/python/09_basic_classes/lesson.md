@@ -221,32 +221,31 @@ IOM103 中的编码器、缩放器、分类模型和 KMeans 都是对象；Pipel
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""使用基础类封装客户数据和行为示例。"""
+"""用类封装数据和行为演示。"""
 
-class Customer:
-    """保存客户名称和月消费。"""
 
-    def __init__(self, name: str, monthly_spending: float) -> None:
+class Product:
+    """保存商品单价和库存数量。"""
+
+    def __init__(self, name: str, price: float, stock: int) -> None:
         self.name = name
-        self.monthly_spending = monthly_spending
+        self.price = price
+        self.stock = stock
 
-    def annual_spending(self) -> float:
-        """返回十二个月的消费金额。"""
-        return self.monthly_spending * 12
+    def restock(self, amount: int) -> None:
+        """演示修改对象自身的状态。"""
+        self.stock += amount
 
-    def describe(self) -> str:
-        """返回客户摘要。"""
-        return f"{self.name}: {self.monthly_spending:.2f}"
+    def label(self) -> str:
+        """演示用对象属性拼出展示文本。"""
+        return f"{self.name}：{self.price:.2f} 元，剩余 {self.stock} 件"
+
 
 def main() -> None:
-    customers = [
-        Customer("Alice", 188.5),
-        Customer("Bob", 250.0),
-    ]
+    pen = Product("签字笔", 3.5, 10)
+    pen.restock(5)
+    print(pen.label())
 
-    for customer in customers:
-        print(customer.describe())
-        print(f"年消费：{customer.annual_spending():.2f}")
 
 if __name__ == "__main__":
     main()

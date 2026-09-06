@@ -25,9 +25,6 @@ def split_data(X: pd.DataFrame, y: pd.Series) -> tuple[pd.DataFrame, pd.DataFram
 
     特殊情况：
         X、y 长度不一致或某类样本太少时保留 scikit-learn 的 ValueError。
-
-    提示：
-        train_test_split(..., test_size=0.25, stratify=y, random_state=42)。
     """
     # TODO: 固定随机种子进行分层划分。
     raise NotImplementedError("TODO: 实现 split_data")
@@ -59,9 +56,6 @@ def split_with_test_size(
 
     特殊情况：
         test_size<=0 或 >=1 时主动抛出 ValueError。
-
-    提示：
-        先验证比例，再调用 train_test_split。
     """
     # TODO: 根据调用者比例进行可复现分层划分。
     raise NotImplementedError("TODO: 实现 split_with_test_size")
@@ -92,9 +86,6 @@ def summarize_split_balance(
 
     特殊情况：
         任一输入为空时抛出 ValueError；不修改输入。
-
-    提示：
-        0/1 Series 的 mean() 就是正类比例。
     """
     # TODO: 汇总两个集合的正类比例。
     raise NotImplementedError("TODO: 实现 summarize_split_balance")

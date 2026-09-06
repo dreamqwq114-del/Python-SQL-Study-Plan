@@ -229,27 +229,27 @@ IOM103 Task A2 使用循环对 Logistic Regression、Decision Tree 和 Random Fo
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""使用条件判断和循环分析客户消费示例。"""
+"""条件判断与循环的基础演示。"""
 
-def classify_spending(amount: float) -> str:
-    """根据月消费金额返回客户等级。"""
-    if amount < 100:
-        return "low"
-    if amount < 500:
-        return "medium"
-    return "high"
+
+def demo_letter_grade(score: float) -> str:
+    """把考试分数换算成等级，仅演示 if/elif/else 的判断顺序。"""
+    if score >= 90:
+        return "A"
+    if score >= 60:
+        return "B"
+    return "C"
+
 
 def main() -> None:
-    customers = [("C001", 80.0), ("C002", 220.0), ("C003", 560.0)]
-    high_value_count = 0
+    for score in [55, 72, 96]:
+        print(f"{score} 分 -> {demo_letter_grade(score)}")
 
-    for customer_id, spending in customers:
-        level = classify_spending(spending)
-        print(f"{customer_id}: {level}")
-        if level == "high":
-            high_value_count += 1
+    total = 0
+    for number in range(1, 6):
+        total += number
+    print("1 到 5 求和：", total)
 
-    print("高消费客户数：", high_value_count)
 
 if __name__ == "__main__":
     main()

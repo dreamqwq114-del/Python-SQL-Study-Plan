@@ -24,9 +24,6 @@ def load_customers(path: Path) -> pd.DataFrame:
 
     特殊情况：
         文件不存在时让 pandas 抛出 FileNotFoundError；不要吞掉错误。
-
-    提示：
-        把 path 直接传给 pd.read_csv()。
     """
     # TODO: 读取完整 CSV。
     raise NotImplementedError("TODO: 实现 load_customers")
@@ -53,9 +50,6 @@ def load_customer_columns(path: Path, columns: list[str]) -> pd.DataFrame:
 
     特殊情况：
         columns=[] 时返回行数不变的零列表；列不存在时抛出 KeyError。
-
-    提示：
-        先读取完整表，再使用 dataframe.loc[:, columns]。
     """
     # TODO: 读取后按指定顺序选择列。
     raise NotImplementedError("TODO: 实现 load_customer_columns")
@@ -82,9 +76,6 @@ def load_orders_with_dates(path: Path) -> pd.DataFrame:
 
     特殊情况：
         缺少 order_date 列时抛出 KeyError；文件不存在时抛出 FileNotFoundError。
-
-    提示：
-        使用 pd.to_datetime(..., errors="coerce", format="mixed")。
     """
     # TODO: 读取订单并转换 order_date。
     raise NotImplementedError("TODO: 实现 load_orders_with_dates")

@@ -202,24 +202,24 @@ IOM103 的 `TotalCharges` 列包含空白文本。原项目使用 `pd.to_numeric
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""使用异常保护数据转换示例。"""
+"""使用 try/except 保护输入转换演示。"""
 
-def parse_positive_amount(text: str) -> float:
-    """把文本转换成严格大于 0 的金额。"""
-    amount = float(text)
-    if amount <= 0:
-        raise ValueError("金额必须大于 0")
-    return amount
+
+def demo_parse_seat(text: str) -> int:
+    """把座位号文本转成整数，并演示何时主动抛出异常。"""
+    seat = int(text)
+    if seat < 1:
+        raise ValueError("座位号至少为 1")
+    return seat
+
 
 def main() -> None:
-    values = ["12.5", "0", "unknown"]
-
-    for value in values:
+    for text in ["12", "0", "abc"]:
         try:
-            amount = parse_positive_amount(value)
-            print(f"{value} -> {amount:.2f}")
+            print(text, "->", demo_parse_seat(text))
         except ValueError as error:
-            print(f"{value} -> 错误：{error}")
+            print(text, "-> 无法使用：", error)
+
 
 if __name__ == "__main__":
     main()

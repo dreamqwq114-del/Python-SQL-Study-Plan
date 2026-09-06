@@ -26,9 +26,6 @@ def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_prob: np.ndarray
 
     特殊情况：
         y_true 只有一个类别时主动抛出 ValueError，避免不同版本返回 NaN。
-
-    提示：
-        从 sklearn.metrics 分别导入五个函数。
     """
     # TODO: 计算五项分类指标。
     raise NotImplementedError("TODO: 实现 calculate_metrics")
@@ -61,9 +58,6 @@ def calculate_threshold_metrics(
 
     特殊情况：
         阈值越界抛出 ValueError；输入长度不一致保留指标函数异常。
-
-    提示：
-        先生成 y_pred，再调用三个指标函数。
     """
     # TODO: 计算指定阈值下的三项指标。
     raise NotImplementedError("TODO: 实现 calculate_threshold_metrics")
@@ -93,9 +87,6 @@ def calculate_specificity(
 
     特殊情况：
         没有真实负类时返回 0.0；长度不一致保留 ValueError。
-
-    提示：
-        confusion_matrix(..., labels=[0,1]).ravel() 得到 tn,fp,fn,tp。
     """
     # TODO: 计算负类召回率 specificity。
     raise NotImplementedError("TODO: 实现 calculate_specificity")

@@ -22,9 +22,6 @@ def filter_customers(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         没有符合项时返回列结构不变的空表；缺列时抛出 KeyError。
-
-    提示：
-        每个条件加括号，并使用 & 连接。
     """
     # TODO: 创建布尔条件并筛选。
     raise NotImplementedError("TODO: 实现 filter_customers")
@@ -53,9 +50,6 @@ def filter_by_cities(
 
     特殊情况：
         cities=[] 返回空表；缺少 city 列时抛出 KeyError。
-
-    提示：
-        Series.isin() 用来判断值是否属于一个列表。
     """
     # TODO: 使用 isin 筛选城市。
     raise NotImplementedError("TODO: 实现 filter_by_cities")
@@ -86,9 +80,6 @@ def filter_spending_range(
 
     特殊情况：
         minimum > maximum 时抛出 ValueError；缺失金额不会被保留。
-
-    提示：
-        Series.between(minimum, maximum) 默认包含两端。
     """
     # TODO: 验证范围并筛选月消费。
     raise NotImplementedError("TODO: 实现 filter_spending_range")

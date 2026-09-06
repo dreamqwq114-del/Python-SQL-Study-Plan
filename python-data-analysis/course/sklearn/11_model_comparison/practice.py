@@ -34,9 +34,6 @@ def compare_models(
     特殊情况：
         两个模型必须使用完全相同验证集；验证标签单类时 AUC 抛 ValueError；
         这里的分数用于选候选模型，不能冒充最终测试成绩。
-
-    提示：
-        对每个模型 fit、predict、predict_proba，再把字典加入列表。
     """
     # TODO: 在相同数据上训练并比较两个模型。
     raise NotImplementedError("TODO: 实现 compare_models")
@@ -66,9 +63,6 @@ def rank_models(
 
     特殊情况：
         metric 不存在时抛出 KeyError；不修改原表。
-
-    提示：
-        sort_values(metric, ascending=False).reset_index(drop=True)。
     """
     # TODO: 按选定指标排名模型。
     raise NotImplementedError("TODO: 实现 rank_models")
@@ -99,9 +93,6 @@ def select_best_model_name(
 
     特殊情况：
         空表抛出 ValueError；缺列抛出 KeyError。
-
-    提示：
-        results[metric].idxmax() 返回第一个最大值的索引标签。
     """
     # TODO: 返回指定指标最佳模型名称。
     raise NotImplementedError("TODO: 实现 select_best_model_name")

@@ -23,9 +23,6 @@ def summarize_by_city(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         默认不生成缺失 city 的分组；缺列时抛出 KeyError。
-
-    提示：
-        groupby().agg() 可给聚合结果命名，最后 reset_index()。
     """
     # TODO: 生成城市汇总表。
     raise NotImplementedError("TODO: 实现 summarize_by_city")
@@ -52,9 +49,6 @@ def summarize_orders_by_customer(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         不修改原表；缺少所需列时抛出 KeyError。
-
-    提示：
-        在副本中增加 order_total，再 groupby().agg()。
     """
     # TODO: 汇总每位客户的订单。
     raise NotImplementedError("TODO: 实现 summarize_orders_by_customer")
@@ -81,9 +75,6 @@ def calculate_churn_rate_by_contract(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         churn 中的缺失值不进入平均值；缺列时抛出 KeyError。
-
-    提示：
-        同一列可以分别使用 size 和 mean 聚合。
     """
     # TODO: 生成合同类型流失汇总。
     raise NotImplementedError("TODO: 实现 calculate_churn_rate_by_contract")

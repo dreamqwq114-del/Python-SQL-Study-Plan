@@ -28,9 +28,6 @@ def plot_city_counts(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         缺失 city 不计数；不得修改原 DataFrame；缺列时抛出 KeyError。
-
-    提示：
-        value_counts().sort_index() 得到计数，使用 ax.bar() 绘图。
     """
     # TODO: 统计城市并保存柱状图。
     raise NotImplementedError("TODO: 实现 plot_city_counts")
@@ -59,9 +56,6 @@ def plot_monthly_sales(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         不得修改原表；缺列时抛出 KeyError；空表也应保存带坐标轴的图。
-
-    提示：
-        sort_values("month") 后使用 ax.plot(..., marker="o")。
     """
     # TODO: 绘制月度销售折线图。
     raise NotImplementedError("TODO: 实现 plot_monthly_sales")
@@ -96,9 +90,6 @@ def plot_sales_and_city_counts(
 
     特殊情况：
         不修改两个输入表；任一必需列缺失时抛出 KeyError。
-
-    提示：
-        fig, axes = plt.subplots(1, 2)，分别使用 axes[0] 和 axes[1]。
     """
     # TODO: 在两个子图中组合折线图和柱状图。
     raise NotImplementedError("TODO: 实现 plot_sales_and_city_counts")

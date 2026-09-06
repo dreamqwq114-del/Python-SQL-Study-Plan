@@ -127,15 +127,16 @@ print(table["drop"].isna().tolist())
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""计算不同聚类数对应的 inertia。"""
+"""扫描不同聚类数的 inertia 演示。"""
 
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs
 
-def build_elbow_table() -> pd.DataFrame:
-    """返回 k=2 至 5 的 inertia 表。"""
-    X, _ = make_blobs(
+
+def demo_scan_inertia() -> pd.DataFrame:
+    """演示对 k=2..5 分别聚类并读取 inertia_。"""
+    features, _ = make_blobs(
         n_samples=60,
         centers=3,
         cluster_std=0.45,
@@ -143,19 +144,16 @@ def build_elbow_table() -> pd.DataFrame:
     )
     rows = []
     for k in range(2, 6):
-        model = KMeans(
-            n_clusters=k,
-            random_state=42,
-            n_init=10,
-        ).fit(X)
+        model = KMeans(n_clusters=k, random_state=42, n_init=10).fit(features)
         rows.append({"k": k, "inertia": model.inertia_})
     return pd.DataFrame(rows)
 
+
 def main() -> None:
-    table = build_elbow_table()
-    print(table["k"].tolist())
-    print(table["inertia"].is_monotonic_decreasing)
-    print(table.round(2).to_dict("records"))
+    table = demo_scan_inertia()
+    print("尝试的 k：", table["k"].tolist())
+    print("inertia 是否递减：", table["inertia"].is_monotonic_decreasing)
+
 
 if __name__ == "__main__":
     main()

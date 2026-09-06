@@ -22,9 +22,6 @@ def convert_age(age_text: str) -> int:
 
     特殊情况：
         负数、带小数的文本或非数字文本都应产生 ValueError。
-
-    提示：
-        先使用 int() 完成类型转换，再判断结果是否小于 0。
     """
     # TODO: 把年龄文本转换为非负整数。
     raise NotImplementedError("TODO: 实现 convert_age")
@@ -51,9 +48,6 @@ def convert_price(price_text: str) -> float:
 
     特殊情况：
         负数、空字符串、非数字文本或带有“元”等单位的文本应产生 ValueError。
-
-    提示：
-        使用 float() 转换，再检查得到的价格是否小于 0。
     """
     # TODO: 把价格文本转换为非负浮点数。
     raise NotImplementedError("TODO: 实现 convert_price")
@@ -82,9 +76,6 @@ def calculate_order_amount(unit_price_text: str, quantity_text: str) -> float:
 
     特殊情况：
         负单价、负数量、非整数数量或无法转换的文本应产生 ValueError。
-
-    提示：
-        分别使用 float() 和 int()，不要直接把两个字符串相乘。
     """
     # TODO: 转换单价和数量，检查非负，然后计算总金额。
     raise NotImplementedError("TODO: 实现 calculate_order_amount")
@@ -123,9 +114,6 @@ def build_order_summary(
     特殊情况：
         数量或单价是负数、格式错误时，应产生 ValueError。
         商品名按传入内容原样显示。
-
-    提示：
-        f-string 中的 {value:.2f} 可以把浮点数显示成两位小数。
     """
     # TODO: 转换数据、计算金额，并使用 f-string 生成指定文本。
     raise NotImplementedError("TODO: 实现 build_order_summary")

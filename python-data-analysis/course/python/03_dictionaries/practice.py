@@ -23,9 +23,6 @@ def count_categories(values: list[str]) -> dict[str, int]:
 
     特殊情况：
         空列表返回空字典；不要改变原列表。
-
-    提示：
-        dictionary.get(value, 0) 可以提供初始计数 0。
     """
     # TODO: 遍历列表并累计每个类别的次数。
     raise NotImplementedError("TODO: 实现 count_categories")
@@ -60,9 +57,6 @@ def build_customer_record(
 
     特殊情况：
         customer_id 为空或 monthly_spending 为负数时产生 ValueError。
-
-    提示：
-        字典字面量写成 {"key": value}。
     """
     # TODO: 检查输入并创建客户字典。
     raise NotImplementedError("TODO: 实现 build_customer_record")
@@ -91,9 +85,6 @@ def get_required_value(record: dict[str, object], key: str) -> object:
 
     特殊情况：
         key 不存在时应由 Python 产生 KeyError；不要改用默认值掩盖错误。
-
-    提示：
-        record[key] 与 record.get(key) 在字段缺失时行为不同。
     """
     # TODO: 用必须存在字段的方式读取字典。
     raise NotImplementedError("TODO: 实现 get_required_value")
@@ -126,9 +117,6 @@ def merge_monthly_sales(
 
     特殊情况：
         任意销售额为负数时产生 ValueError；不能修改传入的两个字典。
-
-    提示：
-        可以先复制 january，再遍历 february 并使用 get() 累加。
     """
     # TODO: 检查金额并合并两个销售字典。
     raise NotImplementedError("TODO: 实现 merge_monthly_sales")

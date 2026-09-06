@@ -29,9 +29,6 @@ def plot_order_status_lines(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         不修改原表；缺列时抛出 KeyError；空表仍保存图片。
-
-    提示：
-        groupby("status", sort=True) 后对每组调用 ax.plot(..., label=status)。
     """
     # TODO: 为每种订单状态绘制带标签的折线。
     raise NotImplementedError("TODO: 实现 plot_order_status_lines")
@@ -63,9 +60,6 @@ def plot_online_and_store_sales(
 
     特殊情况：
         不修改原表；缺列时抛出 KeyError；空表仍保存图。
-
-    提示：
-        对排序后的同一 Axes 调用两次 plot()，并分别设置 label。
     """
     # TODO: 绘制两个渠道的带图例折线。
     raise NotImplementedError("TODO: 实现 plot_online_and_store_sales")
@@ -98,9 +92,6 @@ def plot_customer_dashboard(
 
     特殊情况：
         缺失值不计数；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        plt.subplots(1, 2) 后分别使用 value_counts().sort_index()。
     """
     # TODO: 创建带总标题和紧凑布局的双图看板。
     raise NotImplementedError("TODO: 实现 plot_customer_dashboard")

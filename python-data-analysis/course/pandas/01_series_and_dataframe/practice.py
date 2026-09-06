@@ -26,9 +26,6 @@ def build_customer_frame() -> pd.DataFrame:
 
     特殊情况：
         不使用外部 CSV；每次调用都应返回一张新的 DataFrame。
-
-    提示：
-        把“列名: 一列数据”写进字典，再交给 pd.DataFrame()。
     """
     # TODO: 创建题目指定的客户 DataFrame。
     raise NotImplementedError("TODO: 实现 build_customer_frame")
@@ -55,9 +52,6 @@ def build_order_series() -> pd.Series:
 
     特殊情况：
         索引和数据顺序必须与题目一致。
-
-    提示：
-        pd.Series() 可以同时接收 data、index 和 name。
     """
     # TODO: 创建题目指定的订单数量 Series。
     raise NotImplementedError("TODO: 实现 build_order_series")
@@ -84,9 +78,6 @@ def add_order_total(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         不得修改传入的原 DataFrame；缺少所需列时保留 pandas 的 KeyError。
-
-    提示：
-        先使用 dataframe.copy()，再让两列直接相乘。
     """
     # TODO: 在副本中计算 order_total。
     raise NotImplementedError("TODO: 实现 add_order_total")

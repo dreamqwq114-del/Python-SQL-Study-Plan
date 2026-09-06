@@ -23,9 +23,6 @@ def clean_text_fields(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         缺失文本保持缺失；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        通过 Series.str 依次调用 strip() 和 lower()。
     """
     # TODO: 清理 city 和 contract_type。
     raise NotImplementedError("TODO: 实现 clean_text_fields")
@@ -55,9 +52,6 @@ def filter_products_by_keyword(
 
     特殊情况：
         缺失商品名不匹配；空关键词匹配所有非缺失商品名。
-
-    提示：
-        str.contains(keyword, case=False, na=False, regex=False)。
     """
     # TODO: 按普通文本关键词筛选商品。
     raise NotImplementedError("TODO: 实现 filter_products_by_keyword")
@@ -84,9 +78,6 @@ def add_product_key(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         缺失商品名得到缺失 product_key；不修改原表。
-
-    提示：
-        使用 str.strip().str.lower().str.replace(r"\\s+", "_", regex=True)。
     """
     # TODO: 生成规范化商品键。
     raise NotImplementedError("TODO: 实现 add_product_key")

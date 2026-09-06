@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import re
 from pathlib import Path
 
 import pytest
@@ -113,6 +114,59 @@ def test_examples_and_answers_do_not_contain_starter_code() -> None:
             source = path.read_text(encoding="utf-8")
             assert "TODO" not in source, path
             assert "NotImplementedError" not in source, path
+
+
+def _public_defined_names(code: str) -> set[str]:
+    tree = ast.parse(code)
+    return {
+        node.name
+        for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.ClassDef))
+        and not node.name.startswith("_")
+    }
+
+
+def test_examples_do_not_reimplement_practice_functions() -> None:
+    """示例只演示知识点，函数/类名不得与同章练习题重合，避免直接给出题解。"""
+    for domain in DOMAIN_COUNTS:
+        for chapter_dir in (COURSE_ROOT / domain).glob("[0-9][0-9]_*"):
+            practice_names = _public_defined_names(
+                (chapter_dir / "practice.py").read_text(encoding="utf-8")
+            )
+            example_path = chapter_dir / "example.py"
+            if example_path.is_file():
+                example_names = _public_defined_names(
+                    example_path.read_text(encoding="utf-8")
+                )
+            else:
+                lesson = (chapter_dir / "lesson.md").read_text(encoding="utf-8")
+                anchor = lesson.find("本章完整示例")
+                block = re.search(r"```python\n(.*?)```", lesson[anchor:], re.S)
+                assert block, chapter_dir
+                example_names = _public_defined_names(block.group(1))
+            overlap = (example_names - {"main"}) & practice_names
+            assert not overlap, (
+                f"{domain}/{chapter_dir.name} 示例与练习题重名，等于直接实现题目: {overlap}"
+            )
+
+    proj_practice = _public_defined_names(
+        (PROJECT_CHAPTER / "practice.py").read_text(encoding="utf-8")
+    )
+    proj_example = _public_defined_names(
+        (PROJECT_CHAPTER / "example.py").read_text(encoding="utf-8")
+    )
+    assert not ((proj_example - {"main"}) & proj_practice)
+
+
+def test_practice_has_no_direct_hints_but_lesson_keeps_collapsible_hints() -> None:
+    """练习文件不直接给提示；提示只允许出现在 lesson 末尾折叠区。"""
+    paths = list(COURSE_ROOT.glob("*/[0-9][0-9]_*/practice.py"))
+    paths.append(PROJECT_CHAPTER / "practice.py")
+    assert len(paths) == 45
+    for path in paths:
+        assert "提示：" not in path.read_text(encoding="utf-8"), path
+        lesson = path.parent / "lesson.md"
+        assert "本节提示（卡住时再展开）" in lesson.read_text(encoding="utf-8"), lesson
 
 
 def test_practice_functions_have_consistent_starter_state() -> None:

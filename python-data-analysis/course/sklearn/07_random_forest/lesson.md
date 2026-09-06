@@ -116,30 +116,31 @@ print(list(zip(settings, estimated_relative_cost)))
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""训练多棵树组成的随机森林。"""
+"""随机森林拟合并查看树数量演示。"""
 
 from sklearn.datasets import make_classification
 from sklearn.ensemble import RandomForestClassifier
 
-def train_forest() -> RandomForestClassifier:
-    """训练 50 棵树的确定性随机森林。"""
-    X, y = make_classification(
+
+def demo_fit_demo_forest() -> RandomForestClassifier:
+    """用模拟数据演示随机森林的拟合过程。"""
+    features, target = make_classification(
         n_samples=60,
         n_features=4,
         n_informative=3,
         n_redundant=0,
         random_state=42,
     )
-    return RandomForestClassifier(
-        n_estimators=50,
-        random_state=42,
-    ).fit(X, y)
+    model = RandomForestClassifier(n_estimators=50, random_state=42)
+    return model.fit(features, target)
+
 
 def main() -> None:
-    model = train_forest()
-    print((model.n_estimators, model.random_state))
-    print(len(model.estimators_))
-    print(round(float(model.feature_importances_.sum()), 3))
+    model = demo_fit_demo_forest()
+    print("树的数量：", model.n_estimators)
+    print("实际棵数：", len(model.estimators_))
+    print("特征重要性之和：", round(float(model.feature_importances_.sum()), 3))
+
 
 if __name__ == "__main__":
     main()

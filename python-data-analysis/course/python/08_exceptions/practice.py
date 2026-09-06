@@ -24,9 +24,6 @@ def parse_positive_amount(text: str) -> float:
 
     特殊情况：
         "0"、负数、空字符串和非数字文本都应产生 ValueError。
-
-    提示：
-        float() 已经会为无法转换的文本产生 ValueError。
     """
     # TODO: 转换文本并检查金额严格为正。
     raise NotImplementedError("TODO: 实现 parse_positive_amount")
@@ -53,9 +50,6 @@ def parse_optional_score(text: str) -> float | None:
 
     特殊情况：
         空字符串也返回 None；范围外数值或其他文本产生 ValueError。
-
-    提示：
-        先处理缺失标记，再调用 float()，可以避免对 "NA" 进行转换。
     """
     # TODO: 处理缺失标记并验证成绩范围。
     raise NotImplementedError("TODO: 实现 parse_optional_score")
@@ -83,9 +77,6 @@ def safe_divide(numerator: float, denominator: float) -> float:
 
     特殊情况：
         denominator 为 0 或 0.0 时产生 ValueError。
-
-    提示：
-        使用 if 检查分母，再执行除法。
     """
     # TODO: 防止除以 0 并返回结果。
     raise NotImplementedError("TODO: 实现 safe_divide")
@@ -114,9 +105,6 @@ def read_required_text(file_path: Path) -> str:
 
     特殊情况：
         空文件或只有空白字符的文件产生 ValueError。
-
-    提示：
-        使用 try/except 捕获 FileNotFoundError，并用 raise ValueError(...) from error。
     """
     # TODO: 捕获文件缺失并验证内容非空。
     raise NotImplementedError("TODO: 实现 read_required_text")

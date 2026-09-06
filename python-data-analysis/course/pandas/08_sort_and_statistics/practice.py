@@ -22,9 +22,6 @@ def spending_statistics(dataframe: pd.DataFrame) -> dict[str, float]:
 
     特殊情况：
         空列返回的三项都是 NaN；缺列时抛出 KeyError。
-
-    提示：
-        pandas 的 mean()、median()、max() 默认忽略缺失值。
     """
     # TODO: 计算三项消费统计。
     raise NotImplementedError("TODO: 实现 spending_statistics")
@@ -53,9 +50,6 @@ def sort_customers_by_spending(
 
     特殊情况：
         不修改原表；缺失值保持在结果末尾。
-
-    提示：
-        sort_values() 可通过 ascending 控制方向。
     """
     # TODO: 排序并重置索引。
     raise NotImplementedError("TODO: 实现 sort_customers_by_spending")
@@ -84,9 +78,6 @@ def top_spending_customers(
 
     特殊情况：
         count<0 时抛出 ValueError；count 超过行数时返回全部行。
-
-    提示：
-        先 sort_values()，再 head(count)。
     """
     # TODO: 验证 count 并返回前几名。
     raise NotImplementedError("TODO: 实现 top_spending_customers")

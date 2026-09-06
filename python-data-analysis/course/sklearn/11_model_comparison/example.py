@@ -8,8 +8,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 
-def compare_models() -> pd.DataFrame:
-    """保留最终测试集，在训练数据内部比较两个模型。"""
+def demo_compare_models() -> pd.DataFrame:
+    """用自带模拟数据演示训练/验证/测试划分下的两模型比较流程。
+
+    这里的数据由 make_classification 生成、函数无参数，仅演示完整流程；
+    练习题 compare_models 需要接收外部传入的训练集和验证集。
+    """
     X, y = make_classification(
         n_samples=80,
         n_features=4,
@@ -59,7 +63,7 @@ def compare_models() -> pd.DataFrame:
 
 
 def main() -> None:
-    results = compare_models()
+    results = demo_compare_models()
     print(results["model"].tolist())
     print(results[["accuracy", "roc_auc"]].round(3).to_dict("records"))
 

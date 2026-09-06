@@ -27,9 +27,6 @@ def compare_train_test_accuracy(model: Any, X_train: np.ndarray, X_test: np.ndar
 
     特殊情况：
         模型未拟合保留 NotFittedError；不重新 fit 模型。
-
-    提示：
-        score(X, y) 对分类器默认返回准确率。
     """
     # TODO: 分别评估训练集和测试集。
     raise NotImplementedError("TODO: 实现 compare_train_test_accuracy")
@@ -62,9 +59,6 @@ def detect_overfitting(
 
     特殊情况：
         等于 maximum_gap 时返回 False；任一值越界抛出 ValueError。
-
-    提示：
-        先逐个验证范围，再进行差值比较。
     """
     # TODO: 按明确阈值标记过拟合风险。
     raise NotImplementedError("TODO: 实现 detect_overfitting")
@@ -94,9 +88,6 @@ def scale_without_leakage(
 
     特殊情况：
         禁止把两组先拼接再 fit；列数不同保留 ValueError。
-
-    提示：
-        scaler.fit(X_train) 后分别调用 transform。
     """
     # TODO: 实现不接触测试分布的缩放。
     raise NotImplementedError("TODO: 实现 scale_without_leakage")

@@ -27,9 +27,6 @@ def train_logistic(X: np.ndarray, y: np.ndarray) -> LogisticRegression:
 
     特殊情况：
         y 只有一个类别或行数不一致时保留 scikit-learn 的 ValueError。
-
-    提示：
-        model = LogisticRegression(...); model.fit(X, y)。
     """
     # TODO: 创建并拟合固定参数逻辑回归。
     raise NotImplementedError("TODO: 实现 train_logistic")
@@ -62,9 +59,6 @@ def train_logistic_with_strength(
 
     特殊情况：
         strength<=0 时主动抛出 ValueError。
-
-    提示：
-        scikit-learn 的 C 越小，正则化约束通常越强。
     """
     # TODO: 使用指定 C 训练逻辑回归。
     raise NotImplementedError("TODO: 实现 train_logistic_with_strength")
@@ -95,9 +89,6 @@ def logistic_coefficient_table(
 
     特殊情况：
         模型未拟合时抛出 NotFittedError；名称数量不匹配时抛出 ValueError。
-
-    提示：
-        先检查 len(feature_names) 与 model.coef_.shape[1]。
     """
     # TODO: 生成按绝对系数排序的解释表。
     raise NotImplementedError("TODO: 实现 logistic_coefficient_table")

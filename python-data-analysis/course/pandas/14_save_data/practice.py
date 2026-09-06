@@ -25,9 +25,6 @@ def save_processed(dataframe: pd.DataFrame, path: Path) -> None:
 
     特殊情况：
         已存在文件可覆盖；空 DataFrame 也要写出列标题。
-
-    提示：
-        path.parent.mkdir(parents=True, exist_ok=True)，再 to_csv(index=False)。
     """
     # TODO: 创建目录并保存完整表。
     raise NotImplementedError("TODO: 实现 save_processed")
@@ -57,9 +54,6 @@ def save_selected_columns(
 
     特殊情况：
         列不存在时抛出 KeyError；不得修改原表。
-
-    提示：
-        先 loc 选列，再调用 to_csv(index=False, encoding="utf-8")。
     """
     # TODO: 只保存指定列。
     raise NotImplementedError("TODO: 实现 save_selected_columns")
@@ -87,9 +81,6 @@ def save_city_summary(dataframe: pd.DataFrame, path: Path) -> None:
 
     特殊情况：
         缺失 city 不建立分组；缺少 city 列时抛出 KeyError。
-
-    提示：
-        groupby("city").size().reset_index(name="customer_count")。
     """
     # TODO: 生成城市计数汇总并保存。
     raise NotImplementedError("TODO: 实现 save_city_summary")

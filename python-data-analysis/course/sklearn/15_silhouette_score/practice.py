@@ -26,9 +26,6 @@ def calculate_silhouette_scores(X: np.ndarray, k_values: list[int]) -> dict[int,
 
     特殊情况：
         k 必须至少 2 且小于样本数；无效情况保留 ValueError；空列表返回空字典。
-
-    提示：
-        model.fit_predict(X) 后调用 silhouette_score。
     """
     # TODO: 计算每个 k 的轮廓系数。
     raise NotImplementedError("TODO: 实现 calculate_silhouette_scores")
@@ -54,9 +51,6 @@ def select_best_silhouette_k(scores: dict[int, float]) -> int:
 
     特殊情况：
         空字典抛出 ValueError。
-
-    提示：
-        可以按 (-score, k) 排序，或用 max 的元组规则谨慎处理并列。
     """
     # TODO: 选择轮廓系数最高且并列时较小的 k。
     raise NotImplementedError("TODO: 实现 select_best_silhouette_k")
@@ -87,9 +81,6 @@ def build_cluster_evaluation(
 
     特殊情况：
         空列表返回固定三列空表；无效 k 保留 ValueError。
-
-    提示：
-        每个 k 只需 fit_predict 一次，再读取 inertia_ 和计算轮廓系数。
     """
     # TODO: 同时生成两项聚类评估指标。
     raise NotImplementedError("TODO: 实现 build_cluster_evaluation")

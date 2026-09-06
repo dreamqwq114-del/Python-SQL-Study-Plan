@@ -26,9 +26,6 @@ def encode_city_feature(train: pd.DataFrame, test: pd.DataFrame) -> tuple[np.nda
 
     特殊情况：
         绝不能在 test 上 fit；缺少 city 时抛出 KeyError。
-
-    提示：
-        encoder.fit_transform(train[["city"]])，然后 encoder.transform(test[["city"]])。
     """
     # TODO: 只用训练集拟合城市编码器。
     raise NotImplementedError("TODO: 实现 encode_city_feature")
@@ -61,9 +58,6 @@ def encode_categorical_features(
 
     特殊情况：
         columns 为空时抛出 ValueError；未知测试类别被忽略；缺列抛出 KeyError。
-
-    提示：
-        先检查 columns，再用 train.loc[:, columns]。
     """
     # TODO: 编码多个类别特征。
     raise NotImplementedError("TODO: 实现 encode_categorical_features")
@@ -94,9 +88,6 @@ def get_encoded_feature_names(
 
     特殊情况：
         columns 为空时抛出 ValueError；名称顺序由编码器决定。
-
-    提示：
-        拟合后调用 encoder.get_feature_names_out(columns).tolist()。
     """
     # TODO: 返回训练类别对应的编码列名。
     raise NotImplementedError("TODO: 实现 get_encoded_feature_names")

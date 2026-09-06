@@ -27,9 +27,6 @@ def build_data_path(file_name: str) -> Path:
     特殊情况：
         空文件名、绝对路径、包含文件夹或不是 .csv 后缀时产生 ValueError。
         不要求文件已经存在。
-
-    提示：
-        Path(file_name).name 可以帮助判断传入值是否只是文件名。
     """
     # TODO: 验证文件名并从 DATA_DIR 构造路径。
     raise NotImplementedError("TODO: 实现 build_data_path")
@@ -57,9 +54,6 @@ def build_processed_path(file_name: str) -> Path:
     特殊情况：
         文件名为空、包含路径部分或后缀不是 .csv 时产生 ValueError。
         本函数只构造路径，不写入文件。
-
-    提示：
-        可以复用与 build_data_path 相同的验证思路。
     """
     # TODO: 验证文件名并从 PROCESSED_DATA_DIR 构造路径。
     raise NotImplementedError("TODO: 实现 build_processed_path")
@@ -86,9 +80,6 @@ def build_figure_path(file_name: str) -> Path:
 
     特殊情况：
         文件名为空、包含路径部分或不是 .png 后缀时产生 ValueError。
-
-    提示：
-        Path.suffix 可以读取包括点号在内的扩展名。
     """
     # TODO: 验证 PNG 文件名并构造图片路径。
     raise NotImplementedError("TODO: 实现 build_figure_path")
@@ -115,9 +106,6 @@ def get_project_directories() -> dict[str, Path]:
 
     特殊情况：
         必须直接使用已导入的常量，不要写死本机绝对路径。
-
-    提示：
-        字典的四个值已经从 utils.paths 导入。
     """
     # TODO: 把四个导入的目录常量组织成字典。
     raise NotImplementedError("TODO: 实现 get_project_directories")

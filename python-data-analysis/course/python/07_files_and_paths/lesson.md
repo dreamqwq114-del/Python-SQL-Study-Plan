@@ -223,33 +223,31 @@ IOM103 原项目从三个 CSV 读取数据，把模型指标和客户分群保�
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""使用 pathlib 读写 UTF-8 文件示例。"""
+"""使用 pathlib 创建目录、写入和读取文本演示。"""
 
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-def write_report(file_path: Path, lines: list[str]) -> None:
-    """创建父目录并写入多行报告。"""
-    file_path.parent.mkdir(parents=True, exist_ok=True)
-    file_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-def read_nonempty_lines(file_path: Path) -> list[str]:
-    """返回清理后的非空行。"""
-    result: list[str] = []
-    for line in file_path.read_text(encoding="utf-8").splitlines():
-        cleaned = line.strip()
-        if cleaned:
-            result.append(cleaned)
-    return result
+def demo_write_notes(path: Path, title: str, tags: list[str]) -> None:
+    """演示创建父目录并写入一段 UTF-8 文本。"""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    content = title + "\n" + "、".join(tags) + "\n"
+    path.write_text(content, encoding="utf-8")
+
+
+def demo_read_all(path: Path) -> str:
+    """演示一次性读取整个文本文件。"""
+    return path.read_text(encoding="utf-8")
+
 
 def main() -> None:
-    with TemporaryDirectory() as temporary_directory:
-        report_path = Path(temporary_directory) / "outputs" / "summary.txt"
-        write_report(report_path, ["客户数：3", "流失数：1"])
+    with TemporaryDirectory() as directory:
+        note_path = Path(directory) / "notes" / "today.txt"
+        demo_write_notes(note_path, "学习计划", ["变量", "函数"])
+        print("已创建：", note_path.exists())
+        print(demo_read_all(note_path))
 
-        print("文件存在：", report_path.exists())
-        print("文件名：", report_path.name)
-        print("报告内容：", read_nonempty_lines(report_path))
 
 if __name__ == "__main__":
     main()

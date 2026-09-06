@@ -27,9 +27,6 @@ def fit_kmeans(X: np.ndarray, n_clusters: int) -> KMeans:
 
     特殊情况：
         n_clusters<=0 主动抛 ValueError；聚类数大于样本数保留模型异常。
-
-    提示：
-        创建 KMeans 后调用 fit(X)。
     """
     # TODO: 训练可复现的 K-Means。
     raise NotImplementedError("TODO: 实现 fit_kmeans")
@@ -60,9 +57,6 @@ def cluster_customers(
 
     特殊情况：
         聚类编号 0、1 只是名称，不代表排名；n_clusters<=0 抛 ValueError。
-
-    提示：
-        fit_predict 同时完成训练和返回 labels。
     """
     # TODO: 训练并返回客户聚类标签。
     raise NotImplementedError("TODO: 实现 cluster_customers")
@@ -93,9 +87,6 @@ def cluster_centers_table(
 
     特殊情况：
         未拟合抛 AttributeError；名称数不匹配抛 ValueError。
-
-    提示：
-        pd.DataFrame(model.cluster_centers_, columns=feature_names)，再 insert()。
     """
     # TODO: 将聚类中心整理成业务表。
     raise NotImplementedError("TODO: 实现 cluster_centers_table")

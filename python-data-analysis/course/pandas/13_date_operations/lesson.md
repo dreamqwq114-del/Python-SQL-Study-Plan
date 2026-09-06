@@ -152,34 +152,30 @@ dt.year / dt.month / dt.strftime
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""解析混合日期并按订单月份汇总金额。"""
+"""日期解析与 dt 访问器演示。"""
 
 import pandas as pd
 
 from utils.paths import DATA_DIR
 
-def monthly_order_totals(dataframe: pd.DataFrame) -> pd.DataFrame:
-    """按月份汇总有效订单日期对应的金额。"""
-    result = dataframe.copy()
-    result["order_date"] = pd.to_datetime(
-        result["order_date"],
-        errors="coerce",
-        format="mixed",
-    )
-    result["order_total"] = result["quantity"] * result["unit_price"]
-    result = result.dropna(subset=["order_date"]).copy()
-    result["order_month"] = result["order_date"].dt.strftime("%Y-%m")
-    return (
-        result.groupby("order_month", as_index=False)["order_total"]
-        .sum()
-        .sort_values("order_month")
-    )
+
+def demo_date_parts() -> pd.DataFrame:
+    """演示安全解析日期并提取年、月和星期，不做分组汇总。"""
+    orders = pd.read_csv(DATA_DIR / "sample_orders.csv")
+    parsed = pd.to_datetime(orders["order_date"], errors="coerce", format="mixed")
+    return pd.DataFrame(
+        {
+            "order_date": parsed,
+            "year": parsed.dt.year,
+            "month": parsed.dt.month,
+            "weekday": parsed.dt.day_name(),
+        }
+    ).head(5)
+
 
 def main() -> None:
-    orders = pd.read_csv(DATA_DIR / "sample_orders.csv")
-    summary = monthly_order_totals(orders)
-    print(summary.to_dict("records"))
-    print(summary["order_total"].sum())
+    print(demo_date_parts().to_dict("records"))
+
 
 if __name__ == "__main__":
     main()

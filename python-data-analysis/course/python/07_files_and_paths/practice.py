@@ -25,9 +25,6 @@ def read_first_line(file_path: Path) -> str:
 
     特殊情况：
         文件不存在时保留 Python 的 FileNotFoundError；空文件返回空字符串。
-
-    提示：
-        可以使用 file_path.open() 和文件对象的 readline()。
     """
     # TODO: 以 UTF-8 读取并返回第一行。
     raise NotImplementedError("TODO: 实现 read_first_line")
@@ -54,9 +51,6 @@ def read_nonempty_lines(file_path: Path) -> list[str]:
 
     特殊情况：
         文件不存在时产生 FileNotFoundError；不能改变文件内容。
-
-    提示：
-        可以在列表推导式前先写普通 for 循环，理解后再决定是否简化。
     """
     # TODO: 读取、清理并筛选非空行。
     raise NotImplementedError("TODO: 实现 read_nonempty_lines")
@@ -84,9 +78,6 @@ def write_report(file_path: Path, lines: list[str]) -> None:
 
     特殊情况：
         允许父目录不存在；不能修改传入的 lines 列表。
-
-    提示：
-        file_path.parent.mkdir(parents=True, exist_ok=True) 可创建父目录。
     """
     # TODO: 创建父目录并写入每行文本。
     raise NotImplementedError("TODO: 实现 write_report")
@@ -114,9 +105,6 @@ def count_csv_rows(file_path: Path) -> int:
     特殊情况：
         完全空的文件没有表头，应产生 ValueError；文件不存在时产生
         FileNotFoundError。
-
-    提示：
-        先用 next(reader, None) 读取表头，再循环统计后续行。
     """
     # TODO: 使用 csv.reader 跳过表头并计数。
     raise NotImplementedError("TODO: 实现 count_csv_rows")

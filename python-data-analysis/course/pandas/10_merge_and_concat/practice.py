@@ -23,9 +23,6 @@ def merge_customers_orders(customers: pd.DataFrame, orders: pd.DataFrame) -> pd.
 
     特殊情况：
         任一表缺少 customer_id 时抛出 KeyError；不修改输入表。
-
-    提示：
-        customers.merge(orders, on="customer_id", how="left")。
     """
     # TODO: 左连接客户表和订单表。
     raise NotImplementedError("TODO: 实现 merge_customers_orders")
@@ -51,9 +48,6 @@ def concat_order_batches(batches: list[pd.DataFrame]) -> pd.DataFrame:
 
     特殊情况：
         batches=[] 时返回空 DataFrame；不修改任何输入表。
-
-    提示：
-        非空时使用 pd.concat(..., ignore_index=True)。
     """
     # TODO: 处理空列表并拼接订单批次。
     raise NotImplementedError("TODO: 实现 concat_order_batches")
@@ -83,9 +77,6 @@ def find_orders_without_customer(
 
     特殊情况：
         缺少 customer_id 时抛出 KeyError；不修改输入表。
-
-    提示：
-        使用 ~orders["customer_id"].isin(customers["customer_id"])。
     """
     # TODO: 筛选孤立订单。
     raise NotImplementedError("TODO: 实现 find_orders_without_customer")

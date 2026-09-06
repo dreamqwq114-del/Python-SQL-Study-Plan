@@ -23,9 +23,6 @@ def add_churn_and_annual_spending(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         其他 churn 值映射为缺失值；不得修改原表。
-
-    提示：
-        Series.map() 适合用字典一一映射，金额列可直接乘 12。
     """
     # TODO: 添加文字标签和年消费。
     raise NotImplementedError("TODO: 实现 add_churn_and_annual_spending")
@@ -54,9 +51,6 @@ def replace_contract_labels(
 
     特殊情况：
         字典中没有的值保持不变；空字典不改变数据；不修改原表。
-
-    提示：
-        Series.replace(labels) 不会把未匹配的值变成缺失值。
     """
     # TODO: 在副本中替换合同标签。
     raise NotImplementedError("TODO: 实现 replace_contract_labels")
@@ -84,9 +78,6 @@ def add_spending_band(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         边界 200 属于 Medium，400 属于 High；不修改原表。
-
-    提示：
-        写一个接收单个金额的小函数，再用 Series.apply()。
     """
     # TODO: 使用 apply 添加消费档位。
     raise NotImplementedError("TODO: 实现 add_spending_band")

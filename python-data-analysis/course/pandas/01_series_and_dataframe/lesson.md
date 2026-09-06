@@ -143,7 +143,7 @@ pd.Series() 或 pd.DataFrame()
 2. `build_order_series()`：创建带订单索引和列名的数量 Series。
 3. `add_order_total()`：在副本中计算订单金额，不修改原表。
 
-练习的详细输入、输出、边界情况和提示都写在 [practice_01_series_and_dataframe.py](practice.py) 的 docstring 中。
+练习的详细输入、输出和边界情况写在 [practice_01_series_and_dataframe.py](practice.py) 的 docstring 中；最小提示统一放在本教材末尾的折叠区。
 
 ## 9. 本章完整示例
 

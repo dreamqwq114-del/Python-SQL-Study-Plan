@@ -22,9 +22,6 @@ def count_missing(dataframe: pd.DataFrame) -> pd.Series:
 
     特殊情况：
         空表仍返回每列 0；不得修改原表。
-
-    提示：
-        先用 isna() 得到真假表，再按列 sum()。
     """
     # TODO: 统计每列缺失值。
     raise NotImplementedError("TODO: 实现 count_missing")
@@ -53,9 +50,6 @@ def fill_missing_scores(
 
     特殊情况：
         不修改原表；缺少 satisfaction_score 列时抛出 KeyError。
-
-    提示：
-        先 copy()，再对指定列使用 fillna()。
     """
     # TODO: 在副本中填充满意度。
     raise NotImplementedError("TODO: 实现 fill_missing_scores")
@@ -85,9 +79,6 @@ def drop_incomplete_rows(
 
     特殊情况：
         required_columns=[] 时不删除任何行；列不存在时抛出 KeyError。
-
-    提示：
-        dropna(subset=...) 可只检查指定列，之后 reset_index(drop=True)。
     """
     # TODO: 删除关键列不完整的行。
     raise NotImplementedError("TODO: 实现 drop_incomplete_rows")

@@ -29,9 +29,6 @@ def save_churn_figure(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         缺失 churn 不计数；不得调用 plt.show()；缺列时抛出 KeyError。
-
-    提示：
-        保存必须发生在 plt.close(fig) 之前。
     """
     # TODO: 以指定质量保存流失计数图并关闭 Figure。
     raise NotImplementedError("TODO: 实现 save_churn_figure")
@@ -63,9 +60,6 @@ def save_transparent_spending_scatter(
 
     特殊情况：
         不修改原表；缺列时抛出 KeyError；不得遗留打开的 Figure。
-
-    提示：
-        fig.savefig(..., dpi=200, transparent=True, bbox_inches="tight")。
     """
     # TODO: 保存透明背景散点图。
     raise NotImplementedError("TODO: 实现 save_transparent_spending_scatter")
@@ -98,9 +92,6 @@ def save_city_figure_formats(
 
     特殊情况：
         缺失 city 不计数；不得修改原表；缺列时抛出 KeyError。
-
-    提示：
-        只创建一个 Figure，对两个 Path 分别调用 fig.savefig()，最后关闭。
     """
     # TODO: 用同一 Figure 保存 PNG 和 PDF。
     raise NotImplementedError("TODO: 实现 save_city_figure_formats")

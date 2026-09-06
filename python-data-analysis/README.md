@@ -118,7 +118,7 @@ python -m course.python.06_modules_and_imports.example
 course/python/01_variables_and_types/practice.py
 ```
 
-每个函数的 docstring 已写明背景、参数、返回值、两个示例、特殊情况和提示。只在当前函数中把 `TODO` 和 `NotImplementedError` 替换成自己的实现，不要改函数名、参数或测试；一个文件中可以先完成部分函数，剩余函数继续保留模板标记。做题时如果卡住，回到 `lesson.md` 末尾展开对应函数的折叠提示。
+每个函数的 docstring 已写明背景、参数、返回值、两个示例和特殊情况（练习文件不直接给提示，最小提示统一放在本 `lesson.md` 末尾的折叠区）。只在当前函数中把 `TODO` 和 `NotImplementedError` 替换成自己的实现，不要改函数名、参数或测试；一个文件中可以先完成部分函数，剩余函数继续保留模板标记。做题时如果卡住，回到 `lesson.md` 末尾展开对应函数的折叠提示。
 
 ### 第三步：运行本章测试
 

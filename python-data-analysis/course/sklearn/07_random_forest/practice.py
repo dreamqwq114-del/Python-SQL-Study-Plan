@@ -27,9 +27,6 @@ def train_forest(X: np.ndarray, y: np.ndarray) -> RandomForestClassifier:
 
     特殊情况：
         数据无效时保留 scikit-learn 的 ValueError。
-
-    提示：
-        n_estimators 表示森林中决策树数量。
     """
     # TODO: 训练固定 50 棵树的随机森林。
     raise NotImplementedError("TODO: 实现 train_forest")
@@ -61,9 +58,6 @@ def train_forest_with_estimators(
 
     特殊情况：
         n_estimators<=0 时抛出 ValueError。
-
-    提示：
-        固定 random_state 才能公平比较实验。
     """
     # TODO: 使用指定树数量训练随机森林。
     raise NotImplementedError("TODO: 实现 train_forest_with_estimators")
@@ -94,9 +88,6 @@ def forest_importance_table(
 
     特殊情况：
         未拟合抛出 NotFittedError；名称数量不匹配抛出 ValueError。
-
-    提示：
-        实现结构与上一节树重要性表相似。
     """
     # TODO: 整理随机森林特征重要性。
     raise NotImplementedError("TODO: 实现 forest_importance_table")

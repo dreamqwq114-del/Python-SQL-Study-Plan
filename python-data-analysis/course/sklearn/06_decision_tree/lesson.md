@@ -130,30 +130,31 @@ print(importance["feature"].tolist())
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""训练深度受限的客户分类决策树。"""
+"""决策树拟合并查看结构演示。"""
 
 from sklearn.datasets import make_classification
 from sklearn.tree import DecisionTreeClassifier
 
-def train_tree() -> DecisionTreeClassifier:
-    """训练 max_depth=3 的确定性决策树。"""
-    X, y = make_classification(
+
+def demo_fit_demo_tree() -> DecisionTreeClassifier:
+    """用自带的模拟数据演示如何拟合一棵深度受限的决策树。"""
+    features, target = make_classification(
         n_samples=60,
         n_features=3,
         n_informative=2,
         n_redundant=0,
         random_state=42,
     )
-    return DecisionTreeClassifier(
-        max_depth=3,
-        random_state=42,
-    ).fit(X, y)
+    model = DecisionTreeClassifier(max_depth=3, random_state=42)
+    return model.fit(features, target)
+
 
 def main() -> None:
-    model = train_tree()
-    print((model.max_depth, model.random_state))
-    print(model.get_depth())
-    print(round(float(model.feature_importances_.sum()), 3))
+    model = demo_fit_demo_tree()
+    print("深度上限：", model.max_depth)
+    print("实际深度：", model.get_depth())
+    print("特征重要性之和：", round(float(model.feature_importances_.sum()), 3))
+
 
 if __name__ == "__main__":
     main()

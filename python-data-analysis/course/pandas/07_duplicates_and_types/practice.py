@@ -23,9 +23,6 @@ def clean_duplicates_and_spending(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         不修改原表；缺少所需列时抛出 KeyError。
-
-    提示：
-        使用 drop_duplicates(subset=..., keep="first") 和 pd.to_numeric()。
     """
     # TODO: 按客户去重并安全转换消费列。
     raise NotImplementedError("TODO: 实现 clean_duplicates_and_spending")
@@ -52,9 +49,6 @@ def convert_customer_types(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         不修改原表；缺少 age 或 monthly_spending 时抛出 KeyError。
-
-    提示：
-        pd.to_numeric(errors="coerce") 会把失败值变成缺失值。
     """
     # TODO: 转换 age 和 monthly_spending。
     raise NotImplementedError("TODO: 实现 convert_customer_types")
@@ -80,9 +74,6 @@ def keep_latest_customer_records(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     特殊情况：
         空表返回空表；缺少 customer_id 时抛出 KeyError。
-
-    提示：
-        drop_duplicates() 的 keep 参数可以选择保留最后一条。
     """
     # TODO: 保留每位客户最后一条记录。
     raise NotImplementedError("TODO: 实现 keep_latest_customer_records")

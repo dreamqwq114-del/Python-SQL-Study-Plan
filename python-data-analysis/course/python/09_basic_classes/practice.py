@@ -24,9 +24,6 @@ class Customer:
 
     特殊情况：
         name 为空或 monthly_spending 为负数时产生 ValueError。
-
-    提示：
-        对象属性使用 self.name 和 self.monthly_spending 保存。
     """
 
     def __init__(self, name: str, monthly_spending: float) -> None:
@@ -68,9 +65,6 @@ class Order:
 
     特殊情况：
         商品名为空、数量或单价为负数时产生 ValueError。
-
-    提示：
-        describe() 可以调用 self.total()，避免重复金额公式。
     """
 
     def __init__(self, product_name: str, quantity: int, unit_price: float) -> None:
@@ -110,9 +104,6 @@ class ScoreSummary:
 
     特殊情况：
         空列表或范围外成绩产生 ValueError；对象不能直接保存外部列表引用。
-
-    提示：
-        list(scores) 可以创建浅复制，防止外部 append() 改变对象数据。
     """
 
     def __init__(self, scores: list[float]) -> None:
@@ -152,9 +143,6 @@ def build_customers(rows: list[tuple[str, float]]) -> list[Customer]:
 
     特殊情况：
         任意一行数据无效时，由 Customer 产生 ValueError。
-
-    提示：
-        在循环中调用 Customer(name, spending)，再 append 到结果列表。
     """
     # TODO: 逐行创建 Customer 对象。
     raise NotImplementedError("TODO: 实现 build_customers")

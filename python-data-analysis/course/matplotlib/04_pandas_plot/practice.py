@@ -29,9 +29,6 @@ def plot_city_average(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         缺失城市不分组；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        groupby("city")["monthly_spending"].mean().sort_index().plot.bar()。
     """
     # TODO: 先聚合，再使用 pandas 绘制柱状图。
     raise NotImplementedError("TODO: 实现 plot_city_average")
@@ -64,9 +61,6 @@ def plot_contract_churn_rate(
 
     特殊情况：
         缺失合同类型不分组；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        0/1 列分组后的 mean() 就是每组比例。
     """
     # TODO: 聚合并绘制合同流失率。
     raise NotImplementedError("TODO: 实现 plot_contract_churn_rate")
@@ -99,9 +93,6 @@ def plot_monthly_order_totals(
 
     特殊情况：
         无效日期不参与汇总；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        先生成 order_month，再 groupby().sum().sort_index().plot(marker="o")。
     """
     # TODO: 汇总并绘制月度订单金额。
     raise NotImplementedError("TODO: 实现 plot_monthly_order_totals")

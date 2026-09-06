@@ -30,9 +30,6 @@ def load_datasets(
 
     特殊情况：
         路径不存在时保留 pandas 抛出的 FileNotFoundError；不要创建假数据。
-
-    提示：
-        分别调用 pd.read_csv()，不要在本题清洗或合并。
     """
     # TODO: 读取并按固定顺序返回两张原始数据表。
     raise NotImplementedError("TODO: 实现 load_datasets")
@@ -69,9 +66,6 @@ def clean_customers(customers: pd.DataFrame) -> pd.DataFrame:
         缺少必需列时抛出 KeyError；customer_id 缺失或为空时抛出 ValueError；
         出现 yes/no 之外的非缺失 churn 时抛出
         ValueError；任一数值列整列都无法转换时也抛出 ValueError。
-
-    提示：
-        先 copy() 和 drop_duplicates()；不要在训练/测试划分前用全表中位数填补。
     """
     # TODO: 清理客户表并返回新对象。
     raise NotImplementedError("TODO: 实现 clean_customers")
@@ -104,9 +98,6 @@ def summarize_orders(orders: pd.DataFrame) -> pd.DataFrame:
     特殊情况：
         缺列时抛出 KeyError；数字无法转换、数值缺失或无穷、数量不是整数、数量或单价为负时抛出
         ValueError；不得修改原表。
-
-    提示：
-        先筛选状态，再用 groupby().agg() 同时计算三个统计量。
     """
     # TODO: 计算并汇总已完成订单。
     raise NotImplementedError("TODO: 实现 summarize_orders")
@@ -138,9 +129,6 @@ def merge_customer_summary(
     特殊情况：
         任一表缺少 customer_id 时抛出 KeyError；任一表 customer_id 重复时让
         pandas 的一对一连接检查抛出 MergeError；不修改输入表。
-
-    提示：
-        使用 merge(..., how="left", validate="one_to_one", sort=False)。
     """
     # TODO: 左连接客户与订单汇总，并填充无订单客户。
     raise NotImplementedError("TODO: 实现 merge_customer_summary")
@@ -174,9 +162,6 @@ def create_customer_figure(
     特殊情况：
         缺少绘图列时抛出 KeyError；即使保存失败，也要在 finally 中关闭 Figure；
         不得调用 plt.show()。
-
-    提示：
-        保存 fig.savefig(output_path, dpi=150)，最后 plt.close(fig)。
     """
     # TODO: 保存双子图客户分析图片并可靠关闭 Figure。
     raise NotImplementedError("TODO: 实现 create_customer_figure")
@@ -212,10 +197,6 @@ def train_churn_classifier(
     特殊情况：
         缺少任何必需列时抛出 KeyError；标签含缺失、非 0/1、只有一个类别，
         或任一类别不足以分层划分时抛出 ValueError；不得在划分前拟合预处理器。
-
-    提示：
-        先 split，再让整个 Pipeline 在 X_train 上 fit；AUROC 使用
-        predict_proba(X_test) 的正类概率。
     """
     # TODO: 用无泄漏管道训练并评价客户流失分类器。
     raise NotImplementedError("TODO: 实现 train_churn_classifier")

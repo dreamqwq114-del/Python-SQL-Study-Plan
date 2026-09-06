@@ -28,9 +28,6 @@ def plot_age_spending(dataframe: pd.DataFrame, output_path: Path) -> None:
 
     特殊情况：
         两列必须成对删除无效行；不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        先组成含两列的临时 DataFrame，再 dropna()，避免横纵坐标错位。
     """
     # TODO: 清理成对数据并绘制散点图。
     raise NotImplementedError("TODO: 实现 plot_age_spending")
@@ -62,9 +59,6 @@ def plot_quantity_unit_price(
 
     特殊情况：
         不修改原表；缺列时抛出 KeyError。
-
-    提示：
-        ax.scatter(dataframe["quantity"], dataframe["unit_price"])。
     """
     # TODO: 绘制数量与单价散点图。
     raise NotImplementedError("TODO: 实现 plot_quantity_unit_price")
@@ -96,9 +90,6 @@ def plot_income_spending_by_cluster(
 
     特殊情况：
         不修改原表；缺列时抛出 KeyError；空表仍保存空图。
-
-    提示：
-        for cluster in sorted(dataframe["cluster"].dropna().unique())。
     """
     # TODO: 按聚类编号绘制多组散点。
     raise NotImplementedError("TODO: 实现 plot_income_spending_by_cluster")

@@ -24,9 +24,6 @@ def build_confusion_matrix(y_true: np.ndarray, y_pred: np.ndarray) -> np.ndarray
 
     特殊情况：
         即使某个类别未出现也必须保持 2×2；长度不一致抛出 ValueError。
-
-    提示：
-        confusion_matrix(y_true, y_pred, labels=[0, 1])。
     """
     # TODO: 创建固定顺序的二分类混淆矩阵。
     raise NotImplementedError("TODO: 实现 build_confusion_matrix")
@@ -56,9 +53,6 @@ def confusion_counts(
 
     特殊情况：
         某类不存在时相应计数为 0；固定返回四个键。
-
-    提示：
-        对 2×2 数组使用 .ravel()，再把值转为 int。
     """
     # TODO: 把混淆矩阵拆成四个业务计数。
     raise NotImplementedError("TODO: 实现 confusion_counts")
@@ -88,9 +82,6 @@ def normalized_confusion_matrix(
 
     特殊情况：
         某真实类别没有样本时该行是 0；长度不一致抛出 ValueError。
-
-    提示：
-        confusion_matrix(..., labels=[0,1], normalize="true")。
     """
     # TODO: 返回按真实类别归一化的矩阵。
     raise NotImplementedError("TODO: 实现 normalized_confusion_matrix")

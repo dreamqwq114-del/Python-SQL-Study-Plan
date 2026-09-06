@@ -28,9 +28,6 @@ def calculate_order_total(
 
     特殊情况：
         数量或单价为负、折扣小于 0 或大于 1 时产生 ValueError。
-
-    提示：
-        默认参数让调用者在没有折扣时可以省略第三个参数。
     """
     # TODO: 验证参数并计算折扣后金额。
     raise NotImplementedError("TODO: 实现 calculate_order_total")
@@ -58,9 +55,6 @@ def calculate_growth_rate(old_value: float, new_value: float) -> float:
 
     特殊情况：
         old_value 小于或等于 0、new_value 小于 0 时产生 ValueError。
-
-    提示：
-        函数返回数字，不要在返回值中添加百分号字符串。
     """
     # TODO: 检查输入并计算百分比增长率。
     raise NotImplementedError("TODO: 实现 calculate_growth_rate")
@@ -87,9 +81,6 @@ def summarize_scores(scores: list[float]) -> tuple[float, float, float]:
 
     特殊情况：
         空列表或存在范围外成绩时产生 ValueError。
-
-    提示：
-        min()、max()、sum() 和 len() 可以分别完成所需计算。
     """
     # TODO: 验证成绩并返回三个统计量。
     raise NotImplementedError("TODO: 实现 summarize_scores")
@@ -117,9 +108,6 @@ def format_customer_label(customer_id: str, city: str = "Unknown") -> str:
 
     特殊情况：
         customer_id 为空或只有空格时产生 ValueError。
-
-    提示：
-        先用 strip() 得到清理后的两个变量，再处理空城市。
     """
     # TODO: 清理文本并生成客户标签。
     raise NotImplementedError("TODO: 实现 format_customer_label")

@@ -23,9 +23,6 @@ def classify_spending(amount: float) -> str:
 
     特殊情况：
         100 应归为 "medium"；负数金额应产生 ValueError。
-
-    提示：
-        先处理错误输入，再按从小到大的边界写 if/elif/else。
     """
     # TODO: 检查金额并按边界分类。
     raise NotImplementedError("TODO: 实现 classify_spending")
@@ -52,9 +49,6 @@ def count_churned(statuses: list[str]) -> int:
 
     特殊情况：
         出现 "yes"、空字符串或其他未知值时产生 ValueError。
-
-    提示：
-        循环中可以先验证当前值，再使用 if 判断是否需要计数。
     """
     # TODO: 验证状态并统计 Yes。
     raise NotImplementedError("TODO: 实现 count_churned")
@@ -81,9 +75,6 @@ def calculate_valid_average(values: list[float | None]) -> float:
 
     特殊情况：
         空列表或全部是 None 时产生 ValueError。
-
-    提示：
-        同时维护 total 和 count，只有值不是 None 时才更新它们。
     """
     # TODO: 跳过 None 并计算有效数据平均值。
     raise NotImplementedError("TODO: 实现 calculate_valid_average")
@@ -114,9 +105,6 @@ def find_first_large_order(
 
     特殊情况：
         threshold 或任意订单金额为负数时产生 ValueError；等于阈值不算超过。
-
-    提示：
-        enumerate() 能同时得到索引和金额，找到后可以立即 return。
     """
     # TODO: 验证金额并查找第一个超过阈值的索引。
     raise NotImplementedError("TODO: 实现 find_first_large_order")

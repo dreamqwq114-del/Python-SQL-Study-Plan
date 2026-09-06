@@ -24,9 +24,6 @@ def select_features_and_label(dataframe: pd.DataFrame) -> tuple[pd.DataFrame, pd
 
     特殊情况：
         不修改原表；缺少任一必需列时抛出 KeyError。
-
-    提示：
-        多列使用双层方括号，单列使用一层方括号，并调用 copy()。
     """
     # TODO: 分离固定特征 X 与标签 y。
     raise NotImplementedError("TODO: 实现 select_features_and_label")
@@ -55,9 +52,6 @@ def select_mixed_features(
 
     特殊情况：
         city 仍保持文本，不在本题编码；缺列时抛出 KeyError。
-
-    提示：
-        本节只负责选择变量，类别编码在第 3 节完成。
     """
     # TODO: 分离包含城市的混合特征与标签。
     raise NotImplementedError("TODO: 实现 select_mixed_features")
@@ -84,9 +78,6 @@ def count_target_classes(target: pd.Series) -> dict[int, int]:
 
     特殊情况：
         有缺失值或 0/1 之外的值时抛出 ValueError；空 Series 返回两个 0。
-
-    提示：
-        先检查 isna() 和 isin([0, 1])，再用 value_counts()。
     """
     # TODO: 验证并统计二分类标签。
     raise NotImplementedError("TODO: 实现 count_target_classes")

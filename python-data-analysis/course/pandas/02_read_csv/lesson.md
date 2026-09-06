@@ -143,24 +143,28 @@ pd.read_csv()
 下面的完整脚本把本章知识点串联起来，建议先通读再动手做练习；需要运行时可复制到文件中执行。
 
 ```python
-"""从项目 data 目录读取客户 CSV。"""
-
-from pathlib import Path
+"""读取 CSV 并快速查看数据演示。"""
 
 import pandas as pd
 
 from utils.paths import DATA_DIR
 
-def load_customer_columns(path: Path) -> pd.DataFrame:
-    """读取分析需要的客户列。"""
-    columns = ["customer_id", "city", "monthly_spending", "churn"]
-    return pd.read_csv(path, usecols=columns, encoding="utf-8")
 
-def main() -> None:
-    customers = load_customer_columns(DATA_DIR / "sample_customers.csv")
+def demo_preview_csv() -> None:
+    """演示读取整张表并查看形状、列名、类型和前几行。"""
+    customers = pd.read_csv(
+        DATA_DIR / "sample_customers.csv",
+        encoding="utf-8",
+    )
     print(customers.shape)
     print(customers.columns.tolist())
+    print(customers.dtypes.to_dict())
     print(customers.head(2).to_dict("records"))
+
+
+def main() -> None:
+    demo_preview_csv()
+
 
 if __name__ == "__main__":
     main()

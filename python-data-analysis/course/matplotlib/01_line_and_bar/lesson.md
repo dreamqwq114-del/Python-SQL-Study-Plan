@@ -175,7 +175,7 @@ plt.close(figure)
 2. `plot_monthly_sales()`：按月份排序并绘制带圆点的销售折线。
 3. `plot_sales_and_city_counts()`：在两个子图中组合折线图和柱状图。
 
-每道题的标题、轴标签、DPI、边界情况和提示都写在 [practice_01_line_and_bar.py](practice.py) 中。
+每道题的标题、轴标签、DPI 和边界情况写在 [practice_01_line_and_bar.py](practice.py) 中；最小提示统一放在本教材末尾的折叠区。
 
 ## 9. 本章完整示例
 

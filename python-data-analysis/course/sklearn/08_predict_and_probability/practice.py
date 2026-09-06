@@ -28,9 +28,6 @@ def predict_labels_and_probabilities(model: Any, X: np.ndarray) -> tuple[np.ndar
 
     特殊情况：
         模型未拟合或不支持 predict_proba 时保留相应异常。
-
-    提示：
-        predict_proba 的第 0 列是类 0 概率，第 1 列是类 1 概率。
     """
     # TODO: 返回标签和正类概率。
     raise NotImplementedError("TODO: 实现 predict_labels_and_probabilities")
@@ -63,9 +60,6 @@ def predict_with_threshold(
 
     特殊情况：
         threshold<0 或 >1 时抛出 ValueError。
-
-    提示：
-        布尔数组可用 .astype(int) 转成 0/1。
     """
     # TODO: 按自定义概率阈值生成标签。
     raise NotImplementedError("TODO: 实现 predict_with_threshold")
@@ -97,9 +91,6 @@ def build_prediction_table(
 
     特殊情况：
         三个输入长度不一致时抛出 ValueError；不修改输入。
-
-    提示：
-        先比较 len()，再把三列放进 pd.DataFrame 字典。
     """
     # TODO: 将客户编号、标签和概率组合成表。
     raise NotImplementedError("TODO: 实现 build_prediction_table")
